@@ -1,0 +1,13 @@
+<div class="portlet-title ThemeColor" style="position: relative">
+  <div class="caption">
+    <i class="fa {{::options.icon}}" ng-if="options.icon"></i>
+    {{options.title | translate}}
+  </div>
+
+  <a ng-if="options.fullReportButton" href="javascript:;" 
+     style="position: absolute;right: 15px;top: 1px;" 
+     class="btn btn-sm view-full" 
+     ng-click="options.fullReportButton.cb()">
+    <i class="fa fa-arrow-right"></i> FULL REPORT
+  </a>
+</div>

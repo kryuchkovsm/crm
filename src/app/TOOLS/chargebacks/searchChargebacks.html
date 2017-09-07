@@ -1,0 +1,218 @@
+<div class="row">
+  <div class="col-md-12">
+      <!-- BEGIN Portlet PORTLET-->
+      <div class="portlet box">
+        <div
+          crm-portlet-header=""
+          options="portletHeaderOptions"
+          >
+        </div>
+        <div class="portlet-body" style="display: block;">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="well well-sm TitleBars">
+                <span class="block">{{ "tools.chargebacks.searchchargebacks.search-by" | translate }}:</span>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div
+                    crm-radio-list=""
+                    options="fieldOptions.searchByRLOptions"
+                    value="fields.searchByRLValue">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-8">
+              <form name="newChargebackForm" ng-model="newChargebackForm" novalidate>
+
+              <div class="well well-sm TitleBars">
+                <span class="block" ng-if="newChargeback">{{ "tools.chargebacks.searchchargebacks.display-a-record-that-will-receive-the-chargeback" | translate }}...</span>
+                <span class="block" ng-if="!newChargeback">{{ "tools.chargebacks.searchchargebacks.search-criteria" | translate }}:</span>
+              </div>
+
+              <div class="row nglightSpeedNoHide" ng-if="fields.searchByRLValue.id=='additional'" ng-animate="'animate'">
+                <div class="col-md-6">
+                  <div
+                    ng-if="!newChargeback"
+                    crm-text-input=""
+                    options="fieldOptions.caseNumberTxtOptions"
+                    value="additionalObj.caseNumberTxtValue">
+                  </div>
+                  <div class="well well-sm well-light bg-greyEEE form-group">
+                    <span class="block">{{ "tools.chargebacks.searchchargebacks.site-id" | translate }}:</span>
+                    <input type="text" class="form-control search-box" name="SiteID" ng-model="additionalObj.SiteID">
+                  </div>
+                  <div class="well well-sm well-light bg-greyEEE form-group">
+                    <span class="block">{{ "tools.chargebacks.searchchargebacks.first-name" | translate }}:</span>
+                    <input type="text" class="form-control search-box" name="FirstName" ng-model="additionalObj.FirstName">
+                  </div>
+                  <div class="well well-sm well-light bg-greyEEE form-group">
+                    <span class="block">{{ "tools.chargebacks.searchchargebacks.last-name" | translate }}:</span>
+                    <input type="text" class="form-control search-box" name="LastName" ng-model="additionalObj.LastName">
+                  </div>
+                  <div class="well well-sm well-light bg-greyEEE form-group" ng-class="{'has-error': submitted && newChargebackForm.Email.$invalid}">
+                    <span class="block">{{ "tools.chargebacks.searchchargebacks.email" | translate }}:</span>
+                    <input type="email" class="form-control search-box" name="Email" ng-model="additionalObj.Email" vemail>
+                    <p class="help-block" ng-show="submitted && newChargebackForm.Email.$error.email">{{ "tools.chargebacks.searchchargebacks.enter-valid-email-please" | translate }}</p>
+                  </div>
+                  <div
+                    crm-text-input=""
+                    options="fieldOptions.ccLast4TxtOptions"
+                    value="additionalObj.CCLast4Digits">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div crm-date-picker options="{label: 'STARTING:',valRequired: true}" value="additionalObj.DateFrom"></div>
+                  <div crm-date-picker options="{label: 'ENDING:',valRequired: true}" value="additionalObj.DateTo"></div>
+
+                  <div class="panel panel-warning">
+                    <div class="panel-heading" style="height: 87px;">
+                      <h4 class="panel-title" ng-if="!newChargeback">
+                        {{ "tools.chargebacks.searchchargebacks.note:-the-date-range-uses-the-date-that-the-chargeback-was-added;-not-the-date-of-the-transaction." | translate }}
+                      </h4>
+                      <h4 class="panel-title" ng-if="newChargeback">
+                        {{ "tools.chargebacks.searchchargebacks.note:-the-date-range-uses-the-date-of-the-transaction." | translate }}
+                      </h4>
+                    </div>
+                  </div>
+                  <div crm-date-picker options="{label: 'NOTICE DATE:',valRequired: true}" value="additionalObj.NoticeDate" ng-if="!newChargeback"></div>
+
+                  <div class="well well-sm well-light bg-greyEEE form-group" ng-class="{'has-error': submitted && newChargebackForm.Amount.$invalid}">
+                    <span class="block">{{ "tools.chargebacks.searchchargebacks.transaction-amount" | translate }}:</span>
+                    <input type="number" class="form-control search-box" name="Amount" jquery-numeric ng-model="additionalObj.Amount" />
+                    <p class="help-block" ng-show="submitted && newChargebackForm.Amount.$invalid">{{ "tools.chargebacks.searchchargebacks.enter-correct-amount-please" | translate }}</p>
+                  </div>
+                  <div
+                    ng-if="!newChargeback"
+                    crm-select=""
+                    options="fieldOptions.chargebackCodeSelectOptions"
+                    value="additionalObj.chargebackCodeSelectValue"
+                    >
+                  </div>
+
+                  <div
+                    ng-if="newChargeback"
+                    crm-text-input=""
+                    options="fieldOptions.bankAccountTxtOptions"
+                    value="additionalObj.BankAccount">
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="row nglightSpeedNoHide" ng-if="fields.searchByRLValue.id=='cc'" ng-animate="'animate'">
+                <div class="col-md-12">
+                  <div class="well well-sm well-light bg-greyEEE form-group" ng-class="{'has-error': submitted && newChargebackForm.searchValue.$invalid}">
+                    <span class="block">CC LAST 4 DIGITS:</span>
+                    <input type="number" min="1000" max="9999" class="form-control search-box" name="searchValue" ng-model="searchObj.value" placeholder="Search by CC LAST 4 DIGITS" required>
+                    <p class="help-block" ng-show="submitted && newChargebackForm.searchValue.$error.required">{{ "tools.chargebacks.searchchargebacks.enter-cc-number-please" | translate }}</p>
+                    <p class="help-block" ng-show="submitted && !newChargebackForm.searchValue.$error.required &&
+                    (newChargebackForm.searchValue.$error.min || newChargebackForm.searchValue.$error.max)">{{ "tools.chargebacks.searchchargebacks.cc-should-contain-only-4-digits" | translate }}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="row nglightSpeedNoHide" ng-if="fields.searchByRLValue.id=='ach'" ng-animate="'animate'">
+                <div class="col-md-12">
+                  <div class="well well-sm well-light bg-greyEEE form-group" ng-class="{'has-error': submitted && newChargebackForm.searchValue.$invalid}">
+                    <span class="block">{{ "tools.chargebacks.searchchargebacks.bank-account-(ach)" | translate }}:</span>
+                    <input type="text" class="form-control search-box" name="searchValue" ng-model="searchObj.value" required>
+                    <p class="help-block" ng-show="submitted && newChargebackForm.searchValue.$error.required">{{ "tools.chargebacks.searchchargebacks.enter-bank-account-please" | translate }}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="row nglightSpeedNoHide" ng-if="fields.searchByRLValue.id=='transactionid'" ng-animate="'animate'">
+                <div class="col-md-12">
+                  <div class="well well-sm well-light bg-greyEEE form-group" ng-class="{'has-error': submitted && newChargebackForm.searchValue.$invalid}">
+                    <span class="block">{{ "tools.chargebacks.searchchargebacks.transaction-id" | translate }}:</span>
+                    <input type="number" class="form-control search-box" name="searchValue" ng-model="searchObj.value" min="0" positive-number required>
+                    <p class="help-block" ng-show="submitted && newChargebackForm.searchValue.$error.required">{{ "tools.chargebacks.searchchargebacks.enter-transaction-id-please" | translate }}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row margin-top-4">
+                <div class="col-md-6">
+                  <a href="javascript:;" class="btn btn-lg ApplyColor full-width"  ng-click="search(fields.searchByRLValue.id, newChargebackForm)" ng-disabled="searching">
+                    <span ng-hide="searching">
+                      <i class="fa fa-search"></i>
+                      {{ "tools.chargebacks.searchchargebacks.search" | translate }}
+                    </span>
+                    <span ng-show="searching">
+                      ...{{ "tools.chargebacks.searchchargebacks.searching" | translate }}...
+                    </span>
+                  </a>
+                </div>
+                <div class="col-md-6">
+                  <a href="javascript:;" class="btn btn-lg CancelColor full-width"  ng-click="clear()" ng-disabled="searching">
+                    <i class="fa fa-times"></i>
+                    {{ "tools.chargebacks.searchchargebacks.clear" | translate }}
+                  </a>
+                </div>
+              </div>
+            </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- END Portlet PORTLET-->
+  </div>
+</div>
+
+<div class="panel panel-warning" ng-show="noData">
+  <div class="panel-heading">
+    <h4 class="panel-title">
+      {{ "tools.chargebacks.searchchargebacks.empty-result" | translate }}
+    </h4>
+  </div>
+</div>
+<div class="row" ng-if="data.length>0">
+  <div class="col-md-12">
+    <!-- BEGIN Portlet PORTLET-->
+    <div class="portlet box">
+      <div class="portlet-title ThemeColor">
+        <div class="caption">
+          {{ "tools.chargebacks.searchchargebacks.search-results" | translate }}
+        </div>
+      </div>
+
+      <section class="portlet-body">
+        <section st-table="dataCopy" st-safe-src="data">
+          <div class="table-scrollable">
+            <table class="table table-striped table-auto-layout">
+              <thead>
+              <tr class="TitleBars top-radius white">
+                <th ng-repeat="key in getKeys(data[0])" class="cursor-pointer" st-sort="{{key}}">{{splitUppercase(key)}}</th>
+                <th></th>
+              </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="row in dataCopy">
+                  <td ng-repeat="key in getKeys(data[0])">
+                    <div ng-if="key=='ChargebackExists'">
+                      {{row[key] ? 'Yes' : 'No'}}
+                    </div>
+                    <div ng-if="key!='ChargebackExists'">
+                      <span ng-show="key=='Amount'">$</span>{{key.indexOf('Date')>-1 ?  (dateFromServer(row[key], true)) : row[key]}}
+                    </div>
+                  </td>
+                  <td>
+                    <a href="" class="btn btn-sm WarningColor cursor-pointer" ng-show="row.ChargebackExists" ng-click="editChargeback(row.ChargebackGuid)">
+                      {{ "tools.chargebacks.searchchargebacks.edit" | translate }}
+                    </a>
+                    <a href="" class="btn btn-sm ApplyColor cursor-pointer" ng-show="(row.TransactionId || row.TransactionId==0) && !row.ChargebackExists" ng-click="addChargeback(row.TransactionId)">
+                      {{ "tools.chargebacks.searchchargebacks.select" | translate }}
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="center-text">
+            <div  st-items-by-page="10" st-pagination=""></div>
+          </div>
+        </section>
+      </section>
+    </div>
+  </div>
+</div>

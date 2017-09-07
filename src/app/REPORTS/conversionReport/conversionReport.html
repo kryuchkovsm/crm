@@ -1,0 +1,208 @@
+<div class="row">
+  <div class="col-md-12">
+    <!-- BEGIN Portlet PORTLET1-->
+    <div
+      crm-select-clients-dates=""
+      options="clientDatesOptions"
+      value="clientDatesValue"
+      searchf="search()"
+      >
+    </div>
+    <!-- END Portlet PORTLET1-->
+    <!-- BEGIN Portlet PORTLET2-->
+    <div class="portlet box" ng-if="chartsReady" id="charts">
+      <div
+        crm-portlet-header=""
+        options="portletHeaderOptions2"
+        >
+      </div>
+      <div class="portlet-body" style="display: block;">
+        <div class="row">
+          <div class="col-md-4 margin-bottom-20">
+            <span class="block margin-bottom-20 text-FontColor center-text">
+              {{ "reports.conversionreport.conversionreport.overall-activity" | translate }}
+            </span>
+            <div
+              ng-if="havePieData"
+              crm-piechart=""
+              options="piechartOptions"
+              >
+            </div>
+            <div ng-if="!havePieData"
+                 class="Metronic-alerts alert alert-warning font-size-15 center-text"
+              >
+              {{ "reports.conversionreport.conversionreport.no-data" | translate }}
+            </div>
+          </div>
+          <div class="col-md-8  margin-bottom-20">
+            <span class="block margin-bottom-20 text-FontColor center-text">
+              {{ "reports.conversionreport.conversionreport.activity-by-site" | translate }}
+            </span>
+            <div
+              ng-if="haveActData"
+              crm-dotted-linechart=""
+              options="dottedLinechartOptions1"
+              >
+            </div>
+            <div ng-if="!haveActData"
+                 class="Metronic-alerts alert alert-warning font-size-15 center-text"
+              >
+              {{ "reports.conversionreport.conversionreport.no-data" | translate }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END Portlet PORTLET2-->
+    <div id="bottom"></div>
+    <!-- BEGIN Portlet PORTLET3-->
+    <div class="portlet box" ng-show="dataReady">
+    <!--ng-if="dataReady"-->
+      <div
+        crm-portlet-header=""
+        options="portletHeaderOptions3"
+        >
+      </div>
+
+      <div class="portlet-body" style="display: block;">
+        <div class="no-margin" st-table="tableObj" st-safe-src="tableObjSafe">
+          <div ng-hide="tableObjSafe.length" class="Metronic-alerts alert alert-warning font-size-15 center-text">
+            {{ "reports.conversionreport.conversionreport.no-data" | translate }}
+          </div>
+          
+          <div class="row" ng-show="tableObjSafe.length">
+            <div class="col-md-12 padding-left-right-3">
+              <div class="fixed-table-header">
+                <table class="table scrollable table-striped" table-height="400" fixed-header arr="tableObj">
+                  <thead>
+                    <tr class="TitleBars top-radius white">
+                      <th st-sort="KeyID" class="cursor-pointer uppercase">{{keyID || 'Offer'}} ID</th>
+                      <th st-sort="KeyName" class="cursor-pointer uppercase">{{ "reports.conversionreport.conversionreport.name" | translate }}</th>
+                      <th st-sort="PreClicks" class="cursor-pointer uppercase">{{ "reports.conversionreport.conversionreport.pre-clicks" | translate }}</th>
+                      <th st-sort="LandingClicks" class="cursor-pointer uppercase">{{ "reports.conversionreport.conversionreport.landing-clicks" | translate }}</th>
+                      <th st-sort="ClickThrough" class="cursor-pointer uppercase">{{ "reports.conversionreport.conversionreport.click-through" | translate }}</th>
+                      <th st-sort="Inquiry" class="cursor-pointer uppercase">{{ "reports.conversionreport.conversionreport.inq" | translate }}</th>
+                      <th st-sort="Declines" class="cursor-pointer uppercase">{{ "reports.conversionreport.conversionreport.dec" | translate }}</th>
+                      <th st-sort="Paid" class="cursor-pointer uppercase">{{ "reports.conversionreport.conversionreport.paid" | translate }}</th>
+                      <th st-sort="Track" class="cursor-pointer uppercase">{{ "reports.conversionreport.conversionreport.track" | translate }}</th>
+                      <th st-sort="Actual" class="cursor-pointer uppercase">{{ "reports.conversionreport.conversionreport.actual" | translate }}</th>
+                      <th st-sort="CPA" class="cursor-pointer uppercase">{{ "reports.conversionreport.conversionreport.cpa" | translate }}</th>
+                      <th st-sort="ECPA" class="cursor-pointer uppercase">{{ "reports.conversionreport.conversionreport.ecpa" | translate }}</th>
+                      <th st-sort="EPC" class="cursor-pointer uppercase">{{ "reports.conversionreport.conversionreport.epc" | translate }}</th>
+                      <th st-sort="SU" class="cursor-pointer uppercase">{{ "reports.conversionreport.conversionreport.s/u%" | translate }}</th>
+                      <th st-sort="InquiryToOrderRation" class="cursor-pointer uppercase">{{ "reports.conversionreport.conversionreport.inq:ord" | translate }}</th>
+                      <th st-sort="DeclineRatio" class="cursor-pointer uppercase">{{ "reports.conversionreport.conversionreport.dec-ratio" | translate }}</th>
+                      <th st-sort="UpSell1" class="cursor-pointer uppercase">{{ "reports.conversionreport.conversionreport.upsell-1" | translate }}</th>
+                      <th st-sort="UpSell1Ratio" class="cursor-pointer uppercase">{{ "reports.conversionreport.conversionreport.ratio" | translate }}</th>
+                      <th st-sort="UpSell2" class="cursor-pointer uppercase">{{ "reports.conversionreport.conversionreport.upsell-2" | translate }}</th>
+                      <th st-sort="UpSell2Ratio" class="cursor-pointer uppercase">{{ "reports.conversionreport.conversionreport.ratio" | translate }}</th>
+                      <th st-sort="UpSell3" class="cursor-pointer uppercase">{{ "reports.conversionreport.conversionreport.upsell-3" | translate }}</th>
+                      <th st-sort="UpSell3Ratio" class="cursor-pointer uppercase">{{ "reports.conversionreport.conversionreport.ratio" | translate }}</th>
+                      <th st-sort="SURevenue" class="cursor-pointer uppercase">{{ "reports.conversionreport.conversionreport.s/u-rev" | translate }}</th>
+                      <th st-sort="IncomeByCustomer" class="cursor-pointer uppercase">{{ "reports.conversionreport.conversionreport.inc-cus" | translate }}</th>
+                      <th st-sort="MediaRevenue" class="cursor-pointer uppercase">{{ "reports.conversionreport.conversionreport.media-rev" | translate }}</th>
+                      <th st-sort="OfferReport" class="cursor-pointer uppercase">{{ "reports.conversionreport.conversionreport.rpt" | translate }}</th>
+                      <th st-sort="Spread" class="cursor-pointer uppercase">{{ "reports.conversionreport.conversionreport.spread" | translate }}</th>
+                      <th st-sort="Margin" class="cursor-pointer uppercase">{{ "reports.conversionreport.conversionreport.margin" | translate }}</th>
+                      <th st-sort="RiskOrders" class="cursor-pointer uppercase">{{ "reports.conversionreport.conversionreport.rsk-ords" | translate }}</th>
+                      <th st-sort="RiskOrdersAverage" class="cursor-pointer uppercase">{{ "reports.conversionreport.conversionreport.rsk-score-avg" | translate }}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="row in tableObj">
+                      <td nowrap>
+                        <span ng-if="keyID!='Affiliate'">{{row.KeyID}}</span>
+                        <a ng-if="keyID=='Affiliate'"
+                           ng-click="showSummaryDetails({ KeyID: row.KeyID, Column: 'affiliate' })">
+                          {{row.KeyID}}</a>
+                      </td>
+                      
+                      <td nowrap ng-show="row.KeyName">
+                        <a href="{{row.DomainURL}}" ng-show="row.DomainURL" target="_blank">{{row.KeyName}}</a>
+                        <span ng-hide="row.DomainURL">{{row.KeyName}}</span>
+                      </td>
+                      
+                      <td>
+                        <a ng-click="showSummaryDetails({ KeyID: row.KeyID, Column: 'preclick'})">
+                          {{row.PreClicks}}
+                        </a>
+                      </td>
+                      
+                      <td>
+                        <a ng-click="showSummaryDetails({ KeyID: row.KeyID, Column: 'landing'})">{{row.LandingClicks}}</a>
+                      </td>
+                      
+                      <td ng-init="normPercents(row.KeyID, 'ClickThrough')">{{row.ClickThrough}}</td>
+                      
+                      <td>
+                        <a ng-click="showSummaryDetails({ KeyID: row.KeyID, Column: 'inquiry'})">{{row.Inquiry}}</a>
+                      </td>
+                      
+                      <td>
+                        <a ng-click="showSummaryDetails({ KeyID: row.KeyID, Column: 'declines'})">{{row.Declines}}</a>
+                      </td>
+                      
+                      <td>
+                        <a ng-click="showSummaryDetails({ KeyID: row.KeyID, Column: 'paid'})">{{row.Paid}}</a>
+                      </td>
+                      
+                      <td>
+                        <a ng-click="showSummaryDetails({ KeyID: row.KeyID, Column: 'track'})">{{row.Track}}</a>
+                      </td>
+                      
+                      <td>
+                        <a ng-click="showSummaryDetails({ KeyID: row.KeyID, Column: 'actual'})">{{row.Actual}}</a>
+                      </td>
+                      
+                      <td ng-init="normCurrency(row.KeyID, 'CPA')">{{row.CPA | number:2}}</td>
+                      <td ng-init="normCurrency(row.KeyID, 'ECPA')">{{row.ECPA}}</td>
+                      <td ng-init="normCurrency(row.KeyID, 'EPC')">{{row.EPC}}</td>
+                      <td ng-init="normPercents(row.KeyID, 'SU')">{{row.SU}}</td>
+                      <td>{{row.InquiryToOrderRation}}</td>
+                      <td ng-init="normPercents(row.KeyID, 'DeclineRatio')">{{row.DeclineRatio}}</td>
+                      
+                      <td>
+                        <a ng-click="showSummaryDetails({ KeyID: row.KeyID, Column: 'upsell1'})">{{row.UpSell1}}</a>
+                      </td>
+                      
+                      <td ng-init="normPercents(row.KeyID, 'UpSell1Ratio')">{{row.UpSell1Ratio}}</td>
+                      
+                      <td>
+                        <a ng-click="showSummaryDetails({ KeyID: row.KeyID, Column: 'upsell2'})">{{row.UpSell2}}</a>
+                      </td>
+                      
+                      <td ng-init="normPercents(row.KeyID, 'UpSell2Ratio')">{{row.UpSell2Ratio}}</td>
+                      
+                      <td>
+                        <a ng-click="showSummaryDetails({ KeyID: row.KeyID, Column: 'upsell3'})">{{row.UpSell3}}</a>
+                      </td>
+                      
+                      <td ng-init="normPercents(row.KeyID, 'UpSell3Ratio')">{{row.UpSell3Ratio}}</td>
+                      <td ng-init="normCurrency(row.KeyID, 'SURevenue')">{{row.SURevenue}}</td>
+                      <td ng-init="normCurrency(row.KeyID, 'IncomeByCustomer')">{{row.IncomeByCustomer}}</td>
+                      <td ng-init="normCurrency(row.KeyID, 'MediaRevenue')">{{row.MediaRevenue}}</td>
+                      <td ng-init="normCurrency(row.KeyID, 'OfferReport')">{{row.OfferReport}}</td>
+                      <td ng-init="normCurrency(row.KeyID, 'Spread')">{{row.Spread}}</td>
+                      <td ng-init="normCurrency(row.KeyID, 'Margin')">{{row.Margin}}</td>
+                      
+                      <td>
+                        <a ng-click="showSummaryDetails({ KeyID: row.KeyID, Column: 'risk'})">{{row.RiskOrders}}</a>
+                      </td>
+                      <td>{{row.RiskOrdersAverage}}</td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr class="TitleBars top-radius white">
+                      <th colspan="99">Total Records: {{tableObjSafe.length}}</th>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END Portlet PORTLET3-->
+  </div>
+</div>

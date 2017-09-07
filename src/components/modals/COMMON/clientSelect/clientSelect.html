@@ -1,0 +1,57 @@
+<div class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a href="javascript:;" ng-click="close('false')" data-dismiss="modal">
+          <i class="fa fa-times close"></i>
+        </a>
+        <h4 class="modal-title">{{data.modalTitle}}</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+
+            <!--<div-->
+              <!--ng-dropdown-multiselect=""-->
+              <!--extra-settings="clientsSettings"-->
+              <!--options="clientsData"-->
+              <!--selected-model="clientsModel">-->
+            <!--</div>-->
+
+
+            <div class="well well-sm well-light bg-greyEEE">
+              <span>
+                <input type="text" class="form-control search-box margin-top-0" ng-model="searchClientFilter" placeholder="Type client name here or select from list.">
+              </span>
+              <div style="margin-bottom: 10px; overflow: auto; height: 243px;" class="form-control">
+                <div class="select-element ellipsis" ng-repeat="client in filterClients(clientsData, searchClientFilter)" ng-dblclick="selected.Client=client.ClientID;close(selected.Client)"
+                     data-ng-class="{'bg-greyEEE': selected.Client == client.ClientID}"
+                     ng-click="selected.Client==client.ClientID ? selected.Client='' : selected.Client=client.ClientID">
+                  <a role="menuitem" tabindex="-1" style="color: gray;" class="dropdown-multiselect-item tooltips">
+                    <span data-ng-class="{'fa fa-check margin-left-10': selected.Client == client.ClientID}"></span> {{client.CompanyName}}
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="row margin-top-minus-35">
+          <div class="col-md-6">
+            <a href="javascript:;" class="btn btn-lg CancelColor full-width"  ng-click="close('false')"  data-dismiss="modal">
+              <i class="fa fa-rotate-left"></i>
+              {{ "modals.common.clientselect.clientselect.back" | translate }}
+            </a>
+          </div>
+          <div class="col-md-6">
+            <a href="javascript:;" class="btn btn-lg ApplyColor full-width"  ng-click="close(selected.Client)"  data-dismiss="modal" ng-disabled="!selected.Client">
+              <i class="fa fa-arrow-right"></i>
+              {{ "modals.common.clientselect.clientselect.submit" | translate }}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

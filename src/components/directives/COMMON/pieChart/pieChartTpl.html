@@ -1,0 +1,55 @@
+<div class="CircleGraphBackgroundColor" ng-attr-style="background-color: {{::options.bg}}; position: relative;box-shadow: inset 0 0 7px rgb(136, 136, 136);border-radius: 3px;">
+
+  <div  class="pieChartTxt1">
+    <div ng-if="amounts[0] && labels[0]" class="pieChartAmount1"
+         ng-attr-style="color: {{::txtColors[0] || options.color}};text-transform: {{options.text_transform || 'uppercase'}}"
+         ng-bind="amounts[0]">
+    </div>
+    <div ng-if="labels[0]" class="pieChartLabel1"
+         ng-attr-style="color: {{::txtColors[0] || options.color}};text-transform: {{options.text_transform || 'uppercase'}}"
+         ng-bind="labels[0]">
+    </div>
+  </div>
+
+  <div  class="pieChartTxt2">
+    <div ng-if="amounts[1] && labels[1]" class="pieChartAmount2"
+         ng-attr-style="color: {{::txtColors[1] || options.color}};text-transform: {{options.text_transform || 'uppercase'}}"
+         ng-bind="amounts[1]">
+    </div>
+    <div ng-if="labels[1]" class="pieChartLabel2"
+         ng-attr-style="color: {{::txtColors[1] || options.color}};text-transform: {{options.text_transform || 'uppercase'}}"
+         ng-bind="labels[1]">
+    </div>
+  </div>
+
+  <div class="CircleGraphBackgroundColor" ng-attr-style="padding-top: 40px; padding-bottom: 40px; background-color: {{::options.bg}};box-shadow: inset 0 0 7px rgb(136, 136, 136);border-radius: 3px;">
+    <div id="chart_{{::options.chartID}}" class="chart flot-base-left-5"
+         style="position: relative; height: 230px;">
+    </div>
+    <div ng-if="options.bottomLabel" class="center-text  weight-bold grey" ng-bind="options.bottomLabel">
+    </div>
+  </div>
+
+  <div  class="pieChartTxt3">
+    <div ng-if="amounts[2] && labels[2]" class="pieChartAmount3"
+         ng-attr-style="color: {{::txtColors[2] || options.color}};text-transform: {{options.text_transform || 'uppercase'}}"
+         ng-bind="amounts[2]">
+    </div>
+    <div ng-if="labels[2]" class="pieChartLabel3"
+         ng-attr-style="color: {{::txtColors[2] || options.color}};text-transform: {{options.text_transform || 'uppercase'}}"
+         ng-bind="labels[2]">
+    </div>
+  </div>
+  <div  class="pieChartTxt4">
+    <div ng-if="amounts[3] && labels[3]" class="pieChartAmount4"
+         ng-attr-style="color: {{::txtColors[3] || options.color}};text-transform: {{options.text_transform || 'uppercase'}}"
+         ng-bind="amounts[3]">
+    </div>
+    <div ng-if="labels[3]" class="pieChartLabel4"
+         ng-attr-style="color: {{::txtColors[3] || options.color}};text-transform: {{options.text_transform || 'uppercase'}}"
+         ng-bind="labels[3]">
+    </div>
+  </div>
+</div>
+
+

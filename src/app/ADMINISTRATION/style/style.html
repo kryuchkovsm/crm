@@ -1,0 +1,200 @@
+<div class="row">
+  <div class="col-md-12">
+    <!-- BEGIN Portlet PORTLET-->
+    <div class="portlet box">
+      <div class="portlet-title ThemeColor">
+        <div class="caption">
+          {{ "administration.style.style.style-setup" | translate }}
+        </div>
+      </div>
+      <div class="portlet-body" style="display: block;">
+
+        <div class="row">
+          <div class="col-md-6">
+
+            <div class="well well-sm TitleBars">
+              <span class="block">{{ "administration.style.style.possible-colors" | translate }}:</span>
+            </div>
+
+            <div crm-color-tiles options="colorTilesOptions" value="colorTilesValue"></div>
+
+            <div class="well well-sm TitleBars">
+              <span class="block">{{ "administration.style.style.sample-navigation" | translate }}:</span>
+            </div>
+
+            <div class="margin-bottom-20">
+              <div class="page-header">
+                <div class="page-header-menu ThemeColor example-div" style="display: block">
+                  <div class="hor-menu">
+                    <ul class="nav navbar-nav no-margin">
+                      <li class="divider-vertical MenuDelimiterColor"></li>
+                      <li class="menu-dropdown">
+                        <a href="javascript:;" class="tooltips ActiveElementHoverColor" data-container="body" data-placement="bottom" data-html="true" data-original-title="Dashboard page">
+                          <span class="fa fa-home"></span>
+                          {{ "administration.style.style.home" | translate }}
+                        </a>
+                      </li>
+                      <li class="divider-vertical MenuDelimiterColor"></li>
+                      <li class="menu-dropdown">
+                        <a href="javascript:;" class="tooltips ActiveElementHoverColor" data-container="body" data-placement="bottom" data-html="true" data-original-title="Customer search page">
+                          <span class="fa fa-search"></span>
+                          {{ "administration.style.style.search" | translate }}
+                        </a>
+                      </li>
+                      <li class="divider-vertical MenuDelimiterColor"></li>
+                      <li class="menu-dropdown">
+                        <a href="javascript:;" class="tooltips ActiveElementHoverColor" data-container="body" data-placement="bottom" data-html="true" data-original-title="Sample tooltip">
+                          <span class="fa fa-bar-chart-o"></span>
+                          {{ "administration.style.style.stats" | translate }}
+                        </a>
+                      </li>
+                      <li class="divider-vertical MenuDelimiterColor"></li>
+                      <li class="menu-dropdown">
+                        <a href="javascript:;" class="tooltips ActiveElementHoverColor" data-container="body" data-placement="bottom" data-html="true" data-original-title="Sample tooltip">
+                          <span class="fa fa-wrench"></span>
+                          {{ "administration.style.style.tool" | translate }}
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="well well-sm TitleBars">
+              <span class="block">{{ "administration.style.style.sample-table" | translate }}:</span>
+            </div>
+
+            <div class="margin-bottom-20">
+              <div class="portlet box">
+                <div class="portlet-title ThemeColor" style="position: relative;">
+                  <div class="caption">
+                    <i class="fa fa-line-chart"></i>
+                    {{ "administration.style.style.conversion" | translate }} <span class="desktop-only">{{ "administration.style.style.viewer" | translate }}</span>
+                  </div>
+                  <a href="javascript:;" style="position: absolute;right: 6px;" class="btn btn-sm view-full">
+                    <i class="fa fa-arrow-right"></i> {{ "administration.style.style.full-report" | translate }}
+                  </a>
+                </div>
+                <div class="portlet-body" style="display: block;">
+                  <div crm-table></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="well well-sm TitleBars">
+                  <span class="block">{{ "administration.style.style.select-logo" | translate }}:</span>
+                </div>
+                <div class="size-14">{{ "administration.style.style.please-select-a-transparent-*.png-image.-required-width:-220px,-height:-45px" | translate }}</div>
+                <div class="margin-bottom-1">
+                  &nbsp;
+                </div>
+                <div flow-init flow-files-submitted="processFiles($flow.files, $flow)">
+                  <div class="thumbnail">
+                    <img ng-src="{{logoImage}}" style="height: 100%;">
+                    <!--<img flow-img="$flow.files[0]" ng-if="imageReady" style="height: 100%;">-->
+                  </div>
+                  <div class="center-text">
+                    <span ng-if="!validExt" class="label WarningColor full-width inline margin-bottom-10">{{ "administration.style.style.please-change-the-image-extension,-current-is" | translate }}: "{{currExtension}}"</span>
+                    <span ng-if="!validDms" class="label WarningColor full-width inline margin-bottom-10">{{ "administration.style.style.please-change-the-image-width/height,-current-are" | translate }}: {{images[0].width}} x {{images[0].height}}</span>
+                    <span class="btn btn-primary ApplyColor" ng-show="!$flow.files.length" flow-btn="">{{ "administration.style.style.select-image" | translate }}<input type="file" style="visibility: hidden; position: absolute;"></span>
+                    <span class="btn btn-info ng-hide ApplyColor" ng-show="$flow.files.length" flow-btn="">{{ "administration.style.style.change" | translate }}<input type="file" style="visibility: hidden; position: absolute;"></span>
+                  </div>
+                </div>
+
+                <div class="margin-bottom-1">
+                  &nbsp;
+                </div>
+
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="well well-sm TitleBars" style="margin-bottom: 11px;">
+                  <span class="block">{{ "administration.style.style.sample-form" | translate }}:</span>
+                </div>
+                <div class="login-form-container">
+                  <div class="form-login font-white FormBackground" style="margin: 0 auto;">
+                    <form class="ng-dirty ng-valid-parse ng-valid ng-valid-required">
+                      <div class="input-group top">
+                        <span class="input-group-addon top">
+                          <span class="fa fa-user" style="color:  #888888;"></span>
+                        </span>
+                        <input type="text" class="form-control top ng-untouched ng-dirty ng-valid-parse ng-valid ng-valid-required" name="username" placeholder="Username">
+                      </div>
+                      <div class="input-group bottom">
+                        <span class="input-group-addon bottom">
+                          <span class="fa fa-key" style="color:  #888888;"></span>
+                        </span>
+                        <input type="password" class="form-control bottom ng-untouched ng-dirty ng-valid-parse ng-valid ng-valid-required" name="password" placeholder="Password">
+                      </div>
+
+                      <div class="margin-top-20">
+                        <label class="cursor-pointer" ng-click="userInfo.staySigned=!userInfo.staySigned">
+                          <div class="checker">
+                            <span ng-class="{'checked': userInfo.staySigned}" class="checked"></span>
+                          </div>
+                          <span style="font-size: 12px">{{ "administration.style.style.stay-signed-in" | translate }}</span>
+                        </label>
+                      </div>
+                      <span class="group-btn">
+                        <a href="javascript:" class="btn btn-lg ApplyColor login-button" style="z-index: 1000">
+                          <i class="fa fa-arrow-right"></i>{{ "administration.style.style.login" | translate }}</a>
+                      </span>
+                    </form>
+                  </div>
+                  <div class="form-login-triangle FormBackground login-tab-tale"></div>
+                  <div class="font-sans-serif login-tabs" style="margin: 0 auto;margin-top: -18px;">
+                    <ul>
+                      <li class="width-70">
+                        <a class="active-login-tab"> {{ "administration.style.style.login" | translate }} </a>
+                      </li>
+                      <li class="width-130">
+                        <a class="default-login-tab">
+                          {{ "administration.style.style.can't-login" | translate }}? </a>
+                      </li>
+                      <li class="width-115">
+                        <a class="default-login-tab">
+                          {{ "administration.style.style.information" | translate }} </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="col-md-12">
+                <div class="well well-sm TitleBars">
+                  <span class="block">{{ "administration.style.style.sample-font" | translate }}:</span>
+                </div>
+
+                <div class="font-sans-serif size-20 weight-bold">{{ "administration.style.style.sans-serif-font" | translate }}</div>
+                <div class="font-sans-serif size-18">{{ "administration.style.style.page-header" | translate }}</div>
+                <div class="font-sans-serif size-15 weight-bold">{{ "administration.style.style.navigation" | translate }}</div>
+                <div class="font-sans-serif size-14 weight-bold">{{ "administration.style.style.table-header" | translate }}</div>
+                <div class="font-sans-serif size-14 weight-bold">{{ "administration.style.style.table-column" | translate }}</div>
+                <div class="font-sans-serif size-14">{{ "administration.style.style.graph-labels" | translate }}</div>
+                <div class="font-sans-serif size-13">{{ "administration.style.style.lorem-ipsum-is-simply-dummy-text-of-the-printing-and-typesetting-industry" | translate }}. </div>
+
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 initial">
+                <div class="well well-sm TitleBars">
+                  <span class="block">{{ "administration.style.style.sample-graph" | translate }}:</span>
+                </div>
+                <div ng-if="dottedLinechartOptions" crm-dotted-linechart options="dottedLinechartOptions"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END Portlet PORTLET-->
+  </div>
+</div>

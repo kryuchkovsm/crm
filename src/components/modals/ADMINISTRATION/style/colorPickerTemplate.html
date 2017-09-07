@@ -1,0 +1,44 @@
+<div class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a href="javascript:;" ng-click="close('false')" data-dismiss="modal"><i class="fa fa-times close"></i></a>
+        <h4 class="modal-title">{{ "modals.administration.style.colorpickertemplate.select-a-color" | translate }}:</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-offset-1 col-md-7 col-sm-8 col-xs-8 col-mobile margin-bottom-10">
+            <div style="margin: 0 auto;width: {{data.widthPicker}}px;">
+              <ng-farbtastic width="data.widthPicker" width="data.color" ng-model="data.color"></ng-farbtastic>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-4 col-xs-4 col-mobile">
+            <div class="chosen-color-container">
+              <div class="chosen-color" style="background-color: {{data.color}};border: 1px solid lightgrey;">
+                <div class="chosen-color-title">{{ "modals.administration.style.colorpickertemplate.selected-color" | translate }}</div>
+              </div>
+              <input type="text" class="form-control color-select-input full-width margin-top-10" ng-model="data.color" placeholder="Color">
+            </div>
+          </div>
+        </div>
+        <div class="alert alert-warning center-text" role="alert" ng-show="showError && !data.color">{{ "modals.administration.style.colorpickertemplate.please-select-any-color" | translate }}</div>
+      </div>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-md-6">
+            <a href="javascript:;" class="btn btn-lg CancelColor full-width"  ng-click="close('false')"  data-dismiss="modal">
+              <i class="fa fa-rotate-left"></i>
+              {{ "modals.administration.style.colorpickertemplate.cancel" | translate }}
+            </a>
+          </div>
+          <div class="col-md-6">
+            <a href="javascript:;" class="btn btn-lg ApplyColor full-width" ng-click="close(data.color)">
+              <i class="fa fa-arrow-right"></i>
+              {{ "modals.administration.style.colorpickertemplate.submit" | translate }}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

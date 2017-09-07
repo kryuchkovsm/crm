@@ -1,0 +1,148 @@
+<div class="well well-sm TitleBars">
+  <span class="block">{{ "campaigns.campaigns.steps.step5.upsell" | translate }}</span>
+</div>
+<section ng-repeat="page in fields.Pages | filterByField:{Type: 'upsell'}" ng-if="currentPageID==page.PageID">
+  <form name="upsellForm" ng-init="submitted=false" novalidate>
+    <div class="row margin-bottom-20">
+      <div class="col-md-6">
+        <div class="well well-sm well-light  bg-greyEEE form-group" ng-class="{'has-error': submitted && upsellForm.PageName.$error.required}">
+          <span class="block">{{ "campaigns.campaigns.steps.step5.page-name" | translate }}:</span>
+          <input type="text" step="any" class="form-control search-box" name="PageName" ng-model="page.Properties.upsellPageName" placeholder="Type page name" required>
+          <p class="help-block" ng-show="submitted && upsellForm.PageName.$error.required">{{ "campaigns.campaigns.steps.step5.the-page-name-is-required" | translate }}</p>
+        </div>
+        <!--<div crm-text-input options="upsellPageNameTxtOptions" value="page.Properties.upsellPageName"></div>-->
+      </div>
+      <div class="col-md-6">
+        <div class="well well-sm well-light  bg-greyEEE form-group" ng-class="{'has-error': submitted && upsellForm.PageTitle.$error.required}">
+          <span class="block">{{ "campaigns.campaigns.steps.step5.page-title" | translate }}:</span>
+          <input type="text" step="any" class="form-control search-box" name="PageTitle" ng-model="page.Properties.PageTitle" placeholder="Type page title" required>
+          <p class="help-block" ng-show="submitted && upsellForm.PageTitle.$error.required">{{ "campaigns.campaigns.steps.step5.the-page-title-is-required" | translate }}</p>
+        </div>
+        <!--<div crm-text-input options="upsellPageTitleTxtOptions" value="page.Properties.PageTitle"></div>-->
+      </div>
+    </div>
+
+    <div class="well well-sm TitleBars">
+      <span class="block">{{ "campaigns.campaigns.steps.step5.products" | translate }}</span>
+    </div>
+
+    <div class="row margin-bottom-20">
+      <div class="col-md-12" st-table="page.Groups">
+        <a href="javascript:;" class="btn btn-lg ApplyColor margin-bottom-20" ng-click="addProductGroup()">
+          <i class="fa fa-plus"></i>
+          {{ "campaigns.campaigns.steps.step5.add-product" | translate }}
+        </a>
+
+        <section id="flip-scroll">
+          <table class="table table-striped margin-top-10 margin-bottom-10" ng-show="page.Groups.length">
+            <thead>
+              <tr class="TitleBars top-radius white">
+                <th st-ratio="25">{{ "campaigns.campaigns.steps.step5.name" | translate }}</th>
+                <th st-ratio="10">{{ "campaigns.campaigns.steps.step5.charges" | translate }}</th>
+                <th st-ratio="10">{{ "campaigns.campaigns.steps.step5.active-recurrings" | translate }}</th>
+                <th st-ratio="20">{{ "campaigns.campaigns.steps.step5.checkbox-group" | translate }}</th>
+                <th st-ratio="20">{{ "campaigns.campaigns.steps.step5.radio-group" | translate }}</th>
+                <th st-ratio="15">{{ "campaigns.campaigns.steps.step5.delete" | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+            <tr ng-init="row.Properties.cbRadio=row.Properties.cbRadio || 'radio'" ng-repeat="row in page.Groups">
+              <td st-ratio="25" class="padding-top-8">
+                <select class="inTableSelect" ng-model="row.ProductGroupGuid" ng-options="opt.id as opt.name for opt in productsTableData"
+                        ng-change="row.Properties.ProductName = (productsTableData|filterByField: {id: row.ProductGroupGuid})[0].name">
+                  <option ng-if="!row.ProductGroupGuid" value=''>- {{ "campaigns.campaigns.steps.step5.please-choose" | translate }} -</option>
+                </select>
+              </td>
+              <td st-ratio="10" class="center-text">
+                <div class="padding-top-3">
+                  <a href="javascript:;" ng-click="showCharges((productsTableData|filterByField:{id:row.ProductGroupGuid})[0])">
+                    <i class="fa fa-list"></i> {{ (productsTableData|filterByField:{id:row.ProductGroupGuid})[0].Charges.length }}
+                  </a>
+                </div>
+              </td>
+              <td st-ratio="10" class="center-text">
+                <div class="padding-top-3">
+                  <a href="javascript:;" ng-click="showRecurings((productsTableData|filterByField:{id:row.ProductGroupGuid})[0].ActiveRecurrings)">
+                    <i class="fa fa-list"></i> {{ (productsTableData|filterByField:{id:row.ProductGroupGuid})[0].ActiveRecurrings.length }}
+                  </a>
+                </div>
+              </td>
+              <td st-ratio="20">
+                <div class="padding-top-1">
+                  <div class="radio pointer inline-block" ng-click="row.Properties.cbRadio='cb'">
+                    <span ng-class="{'checked': row.Properties.cbRadio == 'cb'}"><input type="radio" value="cb"></span>
+                  </div>
+                  <input class="inline-block width-50 small-input" min="1" type="number" ng-model="row.Properties.CbGroup">
+                </div>
+              </td>
+              <td st-ratio="20"  class="center-text">
+                <div class="padding-top-1">
+                  <div class="radio pointer inline-block" ng-click="row.Properties.cbRadio='radio'">
+                    <span ng-class="{'checked': row.Properties.cbRadio == 'radio'}"><input type="radio" value="radio"></span>
+                  </div>
+                  <input class="inline-block width-50 small-input" min="1" type="number" ng-model="row.Properties.RadioGroup">
+                </div>
+              </td>
+              <td st-ratio="15" class="center-text">
+                <div class="padding-top-1">
+                  <a href="javascript:;" ng-click="page.Groups.splice($index,1)">
+                    <i class="fa fa-times"></i>
+                  </a>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </section>
+        <div class="center-text">
+          <div st-items-by-page="10" st-pagination=""></div>
+        </div>
+        <div class="alert alert-danger center-text" role="alert" ng-show="submitted && !validProductGroups(page.Groups)">
+          {{ "campaigns.campaigns.steps.step5.add-at-least-one-product" | translate }}
+        </div>
+      </div>
+    </div>
+
+    <div class="well well-sm TitleBars">
+      <span class="block">{{ "campaigns.campaigns.steps.step5.pixels" | translate }}</span>
+    </div>
+
+    <div class="bg-greyEEE padding-10 rounded-3 margin-bottom-20" style="position: relative">
+      <span class="campaign-setup-form-label">{{ "campaigns.campaigns.steps.step5.header-pixel" | translate }}:</span>
+      <div class="tokens-container" ng-include textarea-id="upsell-header-pixels" src="'tokens.html'"></div>
+
+      <textarea ng-model="page.HeaderPixel" maxlength="5000" id="upsell-header-pixels"
+                placeholder="Example:
+                <iframe src='https://response-pixel.com/p.ashx?o=XXX&e={{transaction_id}}&t={{customer_id}}'></iframe>"
+                class="remarkTxtArea"></textarea>
+    </div>
+
+    <div class="bg-greyEEE padding-10 rounded-3 margin-bottom-20" style="position: relative">
+      <span class="campaign-setup-form-label">{{ "campaigns.campaigns.steps.step5.footer-pixel" | translate }}:</span>
+      <div class="tokens-container" ng-include textarea-id="upsell-footer-pixels" src="'tokens.html'"></div>
+      <textarea ng-model="page.FooterPixel" maxlength="5000" id="upsell-footer-pixels"
+                placeholder="Example:
+                <iframe src='https://response-pixel.com/p.ashx?o=XXX&e={{transaction_id}}&t={{customer_id}}'></iframe>"
+                class="remarkTxtArea"></textarea>
+
+    </div>
+
+    <div class="row">
+      <div class="col-md-4">
+        <a href="javascript:;" class="btn btn-lg CancelColor margin-bottom-20 full-width" ng-click="prevUpsellPage()">
+          {{ "campaigns.campaigns.steps.step5.previous" | translate }}
+        </a>
+      </div>
+      <div class="col-md-4">
+        <a href="javascript:;" class="btn btn-lg ApplyColor margin-bottom-20 full-width" ng-click="submitted=true;addUpsell(upsellForm, validProductGroups(page.Groups))">
+          {{ "campaigns.campaigns.steps.step5.add-additional-upsell-page" | translate }}
+        </a>
+      </div>
+      <div class="col-md-4">
+        <a href="javascript:;" class="btn btn-lg ApplyColor margin-bottom-20 full-width" ng-click="submitted=true;nextStep(6, upsellForm, validProductGroups(page.Groups))">
+          {{ "campaigns.campaigns.steps.step5.continue-to-confirmation-page" | translate }}
+        </a>
+      </div>
+    </div>
+  </form>
+</section>

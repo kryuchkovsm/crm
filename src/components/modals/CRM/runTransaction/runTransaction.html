@@ -1,0 +1,103 @@
+<div class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content modal-middle-width">
+      <div class="modal-header">
+        <a href="javascript:;" ng-click="close('false')" data-dismiss="modal"><i class="fa fa-times close"></i></a>
+        <h4 class="modal-title">{{modalTitle}}</h4>
+      </div>
+      <div class="modal-body">
+          <div class="col-md-12 smTable" >
+            <table st-table="transactionsData" class="table narrow table-striped crmTable">
+              <thead>
+              <tr class="heading">
+              </tr>
+              <tr class="TitleBars top-radius white">
+                <th st-ratio="5"></th>
+                <th st-ratio="5"></th>
+                <th st-ratio="58">{{ "modals.crm.runtransaction.runtransaction.group" | translate }}</th>
+                <th st-ratio="22">{{ "modals.crm.runtransaction.runtransaction.total" | translate }}</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr ng-repeat="row in transactionsData track by row.trid">
+                <td st-ratio="5" class="center-text"><a ng-click="add()"><i class="fa fa-plus-circle text-warning"></i></a></td>
+                <td st-ratio="5" class="center-text">
+                  <div class="checker" ng-click="row.active=!row.active;">
+                    <span ng-class="{checked: row.active}"></span>
+                  </div>
+                  <!--<input type="checkbox" ng-model="row.active">-->
+                </td>
+                <td st-ratio="58">{{row.transaction}}</td>
+                <td st-ratio="22">
+                  <input type="text"
+                         class="form-control"
+                         id="1"
+                         name="total"
+                         ng-model="row.total"
+                  >
+                </td>
+              </tr>
+              </tbody>
+              <tfoot>
+              <tr>
+                <td colspan="5" class="text-center">
+                  <div  st-items-by-page="10" st-pagination=""></div>
+                </td>
+              </tr>
+              </tfoot>
+            </table>
+          </div>
+
+        <p class="margin-top-10 margin-left-10 inline">{{ "modals.crm.runtransaction.runtransaction.enter-in-a-different-amount-to-change-pricing-for-any-product." | translate }}</p>
+
+        <div class=" text-left">
+
+          <div class="col-md-12  ">
+            <div class="well well-sm TitleBars">
+              <span class="block">{{ "modals.crm.runtransaction.runtransaction.affiliate-tracking" | translate }}:</span>
+            </div>
+          </div>
+
+          <div class="col-md-6  ">
+            <div
+              crm-combo=""
+              options="affiliateIdComboOptions"
+              value="fields.affiliateIdComboValue"
+              >
+            </div>
+          </div>
+          <div class="col-md-6 ">
+            <div
+              crm-combo=""
+              options="subAffiliateIdComboOptions"
+              value="fields.subAffiliateIdComboValue"
+              >
+            </div>
+          </div>
+
+        </div>
+
+        <p class="text-center margin-top-minus-5">{{ "modals.crm.runtransaction.runtransaction.affiliate-id-and-sub-affiliate-id-values-are-set-within-user-accounts." | translate }}</p>
+
+      </div>
+      <div class="modal-footer margin-top-minus-15 padding-bottom-15">
+
+        <div class="row">
+          <div class="col-md-6">
+            <a href="javascript:;" class="btn btn-lg CancelColor full-width"  ng-click="close('false')"  data-dismiss="modal">
+              <i class="fa fa-times"></i>
+              {{ "modals.crm.runtransaction.runtransaction.exit" | translate }}
+            </a>
+          </div>
+          <div class="col-md-6">
+            <a href="javascript:;" class="btn btn-lg ApplyColor full-width"  ng-click="save(fields)"  data-dismiss="modal">
+              <i class="fa fa-arrow-right"></i>
+              {{ "modals.crm.runtransaction.runtransaction.submit-transaction" | translate }}
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

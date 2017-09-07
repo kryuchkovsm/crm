@@ -1,0 +1,46 @@
+<div class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a href="javascript:;" ng-click="close(false)" ng-disabled="saving"><i class="fa fa-times close"></i></a>
+        <h4 class="modal-title">{{ "modals.tools.enabledomain.domain" | translate }}</h4>
+      </div>
+      <div class="modal-body">
+        <div class="center-text" ng-show="saving">
+          <div class="cssload-loader" style="margin-top: 10%">...{{saving}}...</div>
+        </div>
+
+        <div class="flip-scroll">
+          <table class="table table-stripped" ng-class="{'opacity-2': saving}">
+            <thead>
+              <th>{{ "modals.tools.enabledomain.domain" | translate }}</th>
+              <th>{{ "modals.tools.enabledomain.current-url" | translate }}</th>
+              <th>{{ "modals.tools.enabledomain.enable/disable" | translate }}</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td><a href="{{fields.Domain}}" target="_blank">{{fields.Domain}}</a></td>
+                <td><a href="{{fields.CurrentUrl}}" target="_blank">{{fields.CurrentUrl}}</a></td>
+                <td>
+                  <button class="btn btn-sm ApplyColor" ng-click="useDomain=!useDomain;save();" ng-disabled="saving">
+                    {{fields.UseDomain ? 'Disable' : 'Enable'}} Domain
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-md-offset-2 col-md-8">
+            <a href="javascript:;" class="btn btn-lg CancelColor full-width" ng-click="close(false)" ng-disabled="saving">
+              <i class="fa fa-rotate-left"></i>
+              {{ "modals.tools.enabledomain.close" | translate }}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

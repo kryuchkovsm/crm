@@ -1,0 +1,211 @@
+<div class="row">
+  <div class="col-md-12">
+    <!-- BEGIN Portlet PORTLET1-->
+    <div
+      crm-select-clients-dates=""
+      options="clientDatesOptions"
+      value="clientDatesValue"
+      searchf="search()"
+      >
+    </div>
+    <!-- END Portlet PORTLET1-->
+    <!-- BEGIN Portlet PORTLET2-->
+    <div class="portlet box" ng-show="dataReady">
+      <div
+        crm-portlet-header=""
+        options="portletHeaderOptions2"
+        >
+      </div>
+      <div class="portlet-body" style="display: block;">
+        <div class="row">
+          <div class="col-md-4 margin-bottom-20">
+            <span class="block margin-bottom-20 text-FontColor center-text">{{ "reports.processingreport.processingreport.transactions" | translate }}</span>
+            <div ng-if="haveTransData" crm-piechart="" options="piechartOptions"></div>
+            <div ng-hide="haveTransData" class="Metronic-alerts alert alert-warning font-size-15 center-text">
+              {{ "reports.processingreport.processingreport.no-data" | translate }}
+            </div>
+          </div>
+          <div class="col-md-8">
+            <span class="block margin-bottom-20 text-FontColor center-text">{{ "reports.processingreport.processingreport.processing-limits" | translate }}</span>
+            <div ng-if="haveProcData" crm-barchart="" options="barchartOptions"></div>
+            <div ng-hide="haveProcData" class="Metronic-alerts alert alert-warning font-size-15 center-text">
+              {{ "reports.processingreport.processingreport.no-data" | translate }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END Portlet PORTLET2-->
+    <div id="bottom"></div>
+    <!-- BEGIN Portlet PORTLET3-->
+    <div class="portlet box" ng-show="dataReady">
+      <div crm-portlet-header options="portletHeaderOptions3"></div>
+      <div class="portlet-body" style="display: block;">
+        <div class="tablePortletButtons">
+          <a
+            ng-if="getKeysCount(keysHeader)"
+            href="javascript:;"
+            ng-csv="exportToExcel(keysHeader)"
+            filename="export.csv"
+            csv-header="exportToExcel(keysHeader,true)">
+            <i class="fa fa-file-excel-o icon-hover"
+               title="Download report" data-toggle="tooltip" data-placement="top" tooltip></i>
+          </a>
+          <a href="javascript:;" ng-click="fillTable(tableFiltersValue)">
+            <i class="fa fa-refresh icon-hover"
+               title="Refresh" data-toggle="tooltip" data-placement="top" tooltip></i>
+          </a>
+        </div>
+
+        <div st-table="tableObj" st-safe-src="tableObjSafe">
+          <div ng-hide="tableObjSafe.length" class="Metronic-alerts alert alert-warning font-size-15 center-text">
+            {{ "reports.processingreport.processingreport.no-data" | translate }}
+          </div>
+
+          <div class="row">
+            <div ng-show="tableObjSafe.length" class="col-md-12 margin-bottom-10" >
+              <div class="row margin-top-minus-10">
+                <div class="col-md-3">
+                  <div crm-date-picker="" options="{
+                      label: 'From:',
+                      id: 304,
+                      small: true,
+                      placeholder: 'From'
+                    }" value="tableFiltersValue.DateFrom">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div crm-date-picker="" options="{
+                      label: 'To:  ',
+                      id: 305,
+                      small: true,
+                      placeholder: 'To'
+                    }" value="tableFiltersValue.DateTo">
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <select class="form-control-sm search-box whole-width" ng-model="daySelectValue">
+                    <option value=''>{{ "reports.processingreport.processingreport.period" | translate }}</option>
+                    <option ng-repeat="opt in daySelectOptions" value="{{opt.name}}">{{opt.name}}</option>
+                  </select>
+                </div>
+                <div class="col-md-2">
+                  <select class="form-control-sm search-box whole-width" ng-model="selectedTimezone" ng-options="tz as tz for tz in timezones">
+                    <option value="">{{ "reports.processingreport.processingreport.select-tz" | translate }}</option>
+                  </select>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <div class="row" ng-if="tableObjSafe.length">
+            <div class="col-md-12">
+              <!--<div class="table-scrollable" fixed-header-footer datatable="tableObjSafe">-->
+                <!--<table class="table table-striped table-auto-layout multirow-header-short" st-table="tableObj" st-safe-src="tableObjSafe">-->
+              <div class="fixed-table-header" st-table="tableObj" st-safe-src="tableObjSafe">
+                <table class="table scrollable table-striped" table-height="400" heq="1" fixed-header arr="tableObj">
+                  <thead>
+                    <tr class="TitleBars top-radius white">
+                      <th colspan="1" st-sort="id" class="cursor-pointer">{{ "reports.processingreport.processingreport.processor-id" | translate }}</th>
+                      <th colspan="3">{{ "reports.processingreport.processingreport.pending-auths" | translate }}</th>
+                      <th colspan="3">{{ "reports.processingreport.processingreport.sales-capture" | translate }}</th>
+                      <th colspan="3">{{ "reports.processingreport.processingreport.refunds" | translate }}</th>
+                      <th colspan="3">{{ "reports.processingreport.processingreport.voids" | translate }}</th>
+                      <th colspan="3">{{ "reports.processingreport.processingreport.declines" | translate }}</th>
+                      <th colspan="2">{{ "reports.processingreport.processingreport.totals" | translate }}</th>
+                      <th colspan="2">{{ "reports.processingreport.processingreport.processing-limits" | translate }}</th>
+                      <th colspan="4">{{ "reports.processingreport.processingreport.charge-backs" | translate }}</th>
+                      <th colspan="2">{{ "reports.processingreport.processingreport.alerts" | translate }}</th>
+                    </tr>
+                    <tr class="TitleBars white">
+                      <th class="cursor-pointer">&nbsp;</th>
+
+                      <th st-sort="id" class="cursor-pointer">#</th>
+                      <th st-sort="name" class="cursor-pointer">$</th>
+                      <th st-sort="name" class="cursor-pointer">%</th>
+
+                      <th st-sort="id" class="cursor-pointer">#</th>
+                      <th st-sort="name" class="cursor-pointer">$</th>
+                      <th st-sort="name" class="cursor-pointer">%</th>
+
+                      <th st-sort="id" class="cursor-pointer">#</th>
+                      <th st-sort="name" class="cursor-pointer">$</th>
+                      <th st-sort="name" class="cursor-pointer">%</th>
+
+                      <th st-sort="id" class="cursor-pointer">#</th>
+                      <th st-sort="name" class="cursor-pointer">$</th>
+                      <th st-sort="name" class="cursor-pointer">%</th>
+
+                      <th st-sort="id" class="cursor-pointer">#</th>
+                      <th st-sort="name" class="cursor-pointer">$</th>
+                      <th st-sort="name" class="cursor-pointer">%</th>
+
+                      <th st-sort="id" class="cursor-pointer">#</th>
+                      <th st-sort="name" class="cursor-pointer">$</th>
+
+                      <th st-sort="name" class="cursor-pointer">$</th>
+                      <th st-sort="id" class="cursor-pointer">%</th>
+
+                      <th st-sort="id" class="cursor-pointer">#</th>
+                      <th st-sort="name" class="cursor-pointer">%</th>
+                      <th st-sort="name" class="cursor-pointer">$</th>
+                      <th st-sort="name" class="cursor-pointer">%</th>
+
+                      <th st-sort="id" class="cursor-pointer">#</th>
+                      <th st-sort="id" class="cursor-pointer">%</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="row in tableObj">
+
+                      <td class="right-text">{{row.ProcessorID}}</td>
+
+                      <td class="right-text"><a ng-click="showSummaryDetails({ProcessorID: row.ProcessorID, Column: 'pendingauth'}, tableFiltersValue, 'processing')">{{row.PendingAuth}}</a></td>
+                      <td class="right-text" ng-init="normCurrency(row.KeyID, 'PendingAuthDollars')">{{row.PendingAuthDollars}}</td>
+                      <td class="right-text" ng-init="normPercents(row.KeyID, 'PendingAuthRatio')">{{row.PendingAuthRatio}}</td>
+
+                      <td class="right-text"><a ng-click="showSummaryDetails({ProcessorID: row.ProcessorID, Column: 'salescapture'}, tableFiltersValue, 'processing')">{{row.SalesCapture}}</a></td>
+                      <td class="right-text" ng-init="normCurrency(row.KeyID, 'SalesCaptureDollars')">{{row.SalesCaptureDollars}}</td>
+                      <td class="right-text" ng-init="normPercents(row.KeyID, 'SalesCaptureRatio')">{{row.SalesCaptureRatio}}</td>
+
+                      <td class="right-text"><a ng-click="showSummaryDetails({ProcessorID: row.ProcessorID, Column: 'refunds'}, tableFiltersValue, 'processing')">{{row.Refunds}}</a></td>
+                      <td class="right-text" ng-init="normCurrency(row.KeyID, 'RefundsDollars')">{{row.RefundsDollars}}</td>
+                      <td class="right-text" ng-init="normPercents(row.KeyID, 'RefundsRatio')">{{row.RefundsRatio}}</td>
+
+                      <td class="right-text"><a ng-click="showSummaryDetails({ProcessorID: row.ProcessorID, Column: 'voids'}, tableFiltersValue, 'processing')">{{row.Voids}}</a></td>
+                      <td class="right-text" ng-init="normCurrency(row.KeyID, 'VoidsDollars')">{{row.VoidsDollars}}</td>
+                      <td ng-init="normPercents(row.KeyID, 'VoidsRatio')">{{row.VoidsRatio}}</td>
+
+                      <td><a ng-click="showSummaryDetails({ProcessorID: row.ProcessorID, Column: 'declines'}, tableFiltersValue, 'processing')">{{row.Declines}}</a></td>
+                      <td ng-init="normCurrency(row.KeyID, 'DeclinesDollars')">{{row.DeclinesDollars}}</td>
+                      <td ng-init="normPercents(row.KeyID, 'DeclinesRatio')">{{row.DeclinesRatio}}</td>
+
+
+                      <td>{{row.Totals}}</td>
+                      <td ng-init="normCurrency(row.KeyID, 'TotalsDollars')">{{row.TotalsDollars}}</td>
+
+                      <td ng-init="normCurrency(row.KeyID, 'ProcessingLimitDollars')">{{row.ProcessingLimitDollars}}</td>
+                      <td ng-init="normPercents(row.KeyID, 'ProcessingLimitRatio')">{{row.ProcessingLimitRatio}}</td>
+
+                      <td><a ng-click="showSummaryDetails({ProcessorID: row.ProcessorID, Column: 'chargebacks'}, tableFiltersValue, 'processing')">{{row.ChargeBacks}}</a></td>
+                      <td ng-init="normPercents(row.KeyID, 'ChargeBacksRatio')">{{row.ChargeBacksRatio}}</td>
+                      <td ng-init="normCurrency(row.KeyID, 'ChargeBacksDollars')">{{row.ChargeBacksDollars}}</td>
+                      <td ng-init="normPercents(row.KeyID, 'ChargeBacksRatio2')">{{row.ChargeBacksRatio2}}</td>
+
+                      <td>{{row.Alerts}}</td>
+                      <td ng-init="normPercents(row.KeyID, 'AlertsRatio')">{{row.AlertsRatio}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!--<div class="col-md-12 center-text">-->
+                <!--<div  st-items-by-page="10" st-pagination=""></div>-->
+              <!--</div>-->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END Portlet PORTLET3-->
+  </div>
+</div>

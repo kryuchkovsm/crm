@@ -1,0 +1,141 @@
+<div class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a href="javascript:;" data-dismiss="modal"><i class="fa fa-times close"></i></a>
+        <h4 class="modal-title">{{data.title}}</h4>
+      </div>
+      <div class="modal-body">
+          <div class="portlet-body" style="display: block;">
+            <form name="smtpModForm" novalidate>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="well well-sm well-light  bg-greyEEE form-group" ng-class="{'has-error': smtpModForm.Name.$invalid && submitted}">
+                    <span class="block">{{ "modals.campaigns.email.smtp.addeditsmtpserver.name" | translate }}:</span>
+                    <input type="text" class="form-control search-box" name="Name" ng-model="smtpServer.Name" required>
+                    <p class="error-message" ng-show="submitted && smtpModForm.Name.$error.required">{{ "modals.campaigns.email.smtp.addeditsmtpserver.the-name-is-required" | translate }}</p>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="well well-sm well-light  bg-greyEEE form-group" ng-class="{'has-error': smtpModForm.Hostname.$invalid && submitted}">
+                    <span class="block">{{ "modals.campaigns.email.smtp.addeditsmtpserver.hostname" | translate }}:</span>
+                    <input type="text" class="form-control search-box" name="Hostname" ng-model="smtpServer.Hostname" required>
+                    <p class="error-message" ng-show="submitted && smtpModForm.Hostname.$error.required">{{ "modals.campaigns.email.smtp.addeditsmtpserver.the-hostname-is-required" | translate }}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="well well-sm well-light  bg-greyEEE form-group" ng-class="{'has-error': smtpModForm.Port.$invalid && submitted}">
+                    <span class="block">{{ "modals.campaigns.email.smtp.addeditsmtpserver.port" | translate }}:</span>
+                    <input type="number" class="form-control search-box" name="Port" ng-model="smtpServer.Port" min="0" max="65535" positive-number required>
+                    <p class="error-message" ng-show="submitted && smtpModForm.Port.$error.required">{{ "modals.campaigns.email.smtp.addeditsmtpserver.the-port-is-required" | translate }}</p>
+                    <p class="error-message" ng-show="submitted && !smtpModForm.Port.$error.required && smtpModForm.Port.$error.number">{{ "modals.campaigns.email.smtp.addeditsmtpserver.the-port-should-be-number" | translate }}</p>
+                    <p class="error-message" ng-show="submitted && !smtpModForm.Port.$error.required && smtpModForm.Port.$error.max">{{ "modals.campaigns.email.smtp.addeditsmtpserver.the-max-value-is-65535" | translate }}</p>
+                  </div>
+                </div>
+                <div class="col-md-6 margin-bottom-20">
+                  <div class="well well-sm well-light bg-greyEEE no-margin">
+                    <span class="block">Is SSL</span>
+                    <div class="margin-top-15 margin-bottom-15">
+                      <label class="radio-inline">
+                        <div class="radio" ng-click="smtpServer.IsSSL=true">
+                        <span ng-class="{checked: smtpServer.IsSSL}">
+                          <input type="radio" ng-model="smtpServer.IsSSL" ng-value="true">
+                        </span>
+                        </div>
+                        {{ "modals.campaigns.email.smtp.addeditsmtpserver.yes" | translate }}
+                      </label>
+                      <label class="ng-binding ng-scope radio-inline">
+                        <div class="radio" ng-click="smtpServer.IsSSL=false">
+                        <span ng-class="{checked: !smtpServer.IsSSL}">
+                            <input type="radio" ng-model="smtpServer.IsSSL" ng-value="false">
+                        </span>
+                        </div>
+                        {{ "modals.campaigns.email.smtp.addeditsmtpserver.no" | translate }}
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="well well-sm well-light  bg-greyEEE form-group" ng-class="{'has-error': smtpModForm.Username.$invalid && submitted}">
+                    <span class="block">{{ "modals.campaigns.email.smtp.addeditsmtpserver.username" | translate }}:</span>
+                    <input type="text" class="form-control search-box" name="Username" ng-model="smtpServer.Username" required>
+                    <p class="error-message" ng-show="submitted && smtpModForm.Username.$error.required">{{ "modals.campaigns.email.smtp.addeditsmtpserver.the-username-is-required" | translate }}</p>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="well well-sm well-light  bg-greyEEE form-group" ng-class="{'has-error': smtpModForm.Password.$invalid && submitted}">
+                    <span class="block">{{ "modals.campaigns.email.smtp.addeditsmtpserver.password" | translate }}:</span>
+                    <input type="password" class="form-control search-box" name="Password" ng-model="smtpServer.Password" required>
+                    <p class="error-message" ng-show="submitted && smtpModForm.Password.$error.required">{{ "modals.campaigns.email.smtp.addeditsmtpserver.the-password-is-required" | translate }}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6" ng-if="data.smtpServer.id">
+                  <div class="well well-sm well-light bg-greyEEE">
+                    <span class="block">Is Active</span>
+                    <div class=" ">
+                      <label class="radio-inline">
+                      <div class="radio" ng-click="smtpServer.IsActive=true">
+                        <span ng-class="{checked: smtpServer.IsActive}">
+                          <input type="radio" ng-model="smtpServer.IsActive" ng-value="true">
+                        </span>
+                      </div>
+                        {{ "modals.campaigns.email.smtp.addeditsmtpserver.yes" | translate }}
+                    </label>
+                    <label class="ng-binding ng-scope radio-inline">
+                      <div class="radio" ng-click="smtpServer.IsActive=false">
+                        <span ng-class="{checked: !smtpServer.IsActive}">
+                            <input type="radio" ng-model="smtpServer.IsActive" ng-value="false">
+                        </span>
+                      </div>
+                      {{ "modals.campaigns.email.smtp.addeditsmtpserver.no" | translate }}
+                    </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <div class="alert alert-info" ng-show="processing" role="alert">...{{ "modals.campaigns.email.smtp.addeditsmtpserver.processing" | translate }}...</div>
+        <div class="alert alert-danger" ng-show="authenticatedSmtp.errors" role="alert">{{authenticatedSmtp.errors}}</div>
+        <div class="row">
+          <div class="margin-bottom-10" ng-class="{'col-md-4': data.smtpServer.id, 'col-md-6': !data.smtpServer.id}">
+            <a href="javascript:;" class="btn btn-lg full-width CancelColor" data-dismiss="modal" ng-disabled="processing">
+              <i class="fa fa-rotate-left"></i>
+              {{ "modals.campaigns.email.smtp.addeditsmtpserver.cancel" | translate }}
+            </a>
+          </div>
+          <div class="col-md-4 margin-bottom-10" ng-if="data.smtpServer.id">
+            <a href="javascript:;" class="btn btn-lg full-width ApplyColor"
+               ng-click="confirmSmtp(data.smtpServer.id)" ng-disabled="processing || (data.smtpServer.IsConfirmed && !changedSmtp)">
+              <i class="fa fa-arrow-right"></i>
+              {{ "modals.campaigns.email.smtp.addeditsmtpserver.confirm" | translate }}
+            </a>
+          </div>
+          <div class="margin-bottom-10" ng-class="{'col-md-4': data.smtpServer.id, 'col-md-6': !data.smtpServer.id}">
+            <a href="javascript:;" class="btn btn-lg full-width ApplyColor"  ng-click="submitted=true;createOrEdit(smtpModForm)" ng-disabled="processing">
+              <i class="fa fa-arrow-right"></i>
+              {{ "modals.campaigns.email.smtp.addeditsmtpserver.save" | translate }}
+            </a>
+          </div>
+        </div>
+        <div class="panel" ng-show="authenticatedSmtp.submitted"
+             ng-class="{'panel-success': authenticatedSmtp.success}">
+          <div class="panel-heading">
+            <h4 class="panel-title ng-binding">
+              <span ng-show="authenticatedSmtp.success">{{ "modals.campaigns.email.smtp.addeditsmtpserver.your-server-was-authenticated" | translate }}.</span>
+              <!--<div class="auth-smtp-error-msg" ng-show="!authenticatedSmtp.success" ng-repeat="error in authenticatedSmtp.errors">{{error}}</div>-->
+            </h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="portlet box">
+      <div crm-portlet-header options="{title: 'Article'}"></div>
+
+      <div class="portlet-body" style="display: block;">
+        <section class="article-container">
+          <a href="/#/helpcenter" class="btn ApplyColor" style="position: absolute;right: 10px;top: 7px;">{{ "support.helpcenter.article.knowledge-base" | translate }}</a>
+          <h3>{{showArticleItem.title}}</h3>
+          <div class="article-html-body full-mode" ng-bind-html="showArticleItem.body"></div>
+          <h3>Attachments</h3>
+          <ul style="list-style-type:none;padding-left: 0px;">
+            <li ng-repeat="attachment in showArticleItem.article_attachments"><a ng-href="{{attachment.content_url}}">{{attachment.file_name}}</a></li>
+          </ul>
+        </section>
+
+      </div>
+    </div>
+  </div>
+</div>

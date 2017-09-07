@@ -1,0 +1,287 @@
+<div class="row">
+  <div class="col-md-12">
+    <!-- BEGIN Portlet PORTLET-->
+    <div class="portlet box">
+      <div class="portlet-title ThemeColor">
+        <div class="caption">
+          {{ "crm.customer.editcustomer.edit-customer-information" | translate }}
+        </div>
+      </div>
+      <div class="portlet-body" style="display: block;">
+          <!-- BEGIN Edit Customer Form -->
+          <div class="row margin-bottom-20">
+            <div class="col-md-4">
+              <div class="font-sans-serif size-15 weight-bold inline margin-bottom-10">
+                {{customerDetails.FirstName}} {{customerDetails.LastName}}
+              </div>
+              <div class="table-responsive">
+                <table class="table " >
+                  <tbody>
+                  <tr>
+                    <td class="t-left" style="width: 40%;" > {{ "crm.customer.editcustomer.customer-id" | translate }}: </td>
+                    <td class="t-right" style="width: 60%;"> {{customerDetails.CustomerID}} </td>
+                  </tr><tr>
+                    <td class="t-left" style="width: 40%;"> {{ "crm.customer.editcustomer.type" | translate }}: </td>
+                    <td class="t-right" style="width: 60%;"> {{customerDetails.Type}} </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <form name="editCustomerForm" ng-model="editCustomerForm"  novalidate>
+            <div class="row">
+              <div class="col-md-8">
+                <div class="well well-sm TitleBars">
+                  <span class="block">{{ "crm.customer.editcustomer.contact-information" | translate }}:</span>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div
+                      crm-text-input=""
+                      options="fieldOptions.emailTxtOptions"
+                      value="fields.emailTxtValue"
+                      >
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div
+                      crm-text-input=""
+                      options="fieldOptions.phoneTxtOptions"
+                      value="fields.phoneTxtValue"
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="well well-sm TitleBars">
+                  <span class="block">{{ "crm.customer.editcustomer.edit-payment-information" | translate }}:</span>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div
+                      crm-select=""
+                      options="fieldOptions.paymentTypeSelectOptions"
+                      value="fields.paymentTypeSelectValue">
+                    </div>
+
+                    <section ng-show="fields.paymentTypeSelectValue.id!=4">
+                      <div crm-select=""
+                        options="fieldOptions.cardTypeSelectOptions"
+                        value="fields.cardTypeSelectValue">
+                      </div>
+                      <div class="well well-sm well-light bg-greyEEE">
+                        <span class="block full-width">{{ "crm.customer.editcustomer.expiration-date" | translate }}:</span>
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6">
+                            <select class="form-control search-box expire-combo full-width" ng-model="fields.expireComboValue.select1Value"
+                                    ng-options="opt as opt.name for opt in fieldOptions.expireComboOptions.select1Options">
+                              <option value="" class=""> -- {{ "crm.customer.editcustomer.select-month" | translate }} -- </option>
+                            </select>
+                          </div>
+                          <div class="col-md-6 col-sm-6">
+                            <select class="form-control search-box expire-combo full-width"
+                                    ng-model="fields.expireComboValue.select2Value"
+                                    ng-options="opt as opt.name for opt in fieldOptions.expireComboOptions.select2Options">
+                              <option value="" class=""> -- {{ "crm.customer.editcustomer.select-year" | translate }} -- </option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </section>
+
+                    <section ng-if="fields.paymentTypeSelectValue.id==4">
+                      <div crm-text-input options="fieldOptions.bankAccountNumberTxtOptions" value="fields.bankAccountNumberValue"></div>
+                      <div crm-text-input options="fieldOptions.bankRoutingNumberTxtOptions" value="fields.bankRoutingNumberValue"></div>
+                    </section>
+                  </div>
+                  <div class="col-md-6">
+                    <section ng-if="fields.paymentTypeSelectValue.id==4">
+                      <div crm-text-input options="fieldOptions.bankNameOnAccountTxtOptions" value="fields.bankNameOnAccountValue"></div>
+                      <div crm-select options="fieldOptions.bankAccountTypeSelectOptions" value="fields.bankAccountTypeValue"></div>
+                      <div crm-select options="fieldOptions.bankHolderTypeSelectOptions" value="fields.bankHolderTypeValue"></div>
+                    </section>
+                    <section ng-if="fields.paymentTypeSelectValue.id!=4">
+                      <div crm-text-input options="fieldOptions.creditCardNumberTxtOptions"
+                           value="fields.creditCardNumberTxtValue" cc-type="fields.cardTypeSelectValue.id"></div>
+                      <div crm-text-input options="fieldOptions.nameOnCardTxtOptions"
+                           value="fields.nameOnCardTxtValue"></div>
+                      <div crm-text-input options="fieldOptions.cvvCodeTxtOptionsNotRequired"
+                           value="fields.cvvTxtValue"></div>
+                    </section>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="well well-sm TitleBars">
+                  <span class="block">{{ "crm.customer.editcustomer.shipping-address" | translate }}:</span>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div
+                      crm-text-input=""
+                      options="fieldOptions.firstnameShippingAddressTxtOptions"
+                      value="fields.firstnameShippingAddressTxtValue"
+                      >
+                    </div>
+                    <div
+                      crm-text-input=""
+                      options="fieldOptions.lastnameShippingAddressTxtOptions"
+                      value="fields.lastnameShippingAddressTxtValue"
+                      >
+                    </div>
+
+                    <div
+                      crm-text-input=""
+                      options="fieldOptions.address1TxtOptions"
+                      value="fields.address1TxtValue"
+                      >
+                    </div>
+                    <div
+                      crm-text-input=""
+                      options="fieldOptions.address2TxtOptions"
+                      value="fields.address2TxtValue"
+                      >
+                    </div>
+                    <div
+                      crm-text-input=""
+                      options="fieldOptions.cityTxtOptions"
+                      value="fields.cityTxtValue"
+                      >
+                    </div>
+                    <div
+                      crm-text-input=""
+                      options="fieldOptions.stateTxtOptions"
+                      value="fields.stateTxtValue"
+                      >
+                    </div>
+                    <div
+                      crm-select=""
+                      options="fieldOptions.countrySelectOptions"
+                      value="fields.countrySelectValue"
+                      >
+                    </div>
+                    <div
+                      crm-text-input=""
+                      options="fieldOptions.zipTxtOptions"
+                      value="fields.zipTxtValue"
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="well well-sm TitleBars">
+                  <span class="block">{{ "crm.customer.editcustomer.billing-address" | translate }}:</span>
+                </div>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div
+                      crm-text-input=""
+                      options="fieldOptions.firstnameBillingTxtOptions"
+                      value="fields.firstnameBillingTxtValue"
+                      >
+                    </div>
+                    <div
+                      crm-text-input=""
+                      options="fieldOptions.lastnameBillingTxtOptions"
+                      value="fields.lastnameBillingTxtValue"
+                      >
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div
+                      crm-text-input=""
+                      options="fieldOptions.address1BillingTxtOptions"
+                      value="fields.address1BillingTxtValue"
+                      >
+                    </div>
+                    <div
+                      crm-text-input=""
+                      options="fieldOptions.address2BillingTxtOptions"
+                      value="fields.address2BillingTxtValue"
+                      >
+                    </div>
+                    <div
+                      crm-select=""
+                      options="fieldOptions.countryBillingSelectOptions"
+                      value="fields.countryBillingSelectValue"
+                      >
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div
+                      crm-text-input=""
+                      options="fieldOptions.cityBillingTxtOptions"
+                      value="fields.cityBillingTxtValue"
+                      >
+                    </div>
+                    <div
+                      crm-text-input=""
+                      options="fieldOptions.stateBillingTxtOptions"
+                      value="fields.stateBillingTxtValue"
+                      >
+                    </div>
+                    <div
+                      crm-text-input=""
+                      options="fieldOptions.zipBillingTxtOptions"
+                      value="fields.zipBillingTxtValue"
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+          <div class="row">
+
+            <div class="col-md-12" ng-if="status.errorValidation">
+              <div class="Metronic-alerts alert alert-danger fade in font-size-15">
+                <a href="javascript:;" ng-click="status.errorValidation=false"><i class="fa text-FontColor fa-times close"></i></a>
+                {{ "crm.customer.editcustomer.some-fields-are-not-correct.-check-it-please." | translate }}
+              </div>
+            </div>
+
+            <div class="col-md-12" ng-if="status.success">
+              <div class="Metronic-alerts alert alert-success fade in font-size-15">
+                <a href="javascript:;" ng-click="status.success=false"><i class="fa text-FontColor fa-times close"></i></a>
+                {{ "crm.customer.editcustomer.customer-successfully-saved!" | translate }}
+              </div>
+            </div>
+
+            <div class="col-md-12" ng-if="status.errorServer">
+              <div class="Metronic-alerts alert alert-danger fade in font-size-15">
+                <a href="javascript:;" ng-click="status.errorServer=false"><i class="fa text-FontColor fa-times close"></i></a>
+                {{ "crm.customer.editcustomer.customer-is-not-saved!-server-error." | translate }}
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <div class="well well-sm TitleBars">
+                <span class="block">{{ "crm.customer.editcustomer.actions" | translate }}:</span>
+              </div>
+              <div class="col-md-8 col-md-push-2">
+                <div class="row">
+                  <div class="col-md-6">
+                    <a href="javascript:;" class="btn btn-lg CancelColor full-width" ng-click="close()">
+                      <i class="fa fa-times"></i>
+                      {{ "crm.customer.editcustomer.exit" | translate }}
+                    </a>
+                  </div>
+                  <div class="col-md-6">
+                    <a href="javascript:;" class="btn btn-lg ApplyColor full-width" ng-click="save(fields)">
+                      <i class="fa fa-save"></i>
+                      {{ "crm.customer.editcustomer.save" | translate }}
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- END  Edit Customer Form -->
+        </div>
+    </div>
+    <!-- END Portlet PORTLET-->
+  </div>
+</div>

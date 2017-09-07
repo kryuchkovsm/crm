@@ -1,0 +1,108 @@
+<div class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a href="javascript:;" data-dismiss="modal"><i class="fa fa-times close"></i></a>
+        <h4 class="modal-title">{{data.title}}</h4>
+      </div>
+      <div class="modal-body">
+        <div class="portlet-body" style="display: block;">
+          <form name="eventModForm" novalidate>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="well well-sm well-light  bg-greyEEE form-group" ng-class="{'has-error': eventModForm.SmtpID.$invalid && submitted}">
+                  <span class="block">{{ "modals.campaigns.email.event.addeditevent.smtp-profile" | translate }}:</span>
+                  <select class="form-control search-box" name="SmtpID" ng-model="event.SmtpID" ng-required="data.smtpServers.length"
+                    ng-options="smtpServer.id as smtpServer.name for smtpServer in data.smtpServers | orderBy: 'name'">
+                    <option ng-if="data.smtpServers.length!=1" value="">{{data.smtpServers.length ? ' -Select One -' : 'Default SMTP'}}</option>
+                  </select>
+                  <p class="error-message" ng-show="submitted && eventModForm.SmtpID.$error.required">{{ "modals.campaigns.email.event.addeditevent.the-smtp-profile-is-required" | translate }}</p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="well well-sm well-light  bg-greyEEE form-group" ng-class="{'has-error': eventModForm.TypeID.$invalid && submitted}">
+                  <span class="block">{{ "modals.campaigns.email.event.addeditevent.event-type" | translate }}:</span>
+                  <select class="form-control search-box" name="TypeID" ng-model="event.TypeID"
+                          ng-options="eventType.id as eventType.name for eventType in data.templateTypes" ng-change="changedType" required>
+                    <option value="">- {{ "modals.campaigns.email.event.addeditevent.select-one" | translate }} -</option>
+                  </select>
+                  <p class="error-message" ng-show="submitted && eventModForm.TypeID.$error.required">{{ "modals.campaigns.email.event.addeditevent.the-event-type-is-required" | translate }}</p>
+                  <!--<span class="label label-info" ng-show="templateLoaded && !templates.length">The EVENT doesn't contain any template</span>-->
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="well well-sm well-light  bg-greyEEE form-group" ng-class="{'has-error': eventModForm.Name.$invalid && submitted}">
+                  <span class="block">{{ "modals.campaigns.email.event.addeditevent.name" | translate }}:</span>
+                  <input type="text" class="form-control search-box" name="Name" ng-model="event.Name" required>
+                  <p class="error-message" ng-show="submitted && eventModForm.Name.$error.required">{{ "modals.campaigns.email.event.addeditevent.the-name-is-required" | translate }}</p>
+                </div>
+
+                <div class="well well-sm well-light bg-greyEEE" ng-show="event.ID">
+                  <span class="block">{{ "modals.campaigns.email.event.addeditevent.is-active" | translate }}</span>
+                  <div class=" ">
+                    <label class="radio-inline">
+                      <div class="radio" ng-click="event.IsActive=true">
+                        <span ng-class="{checked: event.IsActive}">
+                          <input type="radio" ng-model="event.IsActive" ng-value="true">
+                        </span>
+                      </div>
+                      {{ "modals.campaigns.email.event.addeditevent.yes" | translate }}
+                    </label>
+                    <label class="ng-binding ng-scope radio-inline">
+                      <div class="radio" ng-click="event.IsActive=false">
+                        <span ng-class="{checked: !event.IsActive}">
+                            <input type="radio" ng-model="event.IsActive" ng-value="false">
+                        </span>
+                      </div>
+                      {{ "modals.campaigns.email.event.addeditevent.no" | translate }}
+                    </label>
+                  </div>
+                </div>
+
+              </div>
+              <div class="col-md-6">
+                <div class="well well-sm well-light  bg-greyEEE form-group" ng-class="{'has-error': eventModForm.TemplateID.$invalid && submitted}">
+                  <span class="block">{{ "modals.campaigns.email.event.addeditevent.template" | translate }}:
+                    <span class="label label-info" ng-show="loadingTemplate">{{ "modals.campaigns.email.event.addeditevent.loading" | translate }}</span>
+                  </span>
+                  <select class="form-control search-box" name="TemplateID" ng-model="event.TemplateID"
+                    ng-options="eTemplate.id as eTemplate.name for eTemplate in templates | limitTo:totalDisplayed | orderBy:'name'" required ng-disabled="!templates.length">
+                    <option value="">{{templates.length ? '- Select One -' : 'No templates available'}}</option>
+                  </select>
+                  <p class="error-message" ng-show="submitted && eventModForm.TemplateID.$error.required">{{ "modals.campaigns.email.event.addeditevent.the-template-is-required" | translate }}</p>
+                </div>
+                <div class="well well-sm well-light bg-greyEEE form-group" ng-class="{'has-error': eventModForm.NumOfDaysBeforeCharge.$invalid && submitted}" ng-show="event.TypeID==2">
+                  <span class="block">{{ "modals.campaigns.email.event.addeditevent.num-days-to-send-before-charge" | translate }}:</span>
+                  <input type="number" class="form-control search-box" name="NumOfDaysBeforeCharge" ng-model="event.NumOfDaysBeforeCharge" placeholder="0" min="0" positive-number>
+                  <p class="error-message" ng-show="submitted && eventModForm.NumOfDaysBeforeCharge.$error.required">{{ "modals.campaigns.email.event.addeditevent.the-num-days-is-required" | translate }}</p>
+                </div>
+
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-md-6">
+            <a href="javascript:;" class="btn btn-lg CancelColor full-width" data-dismiss="modal">
+              <i class="fa fa-rotate-left"></i>
+              {{ "modals.campaigns.email.event.addeditevent.cancel" | translate }}
+            </a>
+          </div>
+          <div class="col-md-6">
+            <a href="javascript:;" class="btn btn-lg ApplyColor full-width"  ng-click="submitted=true;createOrEdit(eventModForm)" ng-disabled="adding">
+              <section ng-show="adding">...{{ "modals.campaigns.email.event.addeditevent.saving" | translate }}...</section>
+              <section ng-hide="adding">
+                <i class="fa fa-arrow-right"></i>
+                {{ "modals.campaigns.email.event.addeditevent.save" | translate }}
+              </section>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

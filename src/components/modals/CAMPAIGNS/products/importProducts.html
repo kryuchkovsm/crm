@@ -1,0 +1,141 @@
+<div class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    
+      <div class="modal-header">
+        <a href="javascript:;" ng-click="close('false')" data-dismiss="modal">
+          <i class="fa fa-times close"></i>
+        </a>
+        <h4 class="modal-title">{{modalTitle}}</h4>
+      </div>
+      
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+              <div class="row" >
+                <div class="col-md-4">
+                  <crm-csv-import 
+                    content="csv.content" 
+                    result="csv.result"
+                    options="csvImportOptions" />
+                </div>
+                <div class="col-md-5">
+                  <div class="btn btn-warning btn-lg full-width" ng-click="downloadNotes()">
+                    <i class="fa fa-download"></i>{{ "crm.products.import.download-template" | translate }}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row" >
+                <div class="col-md-12">
+                  <table st-table="fileTableData" class="table table-striped">
+                    <thead>
+                    <tr class="TitleBars top-radius white">
+                      <th st-ratio="30">{{ "crm.products.import.name" | translate }}</th>
+                      <th st-ratio="30">{{ "crm.products.import.number-of-records" | translate }}</th>
+                      <th st-ratio="30">{{ "crm.products.import.records-imported" | translate }}</th>
+                      <th st-ratio="10">{{ "crm.products.import.imported" | translate }}</th>
+                      <th st-ratio="10"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-show="dataForImport.length == 0">
+                      <td colspan="5" class="text-center">
+                        {{ "crm.products.import.no-files" | translate }}
+                      </td>
+                    </tr>
+                
+                    <tr ng-repeat="row in dataForImport"  ng-show="dataForImport.length>0">
+                      <td st-ratio="30">{{row.name}}</td>
+                      <td st-ratio="30">{{row.data.length}}</td>
+                      <td st-ratio="30">
+                        {{row.succeededLength || 0}}
+                      </td>
+                      
+                      <td st-ratio="10" ng-show="row.error">
+                        {{ 'crm.products.import.imported-error' | translate }}
+                      </td>
+                      <td st-ratio="10" ng-show="!row.error">
+                        {{ (row.imported ? 'crm.products.import.imported-yes' : 'crm.products.import.imported-no') | translate }}
+                      </td>
+
+                      <td st-ratio="5">
+                        <a ng-click="deleteFile(row)" style="color: red; padding:10px">
+                          <i class="fa fa-times"></i>
+                        </a>
+                      </td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                      <td colspan="9" class="text-center">
+                        <div  st-items-by-page="20" st-pagination=""></div>
+                      </td>
+                    </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+              
+              <div class="row"  ng-show="filedDataForImport.length>0">
+                <div class="col-md-12">
+                  <div class="font-sans-serif size-20">
+                    {{ "crm.products.import.failed-files" | translate }}
+                  </div>
+                  <div class="smTable margin-bottom-20">
+                    <table st-table="notImportedTableData" class="table crmTable table-striped">
+                      <thead>
+                      <tr class="TitleBars top-radius white">
+                        <th st-ratio="10">{{ "crm.products.import.name" | translate }}</th>
+                        <th st-ratio="10">{{ "crm.products.import.group-name" | translate }}</th>
+                        <th st-ratio="10">{{ "crm.products.import.charge-name" | translate }}</th>
+                        <th st-ratio="10">{{ "crm.products.import.error" | translate }}</th>
+                      </tr>
+                      </thead>
+                      
+                      <tbody>
+                      <tr ng-repeat="row in filedDataForImport">
+                        <td st-ratio="10">{{row._fileName}}</td>
+                        <td st-ratio="10">{{row.GroupName}}</td>
+                        <td st-ratio="10">{{row.ChargeName}}</td>
+                        <td st-ratio="10">{{row._errorMessage}}</td>
+                      </tr>
+                      </tbody>
+                      
+                      <tfoot>
+                      <tr>
+                        <td colspan="4" class="text-center">
+                          <div  st-items-by-page="20" st-pagination=""></div>
+                        </td>
+                      </tr>
+                      </tfoot>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="row">
+                <div class="col-md-offset-2 col-md-4">
+                  <a href="javascript:;" class="btn btn-lg CancelColor full-width margin-bottom-20" 
+                     ng-click="close('false')">
+                    <i class="fa fa-times"></i>
+                    {{ "crm.products.import.exit" | translate }}
+                  </a>
+                </div>
+                <div class="col-md-4">
+                  <a href="javascript:;" class="btn btn-lg ApplyColor full-width margin-bottom-20" 
+                     ng-click="importData()"
+                     ng-disabled="nothingToImport || importing != 0">
+                     
+                    <i class="fa fa-upload"></i>
+                    {{ (importing ? "crm.products.import.importing" : "crm.products.import.import") | translate }}
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

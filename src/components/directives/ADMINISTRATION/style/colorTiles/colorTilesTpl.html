@@ -1,0 +1,14 @@
+<div class="tiles">
+  <button class="btn btn-primary" ng-click="resetAll()" style="margin-bottom: 15px">{{ "directives.administration.style.colortiles.colortilestpl.reset-colors" | translate }}</button>
+  <div  ng-repeat="option in options.data">
+    <!--Don't change to ThemeColor class!!! Should be inline style -->
+    <div class="tile selected"
+         ng-attr-style="background-color: {{option.bgColor}};"
+         ng-click="showModal(option.id, option.bgColor)">
+      <div class="tile-body" ng-class="{'black-color': lightOrDark(option.bgColor)=='light'}">
+        <i class="fa fa-paint-brush"></i>
+        {{option.label}}
+      </div>
+    </div>
+  </div>
+</div>

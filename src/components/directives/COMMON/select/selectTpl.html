@@ -1,0 +1,13 @@
+<div class="well well-sm well-light bg-greyEEE form-group" ng-class="{'has-error': options.showError && options.valRequired}" show-errors="">
+  <span class="block">{{::options.label}}</span>
+  <span class="inline-block pull-right weight-bold">{{::options.tip}}</span>
+  <form>
+    <select class="form-control search-box whole-width"
+            name="{{::options.label.replace(' ','')}}"
+            ng-model="value"
+            ng-options="opt as opt.name for opt in options.data">
+      <option ng-if="!value" value=''>{{ "common.please-choose" | translate }}</option>
+    </select>
+  </form>
+  <p class="error-message" ng-if="options.showError && options.valRequired">The {{::options.label}} is required</p>
+</div>

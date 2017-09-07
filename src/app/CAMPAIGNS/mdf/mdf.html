@@ -1,0 +1,66 @@
+<div class="row">
+  <div class="col-md-12">
+      <div class="row ">
+        <!-- BEGIN Portlet PORTLET-->
+        <div class="portlet box">
+          <div class="portlet-title ThemeColor">
+            <div class="caption">
+              <span class="desktop-only">{{ "campaigns.mdf.mdf.merchant-defined-fields" | translate }}</span>
+              <span class="mobile-only">{{ "campaigns.mdf.mdf.mdfs" | translate }}</span>
+            </div>
+          </div>
+          <div class="portlet-body" style="display: block;">
+            <section st-table="mdfs" st-safe-src="mdfsSafe">
+              <div class="tableSearchInput top-minus-35">
+                <input st-search class="form-control st-search-input" placeholder="Search MDFs"  type="search"/>
+                <i class="fa fa-search"></i>
+              </div>
+
+              <div class="row">
+                <div class="col-md-2" style="text-align: center">
+                  <a href="javascript:;" class="btn btn-lg ApplyColor margin-bottom-20 full-width" ng-click="addNewMdf()">
+                    <i class="fa fa-plus"></i>
+                    {{ "campaigns.mdf.mdf.add-new" | translate }}
+                  </a>
+                </div>
+              </div>
+
+              <div class="panel panel-success" ng-if="savedMessage">
+                <div class="panel-heading">
+                  <h4 class="panel-title">
+                    {{savedMessage}}
+                  </h4>
+                </div>
+              </div>
+
+              <table class="table table-striped crmTable">
+                <thead>
+                  <tr class="TitleBars top-radius white">
+                    <th st-ratio="33" st-sort="ID" class="cursor-pointer">{{ "campaigns.mdf.mdf.id" | translate }}</th>
+                    <th st-ratio="34" st-sort="Name" class="cursor-pointer">{{ "campaigns.mdf.mdf.name" | translate }}</th>
+                    <th st-ratio="33">{{ "campaigns.mdf.mdf.actions" | translate }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="row1 in mdfs">
+                    <td st-ratio="33">{{row1.ID}}</td>
+                    <td st-ratio="34">{{row1.Name}}</td>
+                    <td st-ratio="33" class="center-text">
+                      <a ng-click="editMerchantRow(row1)"><i class="fa fa-pencil"></i></a>
+                      <a ng-click="deleteMerchantRow(row1.ID)"><i class="fa fa-times"></i></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="center-text">
+                <div  st-items-by-page="10" st-pagination=""></div>
+              </div>
+            </section>
+            <div class="alert alert-warning" role="alert" ng-hide="mdfsSafe.length && mdfs.length">{{ "campaigns.mdf.mdf.no-data" | translate }}</div>
+          </div>
+        </div>
+        <!-- END Portlet PORTLET-->
+      </div>
+  </div>
+</div>
+

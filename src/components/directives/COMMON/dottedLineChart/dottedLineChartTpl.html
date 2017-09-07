@@ -1,0 +1,31 @@
+<div ng-if="leftBlock" class="dottedLineChart dark-blue-bg left-chart-block {{::activeBg}}"
+     ng-attr-style="padding-top: {{::paddingTop}}px;">
+  <div ng-if="options.total" class="center-text white" style="text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3);font-size: 40px"ng-bind="options.total">
+  </div>
+  <div ng-if="options.tooltipLabel" class="center-text white" style="text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3);font-size: 14px"
+       ng-bind="options.tooltipLabel | uppercase">
+  </div>
+
+  <div ng-class="{'bottom-block': options.bottomBlock}">
+    <div ng-if="options.clickTrough" class="left-text white devices-center-text" style="font-size: 12px">
+      {{::options.clickTrough}} CLICK THROUGH
+    </div>
+
+    <div ng-if="options.upsels" class="left-text white devices-center-text" style="font-size: 12px">
+      <span class="text-warning" ng-bind="options.upsels"></span> UPSELS
+    </div>
+
+    <div ng-if="options.preClicks" class="left-text white devices-center-text" style="font-size: 12px">
+      <span class="text-success" ng-if="options.preClicks"></span> PRE CLICKS
+    </div>
+  </div>
+</div>
+
+<div class="{{::addBlueBg}} padding-10 {{::chartBg}} right-chart-block">
+  <section ng-show="options.chartData[0].length>0">
+    <div id="chart_{{::options.chartID}}" class="chart" style="padding: 10px; position: relative;" ng-attr-style="height: {{::height}}px;">
+    </div>
+    <div ng-if="options.bottomLabel" class="center-text  weight-bold grey" ng-bind="options.bottomLabel">
+    </div>
+  </section>
+</div>

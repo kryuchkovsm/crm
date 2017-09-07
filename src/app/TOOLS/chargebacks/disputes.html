@@ -1,0 +1,54 @@
+<div class="row">
+  <div class="col-md-12">
+    <!-- BEGIN Portlet PORTLET-->
+    <div class="portlet box">
+      <div
+        crm-portlet-header=""
+        options="{title: 'Manage Disputes'}"
+        >
+      </div>
+      <div class="portlet-body" style="display: block;">
+        <div st-table="disputes" st-safe-src="safeDisputes">
+          <a href="javascript:;" class="btn btn-lg ApplyColor pull-left margin-bottom-20" ng-click="addEditDispute()">
+            <i class="fa fa-plus"></i>
+            {{ "tools.chargebacks.disputes.add-new" | translate }}
+          </a>
+
+          <div class="table-scrollable">
+            <table class="table table-striped table-auto-layout">
+              <thead>
+                <tr class="TitleBars top-radius white">
+                  <th st-sort="DisputeID" class="cursor-pointer">{{ "tools.chargebacks.disputes.id" | translate }}</th>
+                  <td st-sort="CodeDesc" class="cursor-pointer">{{ "tools.chargebacks.disputes.code-description" | translate }}</td>
+                  <th st-sort="Description" class="cursor-pointer">{{ "tools.chargebacks.disputes.dispute-description" | translate }}</th>
+                  <th st-sort="IsActive" class="cursor-pointer">{{ "tools.chargebacks.disputes.active" | translate }}</th>
+                  <th>{{ "tools.chargebacks.disputes.actions" | translate }}</th>
+                </tr>
+              </thead>
+              <tbody>
+              <tr ng-repeat="row in disputes">
+                <td ng-bind="row.DisputeID"></td>
+                <td ng-bind="row.CodeDesc"></td>
+                <td class="left-text">
+                  <read-more hmtext="{{row.Description}}" hmlimit="75" hm-more-text="more" hm-less-text="less"></read-more>
+                </td>
+                <td>
+                  <i class="fa fa-circle green-color" ng-class="{'green-color': row.IsActive, 'red-color': !row.IsActive}"></i>
+                </td>
+                <td>
+                  <a ng-click="addEditDispute(row)"><i class="fa fa-pencil"></i></a>
+                  <a ng-click="deleteDispute(row)"><i class="fa fa-times"></i></a>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="center-text">
+            <div  st-items-by-page="10" st-pagination=""></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END Portlet PORTLET-->
+  </div>
+</div>

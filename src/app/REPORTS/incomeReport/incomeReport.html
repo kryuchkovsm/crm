@@ -1,0 +1,102 @@
+<div class="row">
+  <div class="col-md-12">
+    <!-- BEGIN Portlet PORTLET1-->
+    <div crm-select-clients-dates type-of-report="'income'" options="clientDatesOptions" value="clientDatesValue" searchf="search()"></div>
+    <div class="portlet box" ng-show="dataReady">
+      <div crm-portlet-header options="{title: 'Income Charts'}"></div>
+      <div class="portlet-body" style="display: block;">
+        <div class="row" >
+          <div class="col-md-6">
+            <span class="block margin-bottom-20 text-FontColor center-text">{{ "reports.incomereport.incomereport.customer-activity" | translate }}</span>
+            <div ng-if="piechartOptions1.chartData.length" crm-piechart options="piechartOptions1"></div>
+            <div ng-if="!piechartOptions1.chartData.length" class="Metronic-alerts alert alert-warning font-size-15 center-text">
+              {{ "reports.incomereport.incomereport.no-data" | translate }}
+            </div>
+          </div>
+          <div class="col-md-6">
+            <span class="block margin-bottom-20 text-FontColor center-text">{{ "reports.incomereport.incomereport.net-income-breakdown" | translate }}</span>
+            <div ng-if="piechartOptions2.chartData.length" crm-piechart options="piechartOptions2"></div>
+            <div ng-if="!piechartOptions2.chartData.length" class="Metronic-alerts alert alert-warning font-size-15 center-text">
+              {{ "reports.incomereport.incomereport.no-data" | translate }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="bottom"></div>
+    <div class="portlet box" ng-show="dataReady">
+      <div crm-portlet-header options="{title: 'Income Details'}"></div>
+      <div class="portlet-body" style="display: block;">
+        <div class="tablePortletButtons">
+          <a
+            href="javascript:;"
+            ng-csv="exportToExcel(keysHeader)"
+            filename="export.csv"
+            csv-header="exportToExcel(keysHeader, true)"
+            >
+            <i class="fa fa-file-excel-o"></i>
+          </a>
+        </div>
+        <div ng-hide="tableObjSafe.length" class="Metronic-alerts alert alert-warning font-size-15 center-text">
+          {{ "reports.incomereport.incomereport.no-data" | translate }}
+        </div>
+        <div ng-show="tableObjSafe.length">
+          <div class="row">
+            <div class="col-md-12 padding-left-right-3">
+                <div class="fixed-table-header" st-table="tableObj" st-safe-src="tableObjSafe">
+                  <table class="table scrollable table-striped" table-height="400" fixed-header arr="tableObj">
+                  <thead>
+                    <tr class="TitleBars top-radius white">
+                      <th st-sort="GroupBy" class="cursor-pointer">{{ "reports.incomereport.incomereport.groupby" | translate }}</th>
+                      <th st-sort="BuyerCount" class="cursor-pointer">#{{ "reports.incomereport.incomereport.buyers" | translate }}</th>
+                      <th st-sort="BilledVolume" class="cursor-pointer">${{ "reports.incomereport.incomereport.billed" | translate }}</th>
+                      <th st-sort="RefundVolume" class="cursor-pointer">${{ "reports.incomereport.incomereport.ref" | translate }}</th>
+                      <th st-sort="RefundCount" class="cursor-pointer">#{{ "reports.incomereport.incomereport.ref" | translate }}</th>
+                      <th st-sort="RefundRatio" class="cursor-pointer">%{{ "reports.incomereport.incomereport.ref" | translate }}</th>
+                      <th st-sort="CancelledCount" class="cursor-pointer">#{{ "reports.incomereport.incomereport.cancel" | translate }}</th>
+                      <th st-sort="CancelledRatio" class="cursor-pointer">%{{ "reports.incomereport.incomereport.cancel" | translate }}</th>
+                      <th st-sort="IncomePerCustomer" class="cursor-pointer">${{ "reports.incomereport.incomereport.inc./cust." | translate }}</th>
+                      <!--<th st-sort="ActiveCount" class="cursor-pointer">#Active</th>-->
+                      <th st-sort="NetIncome" class="cursor-pointer">{{ "reports.incomereport.incomereport.net-inc." | translate }}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="row in tableObj" ng-if="row.GroupBy!='Totals:'">
+                      <td>{{row.GroupBy}}</td>
+                      <td>{{row.BuyerCount}}</td>
+                      <td>{{row.BilledVolume}}</td>
+                      <td>{{row.RefundVolume}}</td>
+                      <td>{{row.RefundCount}}</td>
+                      <td>{{row.RefundRatio}}</td>
+                      <td>{{row.CancelledCount}}</td>
+                      <td>{{row.CancelledRatio}}</td>
+                      <td>{{row.IncomePerCustomer}}</td>
+                      <!--<td>{{row.ActiveCount}}</td>-->
+                      <td>{{row.NetIncome}}</td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td class="TitleBars white">{{gridTotal['GroupBy']}}</td>
+                      <td class="TitleBars white">{{gridTotal['BuyerCount']}}</td>
+                      <td class="TitleBars white">{{gridTotal['BilledVolume']}}</td>
+                      <td class="TitleBars white">{{gridTotal['RefundVolume']}}</td>
+                      <td class="TitleBars white">{{gridTotal['RefundCount']}}</td>
+                      <td class="TitleBars white">{{gridTotal['RefundRatio']}}</td>
+                      <td class="TitleBars white">{{gridTotal['CancelledCount']}}</td>
+                      <td class="TitleBars white">{{gridTotal['CancelledRatio']}}</td>
+                      <td class="TitleBars white">{{gridTotal['IncomePerCustomer']}}</td>
+                      <!--<td class="TitleBars white">{{gridTotal['ActiveCount']}}</td>-->
+                      <td class="TitleBars white">{{gridTotal['NetIncome']}}</td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END Portlet PORTLET3-->
+  </div>
+</div>

@@ -1,0 +1,99 @@
+<div class="row">
+  <div class="col-md-12">
+      <!-- BEGIN Portlet PORTLET1-->
+      <div class="portlet box">
+        <div
+          crm-portlet-header=""
+          options="portletHeaderOptions1"
+          >
+        </div>
+        <div class="portlet-body no-padding-bottom" style="display: block;">
+          <div class="row" >
+            <div class="col-md-4">
+              <div
+                ng-dropdown-multiselect=""
+                options="clientsData"
+                selected-model="clientsModel"
+                extra-settings="clientsSettings"
+                >
+              </div>
+            </div>
+            <div class="col-md-4 ">
+              <div
+                ng-dropdown-multiselect=""
+                options="sitesData"
+                selected-model="sitesModel"
+                extra-settings="sitesSettings">
+              </div>
+            </div>
+            <div class="col-md-4 ">
+              <div class="well well-sm well-light bg-greyEEE no-margin">
+                <span class="block margin-bottom-20">{{ "reports.marketingreport.marketingreport.date-range" | translate }}:</span>
+                <div class="row ">
+                  <div class="col-md-8 col-md-push-2 margin-bottom-20">
+                    <div
+                      crm-date-picker=""
+                      options="fromDateOptions"
+                      value="fields.fromDateValue"
+                      >
+                    </div>
+                    <div class="divider-vertical  margin-bottom-10"></div>
+                    <div
+                      crm-date-picker=""
+                      options="toDateOptions"
+                      value="fields.toDateValue"
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <a href="javascript:;" class="btn btn-success btn-lg search-box ApplyColor full-width margin-top-37" ng-click="search()">
+                <i class="fa fa-arrow-right"></i>
+                {{ "reports.marketingreport.marketingreport.search" | translate }}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- END Portlet PORTLET1-->
+    <!-- BEGIN Portlet PORTLET2-->
+    <div class="portlet box">
+      <div
+        crm-portlet-header=""
+        options="portletHeaderOptions2"
+        >
+      </div>
+      <div class="portlet-body" style="display: block;">
+        <div class="row">
+          <div class="col-md-12">
+            <!-- BEGIN CHART-->
+            <div
+              crm-dotted-linechart=""
+              options="dottedLinechartOptions1"
+              >
+            </div>
+            <!-- END CHART-->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END Portlet PORTLET2-->
+    <!-- BEGIN Portlet PORTLET3-->
+    <div class="portlet box">
+      <div
+        crm-portlet-header=""
+        options="portletHeaderOptions3"
+        >
+      </div>
+      <div class="portlet-body" style="display: block;">
+        <div class="row" >
+
+
+
+
+        </div>
+      </div>
+    </div>
+    <!-- END Portlet PORTLET3-->
+  </div>
+</div>

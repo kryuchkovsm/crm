@@ -1,0 +1,113 @@
+<div class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a href="javascript:;" ng-click="close(false)" ng-disabled="saving"><i class="fa fa-times close"></i></a>
+        <h4 class="modal-title">{{fields.CrmGuid ? 'Edit' : 'Add'}} Whitelabel Partner</h4>
+      </div>
+      <div class="modal-body">
+        <div class="center-text" ng-show="saving">
+          <div class="cssload-loader" style="margin-top: 10%">...{{ "modals.tools.addeditcrm.processing" | translate }}...</div>
+        </div>
+
+        <form name="addEditCrm" novalidate ng-class="{'opacity-2': saving}">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="well well-sm well-light  bg-greyEEE form-group" ng-class="{'has-error': submitted && addEditCrm.Domain.$invalid}">
+                <span class="block">{{ "modals.tools.addeditcrm.domain" | translate }}:</span>
+                <input type="text"
+                       ng-pattern="/^((?:https)?:\/\/)(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|localhost|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})(?::\d+)?(?:\/?|[\/?]\S+)$/i" class="form-control search-box"
+                       name="Domain" ng-model="fields.Domain" check-https placeholder="https://example.com" required>
+                <p class="help-block" ng-show="submitted && addEditCrm.Domain.$error.required">{{ "modals.tools.addeditcrm.enter-domain-please" | translate }}</p>
+                <p class="help-block" ng-show="submitted && !addEditCrm.Domain.$error.required && addEditCrm.Domain.$error.pattern && addEditCrm.Domain.$error.validhttps">{{ "modals.tools.addeditcrm.enter-https-instead-of-http" | translate }}</p>
+                <p class="help-block" ng-show="submitted && !addEditCrm.Domain.$error.required && addEditCrm.Domain.$error.pattern && !addEditCrm.Domain.$error.validhttps">{{ "modals.tools.addeditcrm.enter-the-valid-domain" | translate }}</p>
+              </div>
+              <div class="well well-sm well-light  bg-greyEEE form-group" ng-class="{'has-error': submitted && addEditCrm.CompanyName.$invalid}">
+                <span class="block">{{ "modals.tools.addeditcrm.company-name" | translate }}:</span>
+                <input type="text" class="form-control search-box" name="CompanyName" ng-model="fields.CompanyName" required>
+                <p class="help-block" ng-show="submitted && addEditCrm.CompanyName.$error.required">{{ "modals.tools.addeditcrm.enter-company-name-please" | translate }}</p>
+              </div>
+              <div class="well well-sm well-light  bg-greyEEE form-group" ng-class="{'has-error': submitted && addEditCrm.FirstName.$invalid}">
+                <span class="block">{{ "modals.tools.addeditcrm.first-name" | translate }}:</span>
+                <input type="text" class="form-control search-box" name="FirstName" ng-model="fields.FirstName" required>
+                <p class="help-block" ng-show="submitted && addEditCrm.FirstName.$error.required">{{ "modals.tools.addeditcrm.enter-first-name-please" | translate }}</p>
+              </div>
+              <div class="well well-sm well-light  bg-greyEEE form-group" ng-class="{'has-error': submitted && addEditCrm.LastName.$invalid}">
+                <span class="block">{{ "modals.tools.addeditcrm.last-name" | translate }}:</span>
+                <input type="text" class="form-control search-box" name="LastName" ng-model="fields.LastName" required>
+                <p class="help-block" ng-show="submitted && addEditCrm.LastName.$error.required">{{ "modals.tools.addeditcrm.enter-last-name-please" | translate }}</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="well well-sm well-light  bg-greyEEE form-group" ng-class="{'has-error': submitted && addEditCrm.Phone.$invalid}">
+                <span class="block">{{ "modals.tools.addeditcrm.phone" | translate }}:</span>
+                <input type="text" class="form-control search-box" name="Phone" ng-model="fields.Phone" required>
+                <p class="help-block" ng-show="submitted && addEditCrm.Phone.$error.required">{{ "modals.tools.addeditcrm.enter-phone-please" | translate }}</p>
+              </div>
+              <div class="well well-sm well-light  bg-greyEEE form-group" ng-class="{'has-error': submitted && addEditCrm.Email.$invalid}">
+                <span class="block">{{ "modals.tools.addeditcrm.email" | translate }}:</span>
+                <input type="email" class="form-control search-box" name="Email" ng-model="fields.Email" vemail required>
+                <p class="help-block" ng-show="submitted && addEditCrm.Email.$error.required">{{ "modals.tools.addeditcrm.enter-email-please" | translate }}</p>
+                <p class="help-block" ng-show="submitted && addEditCrm.Email.$error.email">{{ "modals.tools.addeditcrm.enter-valid-email-please" | translate }}</p>
+              </div>
+              <div class="well well-sm well-light  bg-greyEEE form-group" ng-class="{'has-error': submitted && addEditCrm.Address1.$invalid}">
+                <span class="block">{{ "modals.tools.addeditcrm.address-1" | translate }}:</span>
+                <input type="text" class="form-control search-box" name="Address1" ng-model="fields.Address1" required>
+                <p class="help-block" ng-show="submitted && addEditCrm.Address1.$error.required">{{ "modals.tools.addeditcrm.enter-first-address-please" | translate }}</p>
+              </div>
+              <div class="well well-sm well-light  bg-greyEEE form-group">
+                <span class="block">{{ "modals.tools.addeditcrm.address-2" | translate }}:</span>
+                <input type="text" class="form-control search-box" name="Address2" ng-model="fields.Address2">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="well well-sm well-light  bg-greyEEE form-group" ng-class="{'has-error': submitted && addEditCrm.City.$invalid}">
+                <span class="block">{{ "modals.tools.addeditcrm.city" | translate }}:</span>
+                <input type="text" class="form-control search-box" name="City" ng-model="fields.City" required>
+                <p class="help-block" ng-show="submitted && addEditCrm.City.$error.required">{{ "modals.tools.addeditcrm.enter-city-please" | translate }}</p>
+              </div>
+              <div class="well well-sm well-light  bg-greyEEE form-group" ng-class="{'has-error': submitted && addEditCrm.State.$invalid}">
+                <span class="block">{{ "modals.tools.addeditcrm.state" | translate }}:</span>
+                <input type="text" class="form-control search-box" name="State" ng-model="fields.State" required>
+                <p class="help-block" ng-show="submitted && addEditCrm.State.$error.required">{{ "modals.tools.addeditcrm.enter-state-please" | translate }}</p>
+              </div>
+              <div class="well well-sm well-light  bg-greyEEE form-group" ng-class="{'has-error': submitted && addEditCrm.Zip.$invalid}">
+                <span class="block">{{ "modals.tools.addeditcrm.zip" | translate }}:</span>
+                <input type="text" class="form-control search-box" name="Zip" ng-model="fields.Zip" required min="0" my-maxlength="9" positive-number>
+                <p class="help-block" ng-show="submitted && addEditCrm.Zip.$error.required">{{ "modals.tools.addeditcrm.enter-zip-please" | translate }}</p>
+              </div>
+              <div class="well well-sm well-light  bg-greyEEE form-group" ng-class="{'has-error': submitted && addEditCrm.AdministratorUsername.$invalid}">
+                <span class="block">{{ "modals.tools.addeditcrm.administrator-username" | translate }}:</span>
+                <input type="text" class="form-control search-box" name="AdministratorUsername" ng-model="fields.AdministratorUsername" required>
+                <p class="help-block" ng-show="submitted && addEditCrm.AdministratorUsername.$error.required">{{ "modals.tools.addeditcrm.enter-administrator-username-please" | translate }}</p>
+              </div>
+              <div class="well well-sm well-light  bg-greyEEE form-group" ng-class="{'has-error': submitted && addEditCrm.AdministratorEmail.$invalid}">
+                <span class="block">{{ "modals.tools.addeditcrm.administrator-email" | translate }}:</span>
+                <input type="email" class="form-control search-box" name="AdministratorEmail" ng-model="fields.AdministratorEmail" vemail required>
+                <p class="help-block" ng-show="submitted && addEditCrm.AdministratorEmail.$error.required">{{ "modals.tools.addeditcrm.enter-administrator-email-please" | translate }}</p>
+                <p class="help-block" ng-show="submitted && !addEditCrm.AdministratorEmail.$error.required && addEditCrm.AdministratorEmail.$error.email">
+                  {{ "modals.tools.addeditcrm.enter-valid-administrator-email-please" | translate }}</p>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-md-6">
+            <a href="javascript:;" class="btn btn-lg CancelColor full-width" ng-click="close(false)" ng-disabled="saving">
+              <i class="fa fa-rotate-left"></i>
+              {{ "modals.tools.addeditcrm.close" | translate }}
+            </a>
+          </div>
+          <div class="col-md-6">
+            <a href="javascript:;" class="btn btn-lg ApplyColor full-width"  ng-click="submitted=true;save(addEditCrm.$invalid);" ng-disabled="saving">
+              <i class="fa fa-save"></i>
+              {{ "modals.tools.addeditcrm.submit" | translate }}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

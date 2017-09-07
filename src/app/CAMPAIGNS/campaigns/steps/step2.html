@@ -1,0 +1,108 @@
+<div class="size-17 weight-bold ">
+  {{ "campaigns.campaigns.steps.step2.page-type" | translate }}:
+</div>
+
+<div class="row margin-bottom-20">
+  <div class="col-md-3 padding-10">
+    <div class="bg-greyEEE padding-10">
+      <div class="radio pointer" ng-click="fields.WebSiteType='singlepage';">
+        <span ng-class="{'checked': fields.WebSiteType == 'singlepage'}">
+          <input type="radio" value="singlepage">
+        </span>
+      </div>
+      <div class="size-15 margin-top-bottom-10 inline pointer" ng-click="fields.WebSiteType='singlepage';">
+        {{ "campaigns.campaigns.steps.step2.one-page-checkout" | translate }}
+      </div>
+      <div class="size-15 margin-bottom-10">
+        The one page checkout form allows you to submit all order details within a single click within a single page.
+        All field validations are pre-set, and all the necessary fields are set to "required" by default in order for the
+        proper data to be submitted for processing. Do not uncheck the "required" checkboxes for these fields.
+      </div>
+      <div class="well well-sm ThemeColor no-margin">
+        <div class="campaign-setup-page-label" ng-repeat="name in ['First Name', 'Last Name', 'Address 1', 'Address 2',
+        'City', 'State', 'Zip', 'Phone', 'Email', 'Card Type', 'Card Number', 'Expiration Date', 'CW']">{{name | translate}}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4 padding-10">
+    <div class="bg-greyEEE padding-10">
+      <div class="radio pointer" ng-click="fields.WebSiteType='twopages';">
+        <span ng-class="{'checked': fields.WebSiteType == 'twopages'}">
+          <input type="radio" value="twopages">
+        </span>
+      </div>
+      <div class="size-15 margin-top-bottom-10 inline pointer" ng-click="fields.WebSiteType='twopages';">
+        {{ "campaigns.campaigns.steps.step2.two-page-checkout" | translate }}
+      </div>
+      <div class="size-15 margin-bottom-10">
+        A two page checkout allows you to collect contact information on the first page and payment information on a
+        separate billing page.All field validations are pre-set, and all the necessary fields are set to "required" by
+        default in order for the proper data to be submitted for processing. Do not uncheck the "required" checkboxes
+        for these fields.
+      </div>
+      <div class="well well-sm ThemeColor no-margin padding-left-right-15">
+        <div class="row">
+          <div class="col-md-6 padding-left-right-5 margin-bottom-mobile-30">
+            <div class="campaign-setup-page-label" ng-repeat="name in ['First Name', 'Last Name', 'Address 1', 'Address 2', 'City', 'State', 'Zip', 'Phone', 'Email']">{{name | translate}}</div>
+          </div>
+          <div class="col-md-6 padding-left-right-5">
+            <div class="campaign-setup-page-label" ng-repeat="name in ['Card Type', 'Card Number', 'Expiration Date', 'CW']">{{name | translate}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-5 padding-10">
+    <div class="bg-greyEEE padding-10">
+      <div class="radio pointer" ng-click="fields.WebSiteType='multiplepages';common.pagesCount=(common.pagesCount ? common.pagesCount : 1);">
+        <span ng-class="{'checked': fields.WebSiteType == 'multiplepages'}">
+          <input type="radio" value="multiplepages">
+        </span>
+      </div>
+      <div class="size-15 margin-top-bottom-10 inline pointer" ng-click="fields.WebSiteType='multiplepages';common.pagesCount=(common.pagesCount ? common.pagesCount : 1);">
+        {{ "campaigns.campaigns.steps.step2.custom-page-checkout" | translate }}
+      </div>
+      <div class="pull-right">
+        <input type="number" ng-model="common.pagesCount" custom-number-range max-number="8" min-number="1" class="width-50 margin-right-5" style="height: 25px;padding-left: 5px;">
+        <div class="size-15 margin-top-bottom-10 inline pointer">
+          {{ "campaigns.campaigns.steps.step2.page(s)" | translate }}
+        </div>
+      </div>
+      <div class="size-15 margin-bottom-10">
+        {{ "campaigns.campaigns.steps.step2.create-up-to-an-8-page-submission-form,-and-customize-the-forms-on-each-page" | translate }}.
+        {{ "campaigns.campaigns.steps.step2.more-pages-can-be-added-via-custom-programming" | translate }}.
+      </div>
+      <div class="well well-sm ThemeColor no-margin padding-left-right-15">
+        <div class="row">
+          <div class="col-md-3 padding-left-right-5 margin-bottom-mobile-30">
+            <div class="campaign-setup-page-label" ng-repeat="name in ['First Name', 'Last Name', 'Address 1', 'Address 2', 'Phone']">{{name | translate}}</div>
+          </div>
+          <div class="col-md-3 padding-left-right-5 margin-bottom-mobile-30">
+            <div class="campaign-setup-page-label" ng-repeat="name in ['Card Type', 'Card Number', 'Expiration Date', 'CW']">{{name | translate}}</div>
+          </div>
+          <div class="col-md-3 padding-left-right-5 margin-bottom-mobile-30">
+            <div class="campaign-setup-page-label" ng-repeat="name in ['Expiration Date', 'CW']">{{name | translate}}</div>
+          </div>
+          <div class="col-md-3 padding-left-right-5">
+            <div class="campaign-setup-page-label">{{ "campaigns.campaigns.steps.step2.card-type" | translate }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-4 col-md-offset-2">
+    <a href="javascript:;" class="btn btn-lg CancelColor margin-bottom-20 full-width" ng-click="prevStep(1)">
+      {{ "campaigns.campaigns.steps.step2.previous" | translate }}
+    </a>
+  </div>
+  <div class="col-md-4">
+    <a href="javascript:;" class="btn btn-lg ApplyColor margin-bottom-20 full-width" ng-click="nextStep(3)">
+      {{ "campaigns.campaigns.steps.step2.next" | translate }}
+    </a>
+  </div>
+</div>

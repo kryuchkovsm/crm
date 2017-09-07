@@ -1,0 +1,157 @@
+<div class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a href="javascript:;" data-dismiss="modal"><i class="fa fa-times close"></i></a>
+                <h4 class="modal-title">CSR / SSL</h4>
+            </div>
+            <div class="modal-body padding-10">
+                <div style="padding: 10px;font-size: 17px;border-bottom: 5px solid #EEEEEE;">
+                    <span ng-show="createNewCsr">{{fields.CsrGuid ? 'Edit' : 'Create'}} a Certificate Signing Request (CSR):</span>
+                    <span ng-show="showCompleteCSR">{{ "modals.tools.csr.complete-csr" | translate }}</span>
+                </div>
+                <div class="margin-top-bottom-10" ng-hide="createNewCsr || showCompleteCSR">
+                  <a href="javascript:;" class="btn btn-lg ApplyColor" ng-click="createNewCSR()">
+                      <i class="fa fa-plus"></i>
+                    {{ "modals.tools.csr.create-new-csr" | translate }}
+                  </a>
+                </div>
+                <div class="center-text" ng-show="saving">
+                  <div class="cssload-loader" style="margin-top: 10%">...Processing...</div>
+                </div>
+
+                <div class="alert alert-info margin-top-10 margin-bottom-10 center-text" role="alert" ng-show="createNewCsr">
+                  {{ "modals.tools.csr.specify-the-required-information-for-the-certificate.-state/province-and-city/locality-must-be-specified-as-official-names-and-they-can't-contain-abbreviations" | translate }}
+                </div>
+
+                <div class="white-bg" ng-show="createNewCsr">
+                  <form name="newCsr" ng-class="{'opacity-2': saving}">
+                    <div class="row">
+                        <div class="col-md-6">
+                          <div class="well well-sm well-light bg-greyEEE form-group" ng-class="{'has-error': submitted && newCsr.organizationalUnit.$invalid}">
+                              <span class="block">{{ "modals.tools.csr.organizational-unit" | translate }}:</span>
+                              <input type="text" class="form-control search-box" name="organizationalUnit" ng-model="fields.OrganizationalUnit" placeholder="Enter ORGANIZATIONAL UNIT" required>
+                              <p class="help-block ng-binding ng-scope" ng-if="submitted && newCsr.organizationalUnit.$invalid">{{ "modals.tools.csr.the-organizational-unit-is-required" | translate }}</p>
+                          </div>
+                          <div class="well well-sm well-light bg-greyEEE form-group" ng-class="{'has-error': submitted && newCsr.organization.$invalid}">
+                              <span class="block">{{ "modals.tools.csr.organization" | translate }}:</span>
+                              <input type="text" class="form-control search-box" name="organization" ng-model="fields.Organization" placeholder="Enter Organization" required>
+                              <p class="help-block ng-binding ng-scope" ng-if="submitted && newCsr.organization.$invalid">{{ "modals.tools.csr.the-organization-is-required" | translate }}</p>
+                          </div>
+                          <div class="well well-sm well-light bg-greyEEE form-group">
+                            <span class="block">{{ "modals.tools.csr.common-name" | translate }}:</span>
+                            <input ng-if="!fields.CsrGuid" type="text" ng-model="commonName" class="form-control search-box" disabled />
+                            <input ng-if="fields.CsrGuid" type="text" ng-model="fields.CommonName" class="form-control search-box" disabled />
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="well well-sm well-light bg-greyEEE form-group" ng-class="{'has-error': submitted && newCsr.country.$invalid}">
+                            <span class="block">{{ "modals.tools.csr.country" | translate }}:</span>
+                            <select class="form-control search-box" name="country" ng-model="fields.Country"
+                                    ng-options="opt.id as opt.name for opt in countryCodes | filterCountries" required>
+                              <option value=""> -- {{ "modals.tools.csr.select-country" | translate }} -- </option>
+                            </select>
+                            <p class="help-block ng-binding ng-scope" ng-if="submitted && newCsr.country.$invalid">{{ "modals.tools.csr.the-country-is-required" | translate }}</p>
+                          </div>
+                          <div class="well well-sm well-light bg-greyEEE form-group" ng-class="{'has-error': submitted && newCsr.city.$invalid}">
+                            <span class="block">{{ "modals.tools.csr.city" | translate }}:</span>
+                            <input type="text" class="form-control search-box" name="city" ng-model="fields.City" placeholder="Enter City" required>
+                            <p class="help-block ng-binding ng-scope" ng-if="submitted && newCsr.city.$invalid">{{ "modals.tools.csr.the-city-is-required" | translate }}</p>
+                          </div>
+                          <div class="well well-sm well-light bg-greyEEE form-group" ng-class="{'has-error': submitted && newCsr.state.$invalid}">
+                            <span class="block">{{ "modals.tools.csr.state" | translate }}:</span>
+                            <input type="text" class="form-control search-box" name="state" ng-model="fields.State" placeholder="Enter State" required>
+                            <p class="help-block ng-binding ng-scope" ng-if="submitted && newCsr.state.$invalid">{{ "modals.tools.csr.the-state-is-required" | translate }}</p>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="row padding-bottom-20">
+                      <div class="col-md-offset-2 col-sm-offset-2 col-md-4 col-sm-4 margin-bottom-10">
+                        <a href="javascript:;" class="btn btn-lg CancelColor full-width" ng-disabled="saving" ng-click="cancelCsr()">
+                          {{ "modals.tools.csr.cancel" | translate }}
+                        </a>
+                      </div>
+                      <div class="col-md-4 col-sm-4">
+                        <a href="javascript:;" class="btn btn-lg ApplyColor full-width" ng-disabled="saving" ng-click="submitted=true;saveCsr(newCsr.$invalid)">
+                          {{ "modals.tools.csr.save" | translate }}
+                        </a>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="padding-10" ng-show="showCompleteCSR">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div ng-class="{'opacity-2': saving}">
+                        <textarea class="form-control" style="height: 350px;resize: vertical;" ng-model="cert.CertificateBody" placeholder="Enter Certificate...."></textarea>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-offset-2 col-sm-offset-2 col-md-4 col-sm-4 margin-bottom-10">
+                          <a href="javascript:;" class="btn btn-lg CancelColor full-width margin-top-20" ng-click="cancelCert()" ng-disabled="saving">
+                            {{ "modals.tools.csr.cancel" | translate }}
+                          </a>
+                        </div>
+                        <div class="col-md-4 col-sm-4">
+                          <a href="javascript:;" class="btn btn-lg ApplyColor full-width margin-top-20" ng-click="saveCERT()" ng-disabled="!cert.CertificateBody || saving">
+                            {{ "modals.tools.csr.save" | translate }}
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row" ng-show="successMessage">
+                  <div class="col-md-12">
+                    <div class="alert alert-success">
+                      {{successMessage}}
+                    </div>
+                  </div>
+                </div>
+
+                <section st-table="csrs" st-safe-src="csrsSafe">
+                  <div id="flip-scroll">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr class="TitleBars top-radius white">
+                          <th st-ratio="40">{{ "modals.tools.csr.common-name" | translate }}</th>
+                          <th st-ratio="20" st-sort-default="true" class="cursor-pointer" st-sort="IsCompleted">{{ "modals.tools.csr.ssl-applied" | translate }}</th>
+                          <th st-ratio="20">{{ "modals.tools.csr.complete-csr" | translate }}</th>
+                          <th st-ratio="20">{{ "modals.tools.csr.actions" | translate }}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr ng-repeat="csr in csrs" ng-class="{'editable-row': fields.CsrGuid == csr.id || cert.CSRGuid == csr.id, 'deleting-row': deletingID == csr.id}">
+                          <td st-ratio="40">{{csr.CommonName}}</td>
+                          <td st-ratio="20">{{csr.IsCompleted ? 'Yes' : 'No'}}</td>
+                          <td st-ratio="20">
+                            <a href="javascript:;" class="btn btn-sm ApplyColor full-width" ng-click="completeCSR(csr.id);" ng-disabled="csr.IsCompleted">
+                              {{ "modals.tools.csr.complete-csr" | translate }}
+                            </a>
+                          </td>
+                          <td st-ratio="20">
+                            <a ng-click="editCSR(csr.id)"><i class="fa fa-pencil"></i></a>
+                            <a ng-click="deleteCSR(csr)" class="margin-left-5 margin-right-5"><i class="fa fa-times"></i></a>
+                            <a ng-click="downloadCSR(csr)"><i class="fa fa-download"></i></a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="center-text">
+                    <div  st-items-by-page="10" st-pagination=""></div>
+                  </div>
+                </section>
+                <div class="alert alert-warning" role="alert" ng-hide="csrs.length">{{ "modals.tools.csr.no-data" | translate }}</div>
+            </div>
+            <div class="modal-footer">
+                <div style="max-width: 400px;margin: 0 auto;">
+                    <a href="javascript:;" class="btn btn-lg CancelColor full-width" data-dismiss="modal">
+                        <i class="fa fa-rotate-left"></i>
+                      {{ "modals.tools.csr.cancel" | translate }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

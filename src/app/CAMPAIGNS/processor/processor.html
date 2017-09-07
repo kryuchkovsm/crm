@@ -1,0 +1,90 @@
+<!-- BEGIN Portlet PORTLET-->
+<div class="portlet box">
+  <div
+    crm-portlet-header=""
+    options="processorsHeaderOptions"
+    >
+  </div>
+  <div class="portlet-body" style="display: block;">
+    <div st-table="processors" st-safe-src="processorsSafe">
+      <div class="tableSearchInput top-minus-35">
+        <input st-search class="form-control st-search-input"
+               placeholder="Search Processors"
+               type="search"/>
+        <i class="fa fa-search"></i>
+      </div>
+
+      <div class="row margin-bottom-10">
+        <div class="col-md-2" style="text-align: center">
+          <a href="javascript:;"
+             class="btn btn-lg ApplyColor full-width"
+             ng-click="addNewProcessor()">
+            <i class="fa fa-plus"></i>
+            {{ "campaigns.processor.processor.add-new" | translate }}
+          </a>
+        </div>
+        <div class="col-md-2 col-md-offset-8">
+          <div class="margin-top-bottom-7 center-text">
+            <toggle-switch
+              model="switchStatus.IsActive"
+              on-label="Active"
+              off-label="All">
+            </toggle-switch>
+          </div>
+        </div>
+      </div>
+
+      <div id="flip-scroll">
+        <table class="table table-striped">
+          <thead>
+            <tr class="TitleBars top-radius white">
+              <th st-ratio="10" st-sort="GatewayName" class="cursor-pointer">{{ "campaigns.processor.processor.gateway" | translate }}</th>
+              <th st-ratio="10" st-sort="Username" class="cursor-pointer">{{ "campaigns.processor.processor.username" | translate }}</th>
+              <th st-ratio="10" st-sort="Password" class="cursor-pointer">{{ "campaigns.processor.processor.password" | translate }}</th>
+              <th st-ratio="10" st-sort="ProcessorName" class="cursor-pointer">{{ "campaigns.processor.processor.name" | translate }}</th>
+              <th st-ratio="10" st-sort="Processor_Id" class="cursor-pointer">{{ "campaigns.processor.processor.processor-id" | translate }}</th>
+              <th st-ratio="10" st-sort="MonthlyLimit" class="cursor-pointer">{{ "campaigns.processor.processor.monthly-limit" | translate }}</th>
+              <th st-ratio="10" st-sort="IsActive" class="cursor-pointer">{{ "campaigns.processor.processor.active" | translate }}</th>
+              <th st-ratio="10" st-sort="IsSticky" class="cursor-pointer">{{ "campaigns.processor.processor.sticky" | translate }}</th>
+              <th st-ratio="10">{{ "campaigns.processor.processor.actions" | translate }}</th>
+              <th st-ratio="10">{{ "campaigns.processor.processor.adv.rule" | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="row1 in processors  | filter:switchStatus ">
+              <td st-ratio="10" ng-bind="row1.GatewayName"></td>
+              <td st-ratio="10" ng-bind="row1.Username"></td>
+              <td st-ratio="10" ng-bind="row1.Password"></td>
+              <td st-ratio="10" ng-bind="row1.ProcessorName"></td>
+              <td st-ratio="11" ng-bind="row1.Processor_Id"></td>
+              <td st-ratio="10" ng-bind="row1.MonthlyLimit"></td>
+              <td st-ratio="10">{{row1.IsActive ? 'Yes' : 'No'}}</td>
+              <td st-ratio="10">{{row1.IsSticky ? 'Yes' : 'No'}}</td>
+              <td st-ratio="10" class="center-text">
+                <a ng-click="editProcessorRow(row1)">
+                  <i class="fa fa-pencil"></i>
+                </a>
+                <a ng-if="row1.IsActive"
+                  ng-click="deactivateProcessorRow(row1.ProcessorID)">
+                  <i class="fa fa-times"></i>
+                </a>
+              </td>
+              <td st-ratio="9" class="center-text">
+                <a ng-click="advancedProcessorSettings(row1.ProductsLevelAdvancedRuleID, row1.ProcessorID)">
+                  <i class="fa fa-qrcode"></i>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="center-text">
+          <div  st-items-by-page="10" st-pagination=""></div>
+        </div>
+      </div>
+      <div class="alert alert-warning center-text" ng-hide="processors.length" role="alert">
+        {{ "campaigns.processor.processor.no-data" | translate }}
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END Portlet PORTLET-->

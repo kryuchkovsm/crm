@@ -1,0 +1,423 @@
+<div class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a href="javascript:;" ng-click="close('false')" data-dismiss="modal"><i class="fa fa-times close"></i></a>
+        <h4 class="modal-title">{{modalTitle}}</h4>
+      </div>
+        <div class="modal-body" style="max-height: {{windowInner.height-200}}px; overflow: auto">
+          <form name="chargeForm">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="well well-sm TitleBars">
+                  <span class="block">{{ "modals.campaigns.products.addeditcharge.product-information" | translate }}:</span>
+                </div>
+
+                <div class="well well-sm well-light bg-greyEEE form-group" ng-class="{'has-error': submittedForm && chargeForm.name.$invalid}">
+                  <span class="block">{{ "modals.campaigns.products.addeditcharge.name" | translate }}:</span>
+                  <input type="text" class="form-control search-box" name="name" ng-model="fields.Name" required>
+                  <p class="error-message" ng-show="submittedForm && chargeForm.name.$invalid">{{ "modals.campaigns.products.addeditcharge.the-name-is-required" | translate }}</p>
+                </div>
+                <div class="well well-sm well-light bg-greyEEE form-group" ng-class="{'has-error': submittedForm && chargeForm.amount.$invalid}">
+                  <span class="block">{{ "modals.campaigns.products.addeditcharge.amount" | translate }}:</span>
+                  <input type="number" class="form-control search-box" name="amount" ng-model="fields.Amount" min="0" required positive-number>
+                  <p class="error-message" ng-show="submittedForm && chargeForm.amount.$invalid">{{ "modals.campaigns.products.addeditcharge.the-amount-is-required" | translate }}</p>
+                </div>
+                <div class="well well-sm well-light bg-greyEEE form-group" ng-class="{'has-error': submittedForm && chargeForm.productGroupId.$invalid}">
+                  <span class="block ng-binding">{{ "modals.campaigns.products.addeditcharge.product-group" | translate }}:</span>
+                  <span class="inline-block pull-right weight-bold ng-binding"></span>
+                  <select class="form-control search-box whole-width" name="productGroupId" ng-model="fields.ProductGroupId" required>
+                    <option ng-selected="!fields.ProductGroupId" value="">- {{ "modals.campaigns.products.addeditcharge.select-please" | translate }} -</option>
+                    <option ng-repeat="pGroup in fields.ProductGroups | orderBy: 'name'" ng-selected="pGroup.id==fields.ProductGroupId" value="{{pGroup.id}}">{{pGroup.name}}</option>
+                  </select>
+                  <p class="error-message" ng-show="submittedForm && chargeForm.productGroupId.$invalid">{{ "modals.campaigns.products.addeditcharge.the-product-group-is-required" | translate }}</p>
+                </div>
+                <div class="well well-sm well-light bg-greyEEE form-group" ng-class="{'has-error': submittedForm && chargeForm.TypeName.$invalid}">
+                  <span class="block ng-binding">{{ "modals.campaigns.products.addeditcharge.type" | translate }}:</span>
+                  <span class="inline-block pull-right weight-bold ng-binding"></span>
+                  <select class="form-control search-box whole-width" name="TypeName" ng-model="fields.ChargeType" required>
+                    <option ng-selected="!fields.ChargeType" value="">- {{ "modals.campaigns.products.addeditcharge.select-please" | translate }} -</option>
+                    <option
+                      ng-repeat="pType in fields.ChargeTypes"
+                      ng-selected="pType.id==fields.ChargeType"
+                      value="{{pType.id}}">{{pType.name | translate}}</option>
+                  </select>
+                  <p class="error-message" ng-show="submittedForm && chargeForm.TypeName.$invalid">{{ "modals.campaigns.products.addeditcharge.the-type-is-required" | translate }}</p>
+                </div>
+
+                <div class="well well-sm well-light bg-greyEEE form-group" ng-show="fields.ChargeType && (fields.ChargeType==22 || fields.ChargeType==23)">
+                  <span class="block">{{ "modals.campaigns.products.addeditcharge.position" | translate }}:</span>
+                  <select class="form-control search-box whole-width" ng-model="fields.UpsellPosition"
+                          ng-options="pos.id as pos.name for pos in fields.UpsellPositions">
+                    <option ng-selected="!fields.UpsellPosition" value="">- {{ "modals.campaigns.products.addeditcharge.select-please" | translate }} -</option>
+                  </select>
+                </div>
+
+                <div class="well well-sm well-light bg-greyEEE form-group" ng-class="{'has-error': submittedForm && chargeForm.externalProductId.$invalid}">
+                  <span class="block">{{ "modals.campaigns.products.addeditcharge.external-product-key" | translate }}:</span>
+                  <input type="text" class="form-control search-box" name="externalProductId" ng-model="fields.ExternalProductId">
+                  <p class="error-message" ng-show="submittedForm && chargeForm.externalProductId.$invalid">{{ "modals.campaigns.products.addeditcharge.the-external-product-key-is-required" | translate }}</p>
+                </div>
+
+                <div class="well well-sm well-light bg-greyEEE" ng-show="fields.chargeID">
+                  <span class="block">{{ "modals.campaigns.products.addeditcharge.is-active" | translate }}</span>
+                  <div>
+                    <label class="radio-inline">
+                      <div class="radio" ng-click="fields.IsActive=true">
+                            <span ng-class="{checked: fields.IsActive}">
+                              <input type="radio" ng-model="fields.IsActive" ng-value="true">
+                            </span>
+                      </div>
+                      Yes
+                    </label>
+                    <label class="ng-binding ng-scope radio-inline">
+                      <div class="radio" ng-click="fields.IsActive=false">
+                            <span ng-class="{checked: !fields.IsActive}">
+                                <input type="radio" ng-model="fields.IsActive" ng-value="false">
+                            </span>
+                      </div>
+                      No
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="well well-sm TitleBars">
+                  <span class="block">{{ "modals.campaigns.products.addeditcharge.options" | translate }}:</span>
+                </div>
+                <div class="well well-sm well-light bg-greyEEE">
+                  <span class="block">{{ "modals.campaigns.products.addeditcharge.shipment-insurance" | translate }}:</span>
+                  <div class=" ">
+                    <label class="radio-inline">
+                      <div class="radio" ng-click="fields.IsInsure=true">
+                            <span ng-class="{checked: fields.IsInsure}">
+                              <input type="radio" ng-model="fields.IsInsure" ng-value="true">
+                            </span>
+                      </div>
+                      Yes
+                    </label>
+                    <label class="ng-binding ng-scope radio-inline">
+                      <div class="radio" ng-click="fields.IsInsure=false">
+                            <span ng-class="{checked: !fields.IsInsure}">
+                                <input type="radio" ng-model="fields.IsInsure" ng-value="false">
+                            </span>
+                      </div>
+                      No
+                    </label>
+                  </div>
+                </div>
+
+                <div class="well well-sm TitleBars">
+                  <span class="block">{{ "modals.campaigns.products.addeditcharge.fulfillment-options" | translate }}:</span>
+                </div>
+
+                <div class="well well-sm well-light bg-greyEEE form-group">
+                  <span class="block ng-binding">{{ "modals.campaigns.products.addeditcharge.provider" | translate }}:</span>
+                  <span class="inline-block pull-right weight-bold ng-binding"></span>
+                  <select class="form-control search-box whole-width" name="type" ng-model="fields.FulfillmentProvider"
+                          ng-options="pType.id as pType.name for pType in fields.Providers">
+                    <option value="">- {{ "modals.campaigns.products.addeditcharge.select-please" | translate }} -</option>
+                  </select>
+                </div>
+
+                <div class="well well-sm well-light bg-greyEEE form-group">
+                  <span class="block ng-binding">
+                    {{ "modals.campaigns.products.addeditcharge.shipping-code" | translate }}:
+                    <span class="label label-info" ng-show="loadingShippingCodes">{{ "modals.campaigns.products.addeditcharge.loading" | translate }}...</span>
+                  </span>
+                  <span class="inline-block pull-right weight-bold"></span>
+                  <select class="form-control search-box whole-width" ng-model="fields.ShippingCode"
+                          ng-options="pType.id as pType.name for pType in shippingCodes">
+                    <option value="">- {{ "modals.campaigns.products.addeditcharge.select-please" | translate }} -</option>
+                  </select>
+                </div>
+
+                <div class="well well-sm well-light bg-greyEEE">
+                  <span class="block">{{ "modals.campaigns.products.addeditcharge.is-not-shippable" | translate }}:</span>
+                  <div class=" ">
+                    <label class="radio-inline">
+                      <div class="radio" ng-click="fields.IsNotShippable=true">
+                            <span ng-class="{checked: fields.IsNotShippable}">
+                              <input type="radio" ng-model="fields.IsNotShippable" ng-value="true">
+                            </span>
+                      </div>
+                      {{ "modals.campaigns.products.addeditcharge.yes" | translate }}
+                    </label>
+                    <label class="ng-binding ng-scope radio-inline">
+                      <div class="radio" ng-click="fields.IsNotShippable=false">
+                            <span ng-class="{checked: !fields.IsNotShippable}">
+                                <input type="radio" ng-model="fields.IsNotShippable" ng-value="false">
+                            </span>
+                      </div>
+                      {{ "modals.campaigns.products.addeditcharge.no" | translate }}
+                    </label>
+                  </div>
+                </div>
+                
+                <div class="well well-sm well-light bg-greyEEE">
+                  <span class="block">{{ "modals.campaigns.products.addeditcharge.is-lsr" | translate }}?</span>
+                  <div class=" ">
+                    <label class="radio-inline">
+                      <div class="radio" ng-click="fields.IsLsr=true">
+                            <span ng-class="{checked: fields.IsLsr}">
+                              <input type="radio" ng-model="fields.IsLsr" ng-value="true">
+                            </span>
+                      </div>
+                      {{ "modals.campaigns.products.addeditcharge.yes" | translate }}
+                    </label>
+                    <label class="ng-binding ng-scope radio-inline">
+                      <div class="radio" ng-click="fields.IsLsr=false">
+                            <span ng-class="{checked: !fields.IsLsr}">
+                                <input type="radio" ng-model="fields.IsLsr" ng-value="false">
+                            </span>
+                      </div>
+                      {{ "modals.campaigns.products.addeditcharge.no" | translate }}
+                    </label>
+                  </div>
+                </div>
+                <div class="well well-sm well-light bg-greyEEE">
+                  <span class="block">{{ "modals.campaigns.products.addeditcharge.is-fkl" | translate }}?</span>
+                  <div class=" ">
+                    <label class="radio-inline">
+                      <div class="radio" ng-click="fields.IsFkl=true">
+                            <span ng-class="{checked: fields.IsFkl}">
+                              <input type="radio" ng-model="fields.IsFkl" ng-value="true">
+                            </span>
+                      </div>
+                      {{ "modals.campaigns.products.addeditcharge.yes" | translate }}
+                    </label>
+                    <label class="ng-binding ng-scope radio-inline">
+                      <div class="radio" ng-click="fields.IsFkl=false">
+                            <span ng-class="{checked: !fields.IsFkl}">
+                                <input type="radio" ng-model="fields.IsFkl" ng-value="false">
+                            </span>
+                      </div>
+                      {{ "modals.campaigns.products.addeditcharge.no" | translate }}
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="well well-sm TitleBars">
+                  <span class="block">{{ "modals.campaigns.products.addeditcharge.tax-options" | translate }}:</span>
+                </div>
+                <div class="well well-sm well-light bg-greyEEE form-group" ng-class="{'has-error': submittedForm && chargeForm.taxableAmount.$invalid}">
+                  <span class="block">{{ "modals.campaigns.products.addeditcharge.taxable-amount" | translate }}:</span>
+                  <input type="number" class="form-control search-box" name="taxableAmount" ng-model="fields.TaxableAmount" min="0" positive-number required>
+                  <p class="error-message" ng-show="submittedForm && !chargeForm.taxableAmount.$error.min && chargeForm.taxableAmount.$error.required">{{ "modals.campaigns.products.addeditcharge.the-taxable-amount-is-required" | translate }}</p>
+                  <p class="error-message" ng-show="submittedForm && chargeForm.taxableAmount.$error.min">{{ "modals.campaigns.products.addeditcharge.min-value-is-0" | translate }}</p>
+                </div>
+
+                <div class="well well-sm well-light bg-greyEEE">
+                  <span class="block">{{ "modals.campaigns.products.addeditcharge.county-tax" | translate }}:</span>
+                  <div class=" ">
+                    <label class="radio-inline">
+                      <div class="radio" ng-click="fields.IsCountyTax=true">
+                            <span ng-class="{checked: fields.IsCountyTax}">
+                              <input type="radio" ng-model="fields.IsCountyTax" ng-value="true">
+                            </span>
+                      </div>
+                      {{ "modals.campaigns.products.addeditcharge.yes" | translate }}
+                    </label>
+                    <label class="ng-binding ng-scope radio-inline">
+                      <div class="radio" ng-click="fields.IsCountyTax=false">
+                            <span ng-class="{checked: !fields.IsCountyTax}">
+                                <input type="radio" ng-model="fields.IsCountyTax" ng-value="false">
+                            </span>
+                      </div>
+                      {{ "modals.campaigns.products.addeditcharge.no" | translate }}
+                    </label>
+                  </div>
+                </div>
+
+                <div class="well well-sm well-light bg-greyEEE">
+                  <span class="block">{{ "modals.campaigns.products.addeditcharge.local/city-tax" | translate }}:</span>
+                  <div class=" ">
+                    <label class="radio-inline">
+                      <div class="radio" ng-click="fields.IsLocalTax=true">
+                        <span ng-class="{checked: fields.IsLocalTax}">
+                          <input type="radio" ng-model="fields.IsLocalTax" ng-value="true">
+                        </span>
+                      </div>
+                      {{ "modals.campaigns.products.addeditcharge.yes" | translate }}
+                    </label>
+                    <label class="ng-binding ng-scope radio-inline">
+                      <div class="radio" ng-click="fields.IsLocalTax=false">
+                        <span ng-class="{checked: !fields.IsLocalTax}">
+                            <input type="radio" ng-model="fields.IsLocalTax" ng-value="false">
+                        </span>
+                      </div>
+                      {{ "modals.campaigns.products.addeditcharge.no" | translate }}
+                    </label>
+                  </div>
+                </div>
+
+                <div class="well well-sm well-light bg-greyEEE">
+                  <span class="block">{{ "modals.campaigns.products.addeditcharge.state-tax" | translate }}:</span>
+                  <div class=" ">
+                    <label class="radio-inline">
+                      <div class="radio" ng-click="fields.IsStateTax=true">
+                        <span ng-class="{checked: fields.IsStateTax}">
+                          <input type="radio" ng-model="fields.IsStateTax" ng-value="true">
+                        </span>
+                      </div>
+                      {{ "modals.campaigns.products.addeditcharge.yes" | translate }}
+                    </label>
+                    <label class="ng-binding ng-scope radio-inline">
+                      <div class="radio" ng-click="fields.IsStateTax=false">
+                        <span ng-class="{checked: !fields.IsStateTax}">
+                            <input type="radio" ng-model="fields.IsStateTax" ng-value="false">
+                        </span>
+                      </div>
+                      {{ "modals.campaigns.products.addeditcharge.no" | translate }}
+                    </label>
+                  </div>
+                </div>
+
+                <div ng-if="fields.IsStateTax"
+                  ng-dropdown-multiselect=""
+                  options="fields.taxStatesData"
+                  selected-model="fields.taxStatesModel"
+                  extra-settings="fields.taxStatesSettings">
+                </div>
+              </div>
+            </div>
+            <div ng-if="fields.ChargeType && (fields.ChargeType==35 || fields.ChargeType==36)">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="well well-sm TitleBars">
+                    <span class="block">{{ "modals.campaigns.products.addeditcharge.interval-settings" | translate }}:</span>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="well well-sm well-light bg-greyEEE">
+                    <span class="block ng-binding full-width">
+                      {{ "modals.campaigns.products.addeditcharge.first-charge-interval" | translate }}:
+                    </span>
+                    <input type="number" placeholder="1" class="form-control search-box first-combo" ng-model="fields.FirstChargeIntervalValue" min="0" positive-number required>
+                    <select class="form-control search-box second-combo" ng-init="fields.FirstChargeIntervalType ? true : fields.FirstChargeIntervalType=fields.intervalType[0].id"
+                            ng-model="fields.FirstChargeIntervalType"
+                            ng-options="ficData.id as ficData.name for ficData in fields.intervalType">
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="well well-sm well-light bg-greyEEE">
+                    <span class="block ng-binding full-width">
+                      {{ "modals.campaigns.products.addeditcharge.subsequent-charge-interval" | translate }}:
+                    </span>
+                    <input type="number" placeholder="1" class="form-control search-box first-combo" ng-model="fields.SubsequentChargeIntervalValue" min="0" positive-number required>
+                    <select class="form-control search-box second-combo" ng-init="fields.SubsequentChargeIntervalType ? true : fields.SubsequentChargeIntervalType=fields.intervalType[0].id"
+                            ng-model="fields.SubsequentChargeIntervalType"
+                            ng-options="subsData.id as subsData.name for subsData in fields.intervalType">
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="well well-sm well-light bg-greyEEE form-group" ng-init="fields.TotalChargesToRun = fields.TotalChargesToRun ? fields.TotalChargesToRun : 0" ng-class="{'has-error': submittedForm && chargeForm.totalChargesToRun.$invalid}">
+                    <span class="block">{{ "modals.campaigns.products.addeditcharge.total-charges-to-run" | translate }}:</span>
+                    <input type="text" class="form-control search-box" name="totalChargesToRun" ng-model="fields.TotalChargesToRun" required>
+                    <p style="position: absolute;font-size: 11px;margin-top: -7px">({{ "modals.campaigns.products.addeditcharge.enter-0-if-charges-are-to-run-indefinitely" | translate }})</p>
+                    <div style="height: 13px" ng-show="submittedForm && chargeForm.totalChargesToRun.$invalid">
+                      <p class="error-message" style="position: absolute;margin-top: 5px">{{ "modals.campaigns.products.addeditcharge.the-total-charges-to-run-is-required" | translate }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="well well-sm TitleBars" style="cursor: pointer;" ng-click="opened.retries=!opened.retries">
+                <span class="block">{{ "modals.campaigns.products.addeditcharge.retry-settings" | translate }}</span>
+                <span class="toggle-sitch-panel">
+                  <span ng-hide="opened.retries">{{ "modals.campaigns.products.addeditcharge.open" | translate }}</span>
+                  <span ng-show="opened.retries">{{ "modals.campaigns.products.addeditcharge.close" | translate }}</span>
+                  <i class="fa" ng-class="{'fa-caret-right': !opened.retries, 'fa-caret-down': opened.retries}"></i>
+                </span>
+              </div>
+
+              <div ng-show="opened.retries" class="ngFlipX" ng-animate="'animate'">
+                <div class="row" ng-repeat="retry in fields.Retries track by retry.RetryAttemptNumber">
+                  <div class="col-md-4">
+                    <p class="margin-bottom-left-right-20 font-md weight-bold">
+                      {{ "modals.campaigns.products.addeditcharge.retry-atempt" | translate }} #{{retry.RetryAttemptNumber}}
+                    </p>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="well well-sm well-light bg-greyEEE">
+                      <span class="block ng-binding full-width">
+                        {{ "modals.campaigns.products.addeditcharge.retry-timeframe" | translate }}:
+                      </span>
+                      <input type="number" placeholder="0" class="form-control search-box first-combo" ng-model="retry.ChargeInterval" positive-number>
+                      <select class="form-control search-box second-combo" ng-init="retry.ChargeIntervalID ? true : retry.ChargeIntervalID=fields.intervalType[0].id"
+                              ng-model="retry.ChargeIntervalID"
+                              ng-options="retryTC.id as retryTC.name for retryTC in fields.intervalType">
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="well well-sm well-light bg-greyEEE form-group">
+                      <span class="block">{{ "modals.campaigns.products.addeditcharge.retry-amount" | translate }}:</span>
+                      <input type="number" class="form-control search-box" min="0" ng-model="retry.Amount" positive-number>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                <div class="col-md-6">
+                  <div
+                    ng-dropdown-multiselect=""
+                    options="fields.trResponseData"
+                    selected-model="fields.trResponseModel"
+                    extra-settings="fields.trResponseSettings">
+                  </div>
+                </div>
+                <div class="col-md-6" ng-if="fields.chargeID">
+                  <a href="javascript:;" class="btn btn-lg ApplyColor full-width" ng-click="resetCustomers()">
+                    {{ "modals.campaigns.products.addeditcharge.reset-attempts-for-customers-of-the-product" | translate }}
+                  </a>
+                  <a href="javascript:;" class="btn btn-lg ApplyColor full-width margin-top-20" ng-click="updateCustomers()">
+                    {{ "modals.campaigns.products.addeditcharge.update-customers-with-current-rules" | translate }}
+                  </a>
+
+                  <div class="Metronic-alerts alert alert-success fade in font-size-15 margin-top-20" ng-show="successText">
+                    <a href="javascript:;" ng-click="successText=undefined">
+                      <i class="fa text-FontColor fa-times close"></i>
+                    </a>
+                    {{successText}}
+                  </div>
+                  <div class="Metronic-alerts alert alert-danger fade in font-size-15" ng-show="errorText">
+                    <a href="javascript:;" ng-click="errorText=undefined">
+                      <i class="fa text-FontColor fa-times close"></i>
+                    </a>
+                    {{errorText}}
+                  </div>
+                </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-md-offset-3 col-md-3">
+            <a href="javascript:;" class="btn btn-lg CancelColor full-width"  ng-click="close('false')"  ng-disabled="saving">
+              <i class="fa fa-rotate-left"></i>
+              {{ "modals.campaigns.products.addeditcharge.cancel" | translate }}
+            </a>
+          </div>
+          <div class="col-md-3">
+            <a href="javascript:;" class="btn btn-lg ApplyColor full-width"  ng-click="save(chargeForm)" ng-disabled="saving">
+              <span ng-show="saving">...{{ "modals.campaigns.products.addeditcharge.saving" | translate }}...</span>
+              <span ng-hide="saving">
+                <i class="fa fa-arrow-right"></i>
+                {{ "modals.campaigns.products.addeditcharge.save" | translate }}
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

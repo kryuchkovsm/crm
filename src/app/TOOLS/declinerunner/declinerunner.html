@@ -1,0 +1,334 @@
+<div class="row">
+  <div class="col-md-12">
+    <!-- BEGIN Portlet PORTLET1-->
+
+      <a href="javascript:;" ng-hide="tableData.ScheduledJobs" class="btn btn-lg ApplyColor margin-bottom-20 margin-top-10" ng-click="loadJobs()">
+        {{ "tools.declinerunner.declinerunner.click-here-to-view-background-scheduled-jobs" | translate }}
+      </a>
+    <div class="portlet box ngFlipX" ng-show="tableData.ScheduledJobs" ng-animate="'animate'">
+      <div crm-portlet-header options="{title: 'Background Scheduled Jobs'}"></div>
+      <div class="portlet-body" style="display: block;">
+        <div class="row margin-bottom-10">
+          <div class="col-md-3 col-sm-3">
+            <a href="javascript:;" class="btn btn-lg WarningColor" ng-click="tableData.ScheduledJobs=null">
+              <i class="fa fa-times" style="margin-top: -1px;"></i>
+              {{ "tools.declinerunner.declinerunner.hide" | translate }}
+            </a>
+          </div>
+          <div class="col-md-3  col-sm-3 col-md-offset-6 col-sm-offset-6 right-text">
+            <a href="javascript:;" class="btn btn-lg CancelColor" ng-click="clearAll()" ng-disabled="clearing">
+              <i class="fa fa-times" style="margin-top: -1px;"></i>
+              <span ng-hide="clearing">{{ "tools.declinerunner.declinerunner.clear-complete" | translate }}</span>
+              <span ng-show="clearing">...{{ "tools.declinerunner.declinerunner.clearing" | translate }}...</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="alert alert-warning" role="alert" ng-hide="tableData.ScheduledJobs.length">{{ "tools.declinerunner.declinerunner.no-date" | translate }}</div>
+
+        <section st-table="scheduledJobs" st-safe-src="tableData.ScheduledJobs" ng-show="tableData.ScheduledJobs.length">
+          <div class="row">
+            <div class="col-md-6 col-sm-6">
+              <div class="margin-top-6">{{ "tools.declinerunner.declinerunner.found" | translate }}: <b>{{tableData.ScheduledJobs.length}}</b> {{ "tools.declinerunner.declinerunner.records" | translate }}</div>
+            </div>
+            <div class="col-md-6 col-sm-6">
+              <div class="table-page-size maragin-bottom-10">
+                <div class="table-page-size-container">
+                  <div>{{ "tools.declinerunner.declinerunner.page-size" | translate }}:</div>
+                  <select class="form-control" ng-model="backgrJobsPageSize" ng-options="item as item for item in [5,10,15,20,50]"></select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="table-scrollable">
+            <table class="table table-striped table-auto-layout">
+              <thead class="TitleBars">
+              <th>{{ "tools.declinerunner.declinerunner.job-id" | translate }}</th>
+              <th>{{ "tools.declinerunner.declinerunner.job-name" | translate }}</th>
+              <th>{{ "tools.declinerunner.declinerunner.total" | translate }}</th>
+              <th>{{ "tools.declinerunner.declinerunner.status" | translate }}</th>
+              <th>{{ "tools.declinerunner.declinerunner.approved" | translate }}</th>
+              <th>{{ "tools.declinerunner.declinerunner.failed" | translate }}</th>
+              </thead>
+              <tbody>
+              <tr ng-repeat="sj in scheduledJobs">
+                <td>{{sj.JobID}}</td>
+                <td><a href="" ng-click="tableData.showJobTr=true;loadTransactionsByJobId(sj.JobID);">{{normalizeDate(sj.CreateDate)}}</a></td>
+                <td>{{sj.Total}}</td>
+                <td>{{sj.Stat}}</td>
+                <td>{{sj.Approved}}</td>
+                <td>{{sj.Failed}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="center-text">
+            <div st-items-by-page="backgrJobsPageSize" st-pagination=""></div>
+          </div>
+        </section>
+        <section ng-show="tableData.showJobTr" class="margin-top-20 ngFlipX" ng-animate="'animate'">
+          <div class="row margin-bottom-10">
+            <div class="col-md-3 col-sm-3">
+              <a href="javascript:;" class="btn btn-lg WarningColor" ng-click="tableData.showJobTr=false">
+                <i class="fa fa-times" style="margin-top: -1px;"></i>
+                {{ "tools.declinerunner.declinerunner.hide" | translate }}
+              </a>
+            </div>
+            <div class="col-md-3  col-sm-3 col-md-offset-6 col-sm-offset-6">
+              <div class="table-page-size maragin-bottom-10">
+                <div class="table-page-size-container">
+                  <div>{{ "tools.declinerunner.declinerunner.page-size" | translate }}:</div>
+                  <select class="form-control" ng-model="backgrJobPageSize" ng-options="item as item for item in [5,10,15,20,50]"></select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <section st-table="tableDataRawJobTr"  st-safe-src="tableData.jobTransactions">
+            <div class="table-scrollable">
+              <table class="table table-striped table-auto-layout">
+                <thead>
+                <tr class="TitleBars top-radius white">
+                  <th st-ratio="5" st-sort="SiteID" class="cursor-pointer">{{ "tools.declinerunner.declinerunner.site-id" | translate }}</th>
+                  <th st-ratio="10" st-sort="CustomerID" class="cursor-pointer">{{ "tools.declinerunner.declinerunner.customer-id" | translate }}</th>
+                  <th st-ratio="11" st-sort="TransactionID" class="cursor-pointer">{{ "tools.declinerunner.declinerunner.trns.-id" | translate }}</th>
+                  <th st-ratio="7" st-sort="Name" class="cursor-pointer">{{ "tools.declinerunner.declinerunner.name" | translate }}</th>
+                  <th st-ratio="10" st-sort="processor_id" class="cursor-pointer">{{ "tools.declinerunner.declinerunner.processor-id" | translate }}</th>
+                  <th st-ratio="7" st-sort="Amount" class="cursor-pointer">{{ "tools.declinerunner.declinerunner.amount" | translate }}</th>
+                  <th st-ratio="7" st-sort="ChargeType" class="cursor-pointer">{{ "tools.declinerunner.declinerunner.charge-type" | translate }}</th>
+                  <th st-ratio="14" st-sort="Responsetext" class="cursor-pointer">{{ "tools.declinerunner.declinerunner.response-text" | translate }}</th>
+                  <th st-ratio="12" st-sort="TransactionTypeName" class="cursor-pointer">{{ "tools.declinerunner.declinerunner.trns.-type" | translate }}</th>
+                  <th st-ratio="10" st-sort="DateEntered" class="cursor-pointer">{{ "tools.declinerunner.declinerunner.date-entered" | translate }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="row in tableDataRawJobTr">
+                  <td st-ratio="5" ng-bind="row.SiteID"></td>
+                  <td st-ratio="11" ng-bind="row.CustomerID"></td>
+                  <td st-ratio="11" ng-bind="row.TransactionID"></td>
+                  <td st-ratio="7" ng-bind="row.Name"></td>
+                  <td st-ratio="10" ng-bind="row.processor_id"></td>
+                  <td st-ratio="7" ng-bind="row.Amount"></td>
+                  <td st-ratio="7" ng-bind="row.ChargeType"></td>
+                  <td st-ratio="14" ng-bind="row.Responsetext"></td>
+                  <td st-ratio="12" ng-bind="row.TransactionTypeName"></td>
+                  <td st-ratio="10" ng-bind="dateFromServer(row.DateEntered, true)"></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="center-text">
+              <div st-items-by-page="backgrJobPageSize" st-pagination=""></div>
+            </div>
+          </section>
+          <div class="alert alert-warning" role="alert" ng-hide="tableDataRawJobTr.length || loadingBJ">{{ "tools.declinerunner.declinerunner.no-records-to-display" | translate }}.</div>
+          <div class="alert alert-warning" role="alert" ng-show="!tableDataRawJobTr.length && loadingBJ">...{{ "tools.declinerunner.declinerunner.loading" | translate }}...</div>
+        </section>
+      </div>
+    </div>
+
+    <div class="portlet box">
+      <div
+        crm-portlet-header=""
+        options="portletHeaderOptions"
+        >
+      </div>
+      <div class="portlet-body no-padding-bottom" style="display: block;">
+        <form name="declineRunnerForm" ng-model="declineRunnerForm">
+        <div class="row" >
+          <div class="col-md-4">
+            <div
+              ng-dropdown-multiselect=""
+              options="clientsData"
+              selected-model="clientsModel"
+              extra-settings="fieldOptions.clientsSettings"
+              >
+            </div>
+            <div
+              ng-dropdown-multiselect=""
+              options="fieldOptions.ChargeTypes"
+              selected-model="chargeTypeModel"
+              extra-settings="fieldOptions.chargeTypeSettings">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div
+              ng-dropdown-multiselect=""
+              options="sitesData"
+              selected-model="sitesModel"
+              extra-settings="fieldOptions.sitesSettings">
+            </div>
+            <div
+              ng-dropdown-multiselect=""
+              options="fieldOptions.TransactionTypes"
+              selected-model="transactionTypeModel"
+              extra-settings="fieldOptions.transactionTypeSettings">
+            </div>
+          </div>
+          <div class="col-md-4 ">
+            <div
+              ng-dropdown-multiselect=""
+              options="fieldOptions.DeclineResponses"
+              selected-model="transactionResultModel"
+              extra-settings="fieldOptions.transactionResultSettings">
+            </div>
+            <div class="well well-sm well-light bg-greyEEE" style="height: 216px;">
+              <span class="block margin-bottom-20">{{ "tools.declinerunner.declinerunner.order-dates" | translate }}:</span>
+              <div class="row ">
+                <div class="col-md-10 col-md-push-1 margin-bottom-20">
+                  <div class="form-group">
+                    <div
+                      crm-date-picker=""
+                      options="fieldOptions.fromDateOptions"
+                      value="dateFrom"
+                      >
+                    </div>
+                    <div class="divider-vertical  margin-bottom-10"></div>
+                    <div
+                      crm-date-picker=""
+                      options="fieldOptions.toDateOptions"
+                      value="dateTo"
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <p class="error-message" ng-if="fields.formSubmitted && (!dateFrom || !dateTo)">
+                {{ "tools.declinerunner.declinerunner.the-dates-are-required" | translate }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-5">
+            <div crm-radio-list options="fieldOptions.useCurrentDateOptions" value="useCurrentDate"></div>
+          </div>
+          <div class="col-md-7">
+            <div
+              crm-text-input=""
+              options="fieldOptions.searchForTxtOptions"
+              value="fields.SearchFor">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-offset-3 col-md-6">
+            <a href="javascript:;" ng-disabled="submitting" class="btn btn-lg search-box ApplyColor full-width" ng-click="submit();fields.formSubmitted=true">
+              <span ng-show="submitting">...{{ "tools.declinerunner.declinerunner.searching" | translate }}...</span>
+              <span ng-hide="submitting">
+                <i class="fa fa-search"></i>
+                {{ "tools.declinerunner.declinerunner.search" | translate }}
+              </span>
+            </a>
+          </div>
+        </div>
+      </form>
+      </div>
+    </div>
+    <!-- END Portlet PORTLET1-->
+  </div>
+</div>
+
+<div class="row" ng-show="showTrDetails">
+  <div class="col-md-12">
+    <div class="portlet box">
+      <div class="portlet-title ThemeColor">
+        <div class="caption">
+          {{ "tools.declinerunner.declinerunner.declined-transactions-details" | translate }}
+        </div>
+      </div>
+      <div class="portlet-body" style="display: block;">
+        <div class="alert alert-warning" role="alert" ng-hide="tableDataRaw.length">{{ "tools.declinerunner.declinerunner.no-data-to-display" | translate }}</div>
+        <section ng-show="tableDataRaw.length">
+          <div class="row">
+            <div class="col-md-6">
+              <a href="javascript:;" class="btn btn-lg ApplyColor pull-left margin-bottom-right-20 margin-top-10" ng-click="save()" ng-disabled="saving">
+                <i class="fa fa-save"></i>
+                <span ng-hide="saving">{{ "tools.declinerunner.declinerunner.save" | translate }}</span>
+                <span ng-show="saving">...{{ "tools.declinerunner.declinerunner.saving" | translate }}...</span>
+              </a>
+              <a href="javascript:;" class="btn btn-lg CancelColor pull-left margin-bottom-right-20 margin-top-10" ng-click="selectUnselectAll(selectUnselect=!selectUnselect)" ng-disabled="saving">
+                <section ng-show="selectUnselect">
+                  <i class="fa fa-times" style="margin-top: -1px;"></i>
+                  {{ "tools.declinerunner.declinerunner.clear-all" | translate }}
+                </section>
+                <section ng-hide="selectUnselect">
+                  <i class="fa fa-check" style="margin-top: -1px;"></i>
+                  {{ "tools.declinerunner.declinerunner.select-all" | translate }}
+                </section>
+              </a>
+            </div>
+            <div class="col-md-6">
+              <div
+                class="width-400 block pull-right"
+                crm-radio-list=""
+                options="fieldOptions.setRecurrenceRLOptions"
+                value="UseCurrentDate">
+              </div>
+            </div>
+          </div>
+          <section st-table="tableDataRaw"  st-safe-src="tableData.Declines" ng-show="tableDataRaw.length">
+            <div class="row">
+              <div class="col-md-4 col-sm-4">
+                <div class="margin-top-6">{{ "tools.declinerunner.declinerunner.found" | translate }}: <b>{{tableData.Declines.length}}</b> {{ "tools.declinerunner.declinerunner.records" | translate }}</div>
+              </div>
+              <div class="col-md-4 col-sm-4 center-text">
+                <div class="margin-top-6 desktop-center-text">{{ "tools.declinerunner.declinerunner.selected" | translate }} <b>{{ (tableData.Declines|filter:{selected: true}).length }}</b> {{ "tools.declinerunner.declinerunner.records" | translate }}</div>
+              </div>
+              <div class="col-md-4 col-sm-4">
+                <div class="table-page-size maragin-bottom-10">
+                  <div class="table-page-size-container">
+                    <div>{{ "tools.declinerunner.declinerunner.page-size" | translate }}:</div>
+                    <select class="form-control" ng-model="tablePageSize" ng-options="item as item for item in [5,10,15,20,50, 100, 150, 200]"></select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="table-scrollable">
+              <table class="table table-striped table-auto-layout decline-transactions table-padding-cells-5">
+                <thead>
+                  <tr class="TitleBars top-radius white">
+                    <th st-ratio="6" >
+                      <a href="javascript:;" ng-click="selectUnselectAllVisible(true)">{{ "tools.declinerunner.declinerunner.select" | translate }}</a>
+                    </th>
+                    <th st-ratio="5" st-sort="SiteID" class="cursor-pointer">{{ "tools.declinerunner.declinerunner.site-id" | translate }}</th>
+                    <th st-ratio="10" st-sort="CustomerID" class="cursor-pointer">{{ "tools.declinerunner.declinerunner.customer-id" | translate }}</th>
+                    <th st-ratio="11" st-sort="TransactionID" class="cursor-pointer">{{ "tools.declinerunner.declinerunner.trns.-id" | translate }}</th>
+                    <th st-ratio="7" st-sort="Name" class="cursor-pointer">{{ "tools.declinerunner.declinerunner.name" | translate }}</th>
+                    <th st-ratio="10" st-sort="processor_id" class="cursor-pointer">{{ "tools.declinerunner.declinerunner.process-id" | translate }}</th>
+                    <th st-ratio="7" st-sort="Amount" class="cursor-pointer">{{ "tools.declinerunner.declinerunner.amount" | translate }}</th>
+                    <th st-ratio="7" st-sort="ChargeType" class="cursor-pointer">{{ "tools.declinerunner.declinerunner.charge-type" | translate }}</th>
+                    <th st-ratio="14" st-sort="Responsetext" class="cursor-pointer">{{ "tools.declinerunner.declinerunner.resp-text" | translate }}</th>
+                    <th st-ratio="12" st-sort="TransactionTypeName" class="cursor-pointer">{{ "tools.declinerunner.declinerunner.trns.-type" | translate }}</th>
+                    <th st-ratio="10" st-sort="DateEntered" class="cursor-pointer">{{ "tools.declinerunner.declinerunner.date-entered" | translate }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="row in tableDataRaw">
+                  <td st-ratio="6">
+                    <div class="checker" ng-click="row.selected=!row.selected">
+                      <span ng-class="{checked: row.selected}"></span>
+                    </div>
+                    <!--<input type="checkbox" ng-model="row.selected">-->
+                  </td>
+                  <td st-ratio="5" ng-bind="row.SiteID"></td>
+                  <td st-ratio="11" ng-bind="row.CustomerID"></td>
+                  <td st-ratio="11" ng-bind="row.TransactionID"></td>
+                  <td st-ratio="7" ng-bind="row.Name"></td>
+                  <td st-ratio="10" ng-bind="row.processor_id"></td>
+                  <td st-ratio="7" ng-bind="row.Amount"></td>
+                  <td st-ratio="7" ng-bind="row.ChargeType"></td>
+                  <td st-ratio="14" ng-bind="row.Responsetext"></td>
+                  <td st-ratio="12" ng-bind="row.TransactionTypeName"></td>
+                  <td st-ratio="10">{{dateFromServer(row.DateEntered, true)}}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="center-text">
+              <div  st-items-by-page="tablePageSize" st-pagination=""></div>
+            </div>
+          </section>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>

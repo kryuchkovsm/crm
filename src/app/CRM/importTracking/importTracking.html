@@ -1,0 +1,98 @@
+<div class="row">
+  <div class="col-md-12">
+    <!-- BEGIN Portlet PORTLET1-->
+    <div class="portlet box">
+      <div
+        crm-portlet-header=""
+        options="portletHeaderOptions1">
+      </div>
+
+      <div class="portlet-body no-padding-bottom" style="display: block;">
+        <div class="row" >
+          <div class="col-md-3">
+            <crm-csv-import 
+              content="csv.content" 
+              result="csv.result"
+              options="csvImportOptions" />
+          </div>
+          <div class="col-md-3">
+            <div class="btn btn-warning btn-lg full-width" ng-click="downloadNotes()">
+              <i class="fa fa-download"></i>{{ "crm.customer.importtracking.download-template" | translate }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="row" >
+          <div class="col-md-12">
+              <table st-table="fileTableData" class="table table-striped">
+                <thead>
+                <tr class="TitleBars top-radius white">
+                  <th st-ratio="17">{{ "crm.customer.importtracking.name" | translate }}</th>
+                  <th st-ratio="10">{{ "crm.customer.importtracking.number-of-records" | translate }}</th>
+                  <th st-ratio="10">{{ "crm.customer.importtracking.imported" | translate }}</th>
+                  <th st-ratio="5"></th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr ng-show="dataForImport.length == 0">
+                  <td colspan="4" class="text-center">
+                    {{ "crm.customer.importtracking.no-files" | translate }}
+                  </td>
+                </tr>
+
+                <tr ng-repeat="row in dataForImport">
+                  <td st-ratio="17">{{ row.name }}</td>
+                  <td st-ratio="10">{{ row.data.length }}</td>
+
+                  <td st-ratio="10" ng-show="row.error">
+                    {{ 'crm.customer.importtracking.imported-error' | translate }}
+                  </td>
+                  <td st-ratio="10" ng-show="!row.error">
+                    {{ (row.imported ? 'crm.customer.importtracking.imported-yes' : 'crm.customer.importtracking.imported-no') | translate }}
+                  </td>
+
+                  <td st-ratio="5">
+                    <a ng-click="deleteFile(row)" style="color: red; padding:10px">
+                      <i class="fa fa-times"></i>
+                    </a>
+                  </td>
+                </tr>
+                </tbody>
+
+                <tfoot>
+                <tr>
+                  <td colspan="4" class="text-center">
+                    <div  st-items-by-page="20" st-pagination=""></div>
+                  </td>
+                </tr>
+                </tfoot>
+              </table>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col-md-offset-2 col-md-4">
+            <a href="javascript:;" class="btn btn-lg CancelColor full-width margin-bottom-20" 
+               ng-click="exit()">
+              <i class="fa fa-times"></i>
+              {{ "crm.customer.importtracking.exit" | translate }}
+            </a>
+          </div>
+
+          <div class="col-md-4">
+            <a href="javascript:;" class="btn btn-lg ApplyColor full-width margin-bottom-20" 
+               ng-click="importData()"
+               ng-disabled="nothingToImport || importing != 0">
+              <i class="fa fa-upload"></i>
+              {{ (importing ? "crm.customer.importtracking.importing" : "crm.customer.importtracking.import") | translate }}
+            </a>
+          </div>
+        </div>
+
+
+    </div>
+    <!-- END Portlet PORTLET1-->
+  </div>
+</div>

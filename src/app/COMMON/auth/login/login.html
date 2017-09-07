@@ -1,0 +1,135 @@
+<section style="margin-top: 10%">
+  <div class="alert alert-success alert-dismissible center-text" role="alert" ng-show="passwordChanged">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>{{ "common.auth.login.login.success" | translate }}</strong> {{ "common.auth.login.login.your-password-has-been-changed.-use-your-new-password." | translate }}
+  </div>
+  <div class="alert alert-info alert-dismissible" role="alert" ng-show="showSuccessRestore">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <div class="center-text">
+      {{ "common.auth.login.login.restore-instructions-has-been-sent-on-your-email.-check-it-please." | translate }}
+    </div>
+  </div>
+  <div class="login-form-container">
+    <div class="center-text">
+      <img ng-src="{{logoImage}}" style="max-width: 100%;margin-bottom: 15px;">
+      <!--<div class="CustomLogo" style="height: 83px !important;width: 315px;margin: 0 auto"></div>-->
+    </div>
+    <div class="form-login font-white FormBackground"  style="margin: 0 auto;">
+      <form name="loginForm" ng-show="currentTab=='login'">
+        <div class="input-group top">
+            <span class="input-group-addon top">
+              <span class="fa fa-user" style="color:  #888888;"></span>
+            </span>
+          <input type="text" class="form-control top" name="username" placeholder="Username" required ng-model="userInfo.username" />
+        </div>
+        <div class="input-group bottom">
+            <span class="input-group-addon bottom">
+              <span class="fa fa-key" style="color:  #888888;"></span>
+            </span>
+          <input type="password" class="form-control bottom" name="password" placeholder="Password" required ng-model="userInfo.password"/>
+        </div>
+
+        <div class="margin-top-20">
+          <label class="cursor-pointer" ng-click="userInfo.staySigned=!userInfo.staySigned">
+            <div class="checker">
+              <span ng-class="{'checked': userInfo.staySigned}"></span>
+            </div>
+            <span style="font-size: 12px">{{ "common.auth.login.login.stay-signed-in" | translate }}</span>
+          </label>
+        </div>
+        <div class="font-white bold" ng-show="submitted && loginForm.username.$error.required">{{ "common.auth.login.login.username-is-required" | translate }}</div>
+        <div class="font-white bold" ng-show="submitted && loginForm.password.$error.required">{{ "common.auth.login.login.password-is-required" | translate }}</div>
+        <div class="font-white bold" ng-show="submitted && errorLogin">{{errorMessage || 'Something went wrong'}}</div>
+        <span class="group-btn">
+          <a href="javascript:" class="btn btn-lg ApplyColor login-button" ng-click="submitted=true;login(loginForm.$valid)">
+            <i class="fa fa-arrow-right"></i>{{ "common.auth.login.login.login" | translate }}</a>
+        </span>
+      </form>
+      <form name="restoreForm" class="restore" ng-show="currentTab=='restore'">
+        <div class="input-group">
+          <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+            <input type="text" class="form-control none-radius" name="restoreVal" ng-model="restoreObj.Username" required/>
+          </div>
+          <div class="input-group-btn">
+            <button type="button" class="btn-lg WarningColor">
+              {{ "common.auth.login.login.login" | translate }}
+            </button>
+          </div>
+        </div>
+        <div class="margin-top-5" style="position: relative">
+          <div class="font-white bold" style="position: absolute" ng-show="submitted && restoreForm.restoreVal.$error.required">{{ "common.auth.login.login.login-is-required" | translate }}</div>
+        </div>
+        <span class="group-btn">
+          <a href="javascript:" class="btn login-box margin-top-20" ng-click="submitted=true;restore(restoreForm.$valid, restoreObj)"><i class="fa fa-arrow-right"></i>{{ "common.auth.login.login.restore" | translate }}</a>
+        </span>
+      </form>
+
+      <div class="font-sans-serif size-14" ng-show="currentTab=='information'">
+        <div class="row">
+          <div class="col-md-3 col-sm-3 col-xs-3">
+            <i class="fa fa-globe info-icon"></i>
+          </div>
+          <div class="col-md-9 col-sm-9 col-xs-9">
+            {{ "common.auth.login.login.visit-our" | translate }} <a class="loginLink" href="{{loginInfo().WebSite}}" target="_blank" style="font-weight: bold;">{{ "common.auth.login.login.website" | translate }}</a>
+            {{ "common.auth.login.login.for-more-information-related-to-our-products-and-services." | translate }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3 col-sm-3 col-xs-3">
+            <i class="fa fa-phone info-icon"></i>
+          </div>
+          <div class="col-md-9 col-sm-9 col-xs-9">
+            <div class="margin-top-bottom-7">
+              {{ "common.auth.login.login.to-contact-customer-service-with-questions-or-concerns,-call" | translate }}:
+              <!--<b><span>{{ "common.auth.login.login.1-866-866-9276" | translate }}</span></b>-->
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3 col-sm-3 col-xs-3">
+            <i class="fa fa-envelope-o info-icon"></i>
+          </div>
+          <div class="col-md-9 col-sm-9 col-xs-9">
+            <div class="margin-top-bottom-7">
+              {{ "common.auth.login.login.for-general-information-about-our-crm-or-to-get-started,-email-us" | translate }}:
+              <a class="loginLink" href="mailto:{{loginInfo().Email}}?subject=Information%20Request" style="font-weight: bold;">{{loginInfo().Email}}</a>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3 col-sm-3 col-xs-3">
+            <i class="fa fa-key info-icon"></i>
+          </div>
+          <div class="col-md-9 col-sm-9 col-xs-9">
+            <div class="margin-top-bottom-7">{{ "common.auth.login.login.to-continue-using-the-crm-system" | translate }}
+              <a class="loginLink" ng-click="currentTab='login';talePosition = 'login-tab-tale';" style="font-weight:bold;">
+                {{ "common.auth.login.login.click-here" | translate }}
+              </a>
+              {{ "common.auth.login.login.to-login" | translate }}.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-login-triangle FormBackground {{talePosition}}"></div>
+    <div class="font-sans-serif login-tabs" style="margin: 0 auto;margin-top: -18px;">
+      <ul>
+        <li class="width-70">
+          <a ng-click="currentTab='login';talePosition = 'login-tab-tale';showSuccessRestore=false;errorMessage='';"
+             ng-class="{'active-login-tab': currentTab=='login', 'default-login-tab': currentTab!='login'}"> {{ "common.auth.login.login.login" | translate }}</a>
+        </li>
+        <li class="width-130">
+          <a ng-click="currentTab='restore';talePosition = 'cant-tab-tale';showSuccessRestore=false;errorMessage='';"
+             ng-class="{'active-login-tab': currentTab=='restore', 'default-login-tab': currentTab!='restore'}">
+            {{ "common.auth.login.login.can't-login" | translate }}? </a>
+        </li>
+        <li class="width-115">
+          <a ng-click="currentTab='information';talePosition = 'info-tab-tale';showSuccessRestore=false;errorMessage='';"
+             ng-class="{'active-login-tab': currentTab=='information', 'default-login-tab': currentTab!='information'}">
+            {{ "common.auth.login.login.information" | translate }}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>

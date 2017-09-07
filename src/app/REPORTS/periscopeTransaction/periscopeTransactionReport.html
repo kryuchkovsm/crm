@@ -1,0 +1,29 @@
+
+
+<div class="row">
+  <div class="col-md-12">
+  
+    <!-- BEGIN Portlet PORTLET1-->
+    <div
+      id="search-container"
+      crm-select-clients-dates=""
+      options="clientDatesOptions"
+      value="clientDatesValue"
+      searchf="search()"
+      >
+    </div>
+    <!-- END Portlet PORTLET1-->
+
+    <div id="bottom"></div>
+
+    <div ng-show="dataReady == 'No' && tableObj && !tableObj.length"
+         class="Metronic-alerts alert alert-warning font-size-15 margin-top-32 center-text"
+      >
+      {{ "reports.transactionreport.transactionreport.no-data.-please-select-different-query-parameters." | translate }}
+    </div>
+
+    <iframe frameborder="0" scrolling="no" style="width: 100%; height: 1600px" 
+      ng-src="{{ReportURL | trusted}}"></iframe>
+      
+  </div>
+</div>

@@ -1,0 +1,24 @@
+<form name="formCommonInfo">
+  <div class="row">
+    <div class="col-md-6 col-md-push-3">
+      <div class="well well-sm well-light bg-greyEEE form-group" ng-class="{'has-error': submittedFormCommonInfo && formCommonInfo.campaignName.$invalid}">
+        <span class="block ng-binding">{{ "campaigns.campaigns.steps.step1.campaign-name" | translate }}:</span>
+        <input type="text" step="any" class="form-control search-box" name="campaignName" ng-model="fields.CampaignName" placeholder="Type campaign name" required>
+        <p class="help-block ng-binding ng-scope" ng-if="submittedFormCommonInfo && formCommonInfo.campaignName.$error.required">{{ "campaigns.campaigns.steps.step1.the-campaign-name-is-required" | translate }}</p>
+      </div>
+      <div class="well well-sm well-light bg-greyEEE form-group" ng-class="{'has-error': submittedFormCommonInfo && formCommonInfo.campaignUrl.$invalid}">
+        <span class="block ng-binding">{{ "campaigns.campaigns.steps.step1.campaign-url" | translate }}:</span>
+        <input type="text" ng-pattern="/^((?:http|ftp)s?:\/\/)(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|localhost|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})(?::\d+)?(?:\/?|[\/?]\S+)$/i" step="any" class="form-control search-box" name="campaignUrl" ng-model="fields.CampaignUrl" placeholder="http://example.com" required>
+        <p class="help-block" ng-if="submittedFormCommonInfo && formCommonInfo.campaignUrl.$error.required">{{ "campaigns.campaigns.steps.step1.the-campaign-url-is-required" | translate }}</p>
+        <p class="help-block" ng-if="submittedFormCommonInfo && !formCommonInfo.campaignUrl.$error.required && formCommonInfo.campaignUrl.$error.pattern">{{ "campaigns.campaigns.steps.step1.enter-the-valid-url" | translate }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4 col-md-push-4">
+      <a href="javascript:;" class="btn btn-lg ApplyColor margin-bottom-20 full-width" ng-click="submittedFormCommonInfo=true;nextStep(2,formCommonInfo)">
+        {{ "campaigns.campaigns.steps.step1.save-and-continue" | translate }}
+      </a>
+    </div>
+  </div>
+</form>

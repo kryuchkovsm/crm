@@ -1,0 +1,28 @@
+<div class="row campaign-setup-container">
+  <div class="col-md-12">
+    <div class="portlet box">
+      <div crm-portlet-header options="{title: 'Campaign Setup', searchField: {cb: void(0)}}">
+      </div>
+      <div class="portlet-body">
+        <!--<div ng-include src="stepPageUrl" ng-if="stepPageUrl" ng-class="{'nglightSpeedRTL': moveToLeft, 'nglightSpeedLTR': !moveToLeft}" ng-animate="'animate'"></div>-->
+        <div ng-include src="stepPageUrl" ng-if="stepPageUrl"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/ng-template" id="tokens.html">
+  <div class="draggable-template-extensions" style="height: 90px;" draggable options='{containment: ".page-content", scroll: false}'>
+    <div class="dg-ext-body">
+      <p>{{ "campaigns.campaigns.campaignsetup.tokens" | translate }}:</p>
+      <div class="dg-ext-list-container">
+        <ul>
+          <li ng-repeat="token in tokens">
+            <span>{{token}}</span>
+            <i class="fa fa-plus-circle" ng-click="addToken(token, $event)"></i>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</script>

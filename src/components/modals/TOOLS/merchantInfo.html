@@ -1,0 +1,82 @@
+<div class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a href="javascript:;" ng-click="close(false)" ng-disabled="saving"><i class="fa fa-times close"></i></a>
+        <h4 class="modal-title">{{ "modals.tools.merchantinfo.edit-merchant-information" | translate }}</h4>
+      </div>
+      <div class="modal-body">
+        <form name="merchantInformationForm" novalidate>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="well well-sm well-light bg-greyEEE form-group" ng-class="{'has-error': submitted && merchantInformationForm.CompanyName.$error.required}">
+                <span class="block ng-binding">{{ "modals.tools.merchantinfo.merchant-name" | translate }}:</span>
+                <input class="form-control search-box" type="text" name="CompanyName" ng-model="fields.CompanyName" required>
+                <p class="help-block" ng-show="submitted && merchantInformationForm.CompanyName.$error.required">{{ "modals.tools.merchantinfo.enter-company-name-please" | translate }}</p>
+              </div>
+              <!--<div class="well well-sm well-light bg-greyEEE form-group" ng-class="{'has-error': submitted && merchantInformationForm.MerchantName.$error.required}">-->
+                <!--<span class="block ng-binding">MERCHANT NAME:</span>-->
+                <!--<input class="form-control search-box" type="text" name="MerchantName" ng-model="fields.MerchantName" required>-->
+                <!--<p class="help-block" ng-show="submitted && merchantInformationForm.MerchantName.$error.required">Enter MERCHANT NAME please</p>-->
+              <!--</div>-->
+              <!--<div class="well well-sm well-light bg-greyEEE form-group" ng-class="{'has-error': submitted && merchantInformationForm.MID.$error.required}">-->
+                <!--<span class="block ng-binding">MID:</span>-->
+                <!--<input class="form-control search-box" type="text" name="MID" ng-model="fields.MerchantName" required>-->
+                <!--<p class="help-block" ng-show="submitted && merchantInformationForm.MID.$error.required">Enter MID please</p>-->
+              <!--</div>-->
+              <div class="well well-sm well-light bg-greyEEE form-group" ng-class="{'has-error': submitted && merchantInformationForm.Address1.$error.required}">
+                <span class="block ng-binding">{{ "modals.tools.merchantinfo.address1" | translate }}:</span>
+                <input class="form-control search-box" type="text" name="Address1" ng-model="fields.Address1" required>
+                <p class="help-block" ng-show="submitted && merchantInformationForm.Address1.$error.required">{{ "modals.tools.merchantinfo.enter-address1-please" | translate }}</p>
+              </div>
+              <div class="well well-sm well-light bg-greyEEE form-group" ng-class="{'has-error': submitted && merchantInformationForm.Address2.$error.required}">
+                <span class="block ng-binding">ADDRESS2:</span>
+                <input class="form-control search-box" type="text" name="Address2" ng-model="fields.Address2" required>
+                <p class="help-block" ng-show="submitted && merchantInformationForm.Address2.$error.required">{{ "modals.tools.merchantinfo.enter-address2-please" | translate }}</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="well well-sm well-light bg-greyEEE form-group" ng-class="{'has-error': submitted && merchantInformationForm.City.$error.required}">
+                <span class="block ng-binding">{{ "modals.tools.merchantinfo.city" | translate }}:</span>
+                <input class="form-control search-box" type="text" name="City" ng-model="fields.City" required>
+                <p class="help-block" ng-show="submitted && merchantInformationForm.City.$error.required">{{ "modals.tools.merchantinfo.enter-city-please" | translate }}</p>
+              </div>
+              <div class="well well-sm well-light bg-greyEEE form-group" ng-class="{'has-error': submitted && merchantInformationForm.State.$error.required}">
+                <span class="block ng-binding">{{ "modals.tools.merchantinfo.state" | translate }}:</span>
+                <input class="form-control search-box" type="text" name="State" ng-model="fields.State" required>
+                <p class="help-block" ng-show="submitted && merchantInformationForm.State.$error.required">{{ "modals.tools.merchantinfo.enter-state-please" | translate }}</p>
+              </div>
+              <div class="well well-sm well-light bg-greyEEE form-group" ng-class="{'has-error': submitted && merchantInformationForm.ZipCode.$error.required}">
+                <span class="block ng-binding">{{ "modals.tools.merchantinfo.zip-code" | translate }}:</span>
+                <input class="form-control search-box" type="text" name="ZipCode" ng-model="fields.ZipCode" required>
+                <p class="help-block" ng-show="submitted && merchantInformationForm.ZipCode.$error.required">{{ "modals.tools.merchantinfo.enter-zip-code-please" | translate }}</p>
+              </div>
+              <!--<div class="well well-sm well-light bg-greyEEE form-group" ng-class="{'has-error': submitted && merchantInformationForm.Country.$error.required}">-->
+                <!--<span class="block ng-binding">COUNTRY:</span>-->
+                <!--<input class="form-control search-box" type="text" name="COUNTRY" ng-model="fields.Country" required>-->
+                <!--<p class="help-block" ng-show="submitted && merchantInformationForm.Country.$error.required">Enter Country please</p>-->
+              <!--</div>-->
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-md-6">
+            <a href="javascript:;" class="btn btn-lg CancelColor full-width" ng-click="close(false)" ng-disabled="saving">
+              <i class="fa fa-rotate-left"></i>
+              {{ "modals.tools.merchantinfo.close" | translate }}
+            </a>
+          </div>
+          <div class="col-md-6">
+            <a href="javascript:;" class="btn btn-lg ApplyColor full-width"  ng-click="save(merchantInformationForm.$invalid);" ng-disabled="saving">
+              <i class="fa fa-save"></i>
+              {{ "modals.tools.merchantinfo.submit" | translate }}
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

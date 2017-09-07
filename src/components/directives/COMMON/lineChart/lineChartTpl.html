@@ -1,0 +1,31 @@
+<div style="position: relative">
+  <div class="SmallGraphBackgroundColor">
+    <div class="lineChartAmount"
+         ng-attr-style="color: {{options.color}};">
+         {{ options.showPercents ? options.total + '%' : options.total }}
+    </div>
+
+    <div ng-if="options.tooltipLabel" class="lineChartLabel"
+         ng-attr-style="color: {{options.color}};"
+         ng-bind="options.tooltipLabel | uppercase">
+    </div>
+
+    <div ng-if="options.percents && options.percents!=0" class="lineChartPercents"
+         ng-attr-style="color: {{options.color}};">
+      {{options.percents}}%
+      <i class="fa fa-{{::options.icon}}"
+         ng-attr-style="color: {{options.color}};">
+      </i>
+    </div>
+  </div>
+
+  <div class="SmallGraphBackgroundColor"
+       ng-attr-style="padding-top: {{paddingTop}}px; padding-bottom: {{paddingBottom}}px;">
+    <div id="chart_{{options.chartID}}" class="chart"
+         ng-attr-style="position: relative; height: {{height}}px;">
+    </div>
+    <div ng-if="options.bottomLabel" class="center-text  weight-bold grey" ng-bind="options.bottomLabel">
+    </div>
+  </div>
+
+</div>

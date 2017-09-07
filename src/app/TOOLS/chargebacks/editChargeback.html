@@ -1,0 +1,445 @@
+<div class="row" ng-show="dataReady">
+  <div class="col-md-12">
+      <!-- BEGIN Portlet PORTLET-->
+      <div class="portlet box">
+        <div
+          crm-portlet-header=""
+          options="portletHeaderOptions"
+          >
+        </div>
+        <div class="portlet-body">
+
+            <form name="newChargebackForm" ng-model="newChargebackForm"  novalidate>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="font-sans-serif size-15 color-grey weight-bold inline margin-bottom-10">
+                    <span ng-if="siteID">{{ "tools.chargebacks.editchargeback.siteid" | translate }}: {{siteID}}</span>
+                    <span ng-if="transactionId">{{ "tools.chargebacks.editchargeback.transaction-id" | translate }}: {{transactionId}}</span> &nbsp;
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <section style="text-align: right;">
+                    <label class="cursor-pointer" ng-click="fields.BlockCC=!fields.BlockCC">
+                      <div class="checker">
+                        <span ng-class="{checked: fields.BlockCC}"></span>
+                      </div>{{ "tools.chargebacks.editchargeback.block-credit-card" | translate }}
+                    </label>
+
+                    <label class="cursor-pointer" ng-click="fields.BlockIP=!fields.BlockIP">
+                      <div class="checker">
+                        <span ng-class="{checked: fields.BlockIP}"></span>
+                      </div> {{ "tools.chargebacks.editchargeback.block-ip-address" | translate }}
+                    </label>
+                  </section>
+                </div>
+              </div>
+              <div class="row margin-bottom-20">
+                <div class="col-md-4">
+                  <div ng-if="!showExtra">
+                    <div
+                      crm-text-input=""
+                      options="fieldOptions.faxToTxtOptions"
+                      value="fields.FaxNumber">
+                    </div>
+                    <div
+                      crm-text-input=""
+                      options="fieldOptions.midTxtOptions"
+                      value="fields.ChargebackInformation.MID"
+                      >
+                    </div>
+                    <div
+                      crm-text-input=""
+                      options="fieldOptions.referenceNumberTxtOptions"
+                      value="fields.ChargebackInformation.ReferenceNumber"
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div ng-if="!showExtra">
+                    <div
+                      crm-date-picker=""
+                      options="fieldOptions.noticeDateOptions"
+                      value="fields.DateOfNotice"
+                      >
+                    </div>
+
+                    <div class="well well-sm well-light bg-greyEEE form-group" ng-class="{'has-error': newChargebackForm.chargebackCode.$invalid && submitted}" show-errors>
+                      <span class="block ng-binding">{{ "tools.chargebacks.editchargeback.chargeback-code" | translate }}:</span>
+                      <select name="chargebackCode" class="form-control search-box whole-width"
+                              ng-options="item.id as item.name for item in fieldOptions.chargebackCodeSelectOptions.data"
+                              ng-model="fields.ChargebackInformation.ChargebackCodeID" required>
+                        <option value="">- {{ "tools.chargebacks.editchargeback.please-choose" | translate }} -</option>
+                      </select>
+                      <p class="error-message" ng-if="newChargebackForm.chargebackCode.$invalid && submitted">{{ "tools.chargebacks.editchargeback.the-chargeback-code-is-required" | translate }}</p>
+                    </div>
+                    <div
+                      crm-text-input=""
+                      options="fieldOptions.caseNumberTxtOptions"
+                      value="fields.ChargebackInformation.CaseNumber"
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4" ng-if="!showExtra">
+                  <div class="well well-sm TitleBars" style="margin-bottom: 10px">
+                    <span class="block">{{ "tools.chargebacks.editchargeback.choose-pdf-pages-to-send" | translate }}:</span>
+                  </div>
+                  <div class="margin-bottom-left-right-10">
+                    <div class="row add-user-row">
+                      <div class="col-md-12 size-12">
+                        <div ng-repeat="(key,val) in fields.PdfPagesInformation">
+                          <label class="cursor-pointer" ng-click="fields.PdfPagesInformation[key]=!fields.PdfPagesInformation[key]">
+                            <div class="checker">
+                              <span ng-class="{checked: val}"></span>
+                            </div>{{unCamelCase(key.replace('cb',''))}}
+                          </label>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <a href="javascript:;" class="btn CancelColor full-width" ng-click="changeValueForAll(false)">
+                              {{ "tools.chargebacks.editchargeback.unselect-all" | translate }}
+                            </a>
+                          </div>
+                          <div class="col-md-6">
+                            <a href="javascript:;" class="btn ApplyColor full-width" ng-click="changeValueForAll(true)">
+                              {{ "tools.chargebacks.editchargeback.select-all" | translate }}
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    crm-text-input=""
+                    options="fieldOptions.chargebackAmountTxtOptions"
+                    value="fields.ChargebackInformation.ChargebackAmount"
+                    >
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="row" ng-if="!showExtra">
+                <div class="col-md-12">
+                  <div class="well well-sm TitleBars">
+                    <span class="block">{{ "tools.chargebacks.editchargeback.transaction-information" | translate }}:</span>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div
+                        crm-text-input=""
+                        options="fieldOptions.transactionAmountTxtOptions"
+                        value="fields.TransactionInformation.TransactionAmount"
+                        >
+                      </div>
+                      <div
+                        crm-text-input=""
+                        options="fieldOptions.authorizationCodeTxtOptions"
+                        value="fields.TransactionInformation.AuthCode"
+                        >
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="well well-sm well-light bg-greyEEE form-group">
+                        <span class="block">{{ "tools.chargebacks.editchargeback.avs-status" | translate }}:</span>
+                        <div class="disabled-input-value">{{fields.TransactionInformation.AVSStatus || 'Empty'}}</div>
+                      </div>
+                      <div
+                        crm-date-picker=""
+                        options="fieldOptions.transactionDateOptions"
+                        value="fields.TransactionInformation.TransactionDate"
+                        >
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div
+                        crm-date-picker=""
+                        options="fieldOptions.settlementDateOptions"
+                        value="fields.TransactionInformation.SettlementDate"
+                        >
+                      </div>
+                      <div class="well well-sm well-light bg-greyEEE form-group">
+                        <span class="block">{{ "tools.chargebacks.editchargeback.cvv-status" | translate }}:</span>
+                        <div class="disabled-input-value">{{fields.TransactionInformation.CVVStatus || 'Empty'}}</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div ng-if="showExtra" class="well well-sm TitleBars ngFlipX" ng-animate="'animate'">
+                <span class="block">{{ "tools.chargebacks.editchargeback.chargeback-adjustments" | translate }}:</span>
+              </div>
+              <div ng-if="showExtra" class="row ngFlipX" ng-animate="'animate'">
+                <div class="col-md-4">
+                  <div
+                    crm-text-input=""
+                    options="fieldOptions.faxToTxtOptions"
+                    value="fields.FaxNumber">
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div
+                    crm-date-picker=""
+                    options="fieldOptions.noticeDateOptions"
+                    value="fields.DateOfNotice"
+                    >
+                  </div>
+
+                  <label class="cursor-pointer" ng-click="fields.IsRetrieval=!fields.IsRetrieval">
+                    <div class="checker">
+                      <span ng-class="{checked: fields.IsRetrieval}"></span>
+                    </div>{{ "tools.chargebacks.editchargeback.is-retrieval" | translate }}
+                  </label>
+
+                </div>
+                <div class="col-md-4">
+                  <div class="well well-sm well-light bg-greyEEE form-group" ng-class="{'has-error': newChargebackForm.chargebackCode.$invalid && submitted}" show-errors>
+                    <span class="block ng-binding">CHARGEBACK CODE:</span>
+                    <select name="chargebackCode" class="form-control search-box whole-width"
+                            ng-options="item.id as item.name for item in fieldOptions.chargebackCodeSelectOptions.data"
+                            ng-model="fields.ChargebackInformation.ChargebackCodeID" required>
+                      <option value="">- {{ "tools.chargebacks.editchargeback.please-choose" | translate }} -</option>
+                    </select>
+                    <p class="error-message" ng-if="newChargebackForm.chargebackCode.$invalid && submitted">{{ "tools.chargebacks.editchargeback.the-chargeback-code-is-required" | translate }}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div ng-if="showExtra" class="margin-bottom-20 ngFlipX" ng-animate="'animate'">
+                <div class="well well-sm TitleBars">
+                  <span class="block">{{ "tools.chargebacks.editchargeback.chargeback-information" | translate }}:</span>
+                </div>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div
+                      crm-text-input=""
+                      options="fieldOptions.chargebackAmountTxtOptions"
+                      value="fields.ChargebackInformation.ChargebackAmount"
+                      >
+                    </div>
+                    <div
+                      crm-text-input=""
+                      options="fieldOptions.midTxtOptions"
+                      value="fields.ChargebackInformation.MID"
+                      >
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div
+                      crm-text-input=""
+                      options="fieldOptions.referenceNumberTxtOptions"
+                      value="fields.ChargebackInformation.ReferenceNumber"
+                      >
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div
+                      crm-text-input=""
+                      options="fieldOptions.caseNumberTxtOptions"
+                      value="fields.ChargebackInformation.CaseNumber"
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div ng-if="showExtra" class="row margin-bottom-20">
+                <div class="col-md-8">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="row no-margin" >
+                        <div class="col-md-12 bg-grey-portlet">
+                          <div class="well well-sm TitleBars">
+                            <span class="block">{{ "tools.chargebacks.editchargeback.additional-information" | translate }}:</span>
+                          </div>
+                          <div class="margin-bottom-left-right-10">
+                            <textarea style="width: 100%" id="TextArea0" cols="20" rows="7" ng-model="fields.AdditionalInfo">
+                            </textarea>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="row no-margin" >
+                        <div class="col-md-12 bg-grey-portlet">
+                          <div class="well well-sm TitleBars">
+                            <span class="block">{{ "tools.chargebacks.editchargeback.refund-notes:-(page-6)" | translate }}</span>
+                          </div>
+                          <div class="margin-bottom-left-right-10">
+                            <textarea style="width: 100%" id="TextArea1" cols="20" rows="7" ng-model="fields.RefundNotes">
+                            </textarea>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="well well-sm TitleBars">
+                        <span class="block">{{ "tools.chargebacks.editchargeback.shipping-information" | translate }}:</span>
+                      </div>
+                      <div
+                        crm-text-input=""
+                        options="fieldOptions.shippingMethodTxtOptions"
+                        value="fields.ShippingInformation.ShippingMethod"
+                        >
+                      </div>
+                      <div
+                        crm-text-input=""
+                        options="fieldOptions.trackingNumberTxtOptions"
+                        value="fields.ShippingInformation.TrackingNumber"
+                        >
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="well well-sm TitleBars">
+                        <span class="block">{{ "tools.chargebacks.editchargeback.choose-pdf-pages-to-send" | translate }}:</span>
+                      </div>
+                      <div class="margin-bottom-left-right-10">
+                        <div class="row add-user-row">
+                          <div class="col-md-12 size-12">
+                            <div ng-repeat="(key,val) in fields.PdfPagesInformation">
+                              <label class="cursor-pointer" ng-click="fields.PdfPagesInformation[key]=!fields.PdfPagesInformation[key]">
+                                <div class="checker">
+                                  <span ng-class="{checked: val}"></span>
+                                </div>{{unCamelCase(key.replace('cb',''))}}
+                              </label>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-6">
+                                <a href="javascript:;" class="btn CancelColor full-width" ng-click="changeValueForAll(false)">
+                                  {{ "tools.chargebacks.editchargeback.unselect-all" | translate }}
+                                </a>
+                              </div>
+                              <div class="col-md-6">
+                                <a href="javascript:;" class="btn ApplyColor full-width" ng-click="changeValueForAll(true)">
+                                  {{ "tools.chargebacks.editchargeback.select-all" | translate }}
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <section>
+                    <div class="well well-sm TitleBars" ng-click="showCardholderInformation=!showCardholderInformation" style="cursor: pointer">
+                      <span class="block">{{ "tools.chargebacks.editchargeback.cardholder-information:-(click-to-expand)" | translate }}</span>
+                      <i class="fa" style="float: right" ng-class="{'fa-chevron-down': showCardholderInformation, 'fa-chevron-right': !showCardholderInformation}"></i>
+                    </div>
+                    <section class="ngFlipX" ng-show="showCardholderInformation" ng-animate="'animate'">
+                      <table class="table">
+                        <tbody>
+                        <tr ng-repeat="(chInfoKey, chInfoVal) in cardholderInformation">
+                          <td style="width: 50%;text-align: left !important;border-top: 0px;padding: 2px;">{{unCamelCase(chInfoKey)}}:</td>
+                          <td style="width: 50%;text-align: right !important;border-top: 0px;padding: 2px;">{{chInfoVal}}</td>
+                        </tr>
+                        </tbody>
+                      </table>
+                    </section>
+                  </section>
+
+                  <section>
+                    <div class="well well-sm TitleBars" ng-click="showMerchantInformation=!showMerchantInformation" style="cursor: pointer">
+                      <span class="block">{{ "tools.chargebacks.editchargeback.merchant-information:-(click-to-expand)" | translate }}</span>
+                      <i class="fa" style="float: right" ng-class="{'fa-chevron-down': showMerchantInformation, 'fa-chevron-right': !showMerchantInformation}"></i>
+                    </div>
+                    <section class="ngFlipX" ng-show="showMerchantInformation" ng-animate="'animate'">
+                      <table class="table">
+                        <tbody>
+                        <tr ng-repeat="(chInfoKey, chInfoVal) in fields.MerchantInformation">
+                          <td style="width: 50%;text-align: left !important;border-top: 0px;padding: 2px;">{{unCamelCase(chInfoKey)}}:</td>
+                          <td style="width: 50%;text-align: right !important;border-top: 0px;padding: 2px;">{{chInfoVal}}</td>
+                        </tr>
+                        </tbody>
+                      </table>
+
+                      <div style="text-align: center">
+                        <button class="btn btn-lg ApplyColor" type="button" ng-click="editMerchantInfo()">{{ "tools.chargebacks.editchargeback.edit-merchant-information" | translate }}</button>
+                      </div>
+                    </section>
+                  </section>
+
+                </div>
+                <div class="col-md-4">
+                  <div class="well well-sm TitleBars">
+                    <span class="block">{{ "tools.chargebacks.editchargeback.transaction-information" | translate }}:</span>
+                  </div>
+                  <div
+                    crm-text-input=""
+                    options="fieldOptions.transactionAmountTxtOptions"
+                    value="fields.TransactionInformation.TransactionAmount"
+                    >
+                  </div>
+                  <div
+                    crm-text-input=""
+                    options="fieldOptions.authorizationCodeTxtOptions"
+                    value="fields.TransactionInformation.AuthCode"
+                    >
+                  </div>
+                  <div class="well well-sm well-light bg-greyEEE form-group">
+                    <span class="block">{{ "tools.chargebacks.editchargeback.avs-status" | translate }}:</span>
+                    <div class="disabled-input-value">{{fields.TransactionInformation.AVSStatus || 'Empty'}}</div>
+                  </div>
+                  <div
+                    crm-date-picker=""
+                    options="fieldOptions.transactionDateOptions"
+                    value="fields.TransactionInformation.TransactionDate"
+                    >
+                  </div>
+                  <div
+                    crm-date-picker=""
+                    options="fieldOptions.settlementDateOptions"
+                    value="fields.TransactionInformation.SettlementDate"
+                    >
+                  </div>
+                  <div class="well well-sm well-light bg-greyEEE form-group">
+                    <span class="block">{{ "tools.chargebacks.editchargeback.cvv-status" | translate }}:</span>
+                    <div class="disabled-input-value">{{fields.TransactionInformation.CVVStatus || 'Empty'}}</div>
+                  </div>
+                </div>
+              </div>
+
+              <div ng-if="showExtra" class="well well-sm TitleBars">
+                <span class="block">{{ "tools.chargebacks.editchargeback.actions" | translate }}:</span>
+              </div>
+
+              <div class="row" ng-show="saving">
+                <div class="col-md-12">
+                  <div class="alert alert-info" role="alert" style="text-align: center;">...{{ "tools.chargebacks.editchargeback.saving" | translate }}...</div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-4">
+                  <a ng-if="!showExtra" href="javascript:;" class="btn btn-lg CancelColor full-width"  ng-click="toggleExtra(true)" ng-disabled="saving">
+                    <i class="fa fa-pencil"></i>
+                    {{ "tools.chargebacks.editchargeback.edit-remaining-fields" | translate }}
+                  </a>
+                  <a ng-if="showExtra" href="javascript:;" class="btn btn-lg CancelColor full-width"  ng-click="toggleExtra(false)" ng-disabled="saving">
+                    <i class="fa fa-times"></i>
+                    {{ "tools.chargebacks.editchargeback.hide-extra-fields" | translate }}
+                  </a>
+                </div>
+                <div class="col-md-4">
+                  <a href="javascript:;" class="btn btn-lg full-width WarningColor"  ng-click="saveAndView()" ng-disabled="saving">
+                    <i class="fa fa-eye"></i>
+                    {{ "tools.chargebacks.editchargeback.save-and-view" | translate }}
+                  </a>
+                </div>
+                <div class="col-md-4">
+                  <a href="javascript:;" class="btn btn-lg ApplyColor full-width"  ng-click="saveAndSend()" ng-disabled="saving">
+                    <i class="fa fa-send"></i>
+                    {{ "tools.chargebacks.editchargeback.save-and-send" | translate }}
+                  </a>
+                </div>
+              </div>
+            </form>
+        </div>
+      </div>
+      <!-- END Portlet PORTLET-->
+  </div>
+</div>

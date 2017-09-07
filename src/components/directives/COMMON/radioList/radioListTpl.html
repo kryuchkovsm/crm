@@ -1,0 +1,21 @@
+<div class="well well-sm well-light bg-greyEEE" ng-class="{'no-margin': options.column}">
+  <span class="block" ng-if="options.label">{{::options.label | translate}}:</span>
+  <form>
+    <div class="{{::options.wide}} {{::options.labelInline}}" ng-style="options.styles">
+      <label class=""
+             ng-repeat="option in options.data"
+             ng-class="{'margin-right-10 margin-top-1': options.column,
+             'radio-inline': !options.column}">
+        <div class="radio">
+          <span class="{{option.checked}}">
+            <input type="radio"
+                   id="{{::option.id}}"
+                   value="{{::option.id}}"
+                   ng-click="setSelectedItem(option.id)">
+          </span>
+        </div>
+        {{::option.name | translate}}
+      </label>
+    </div>
+  </form>
+</div>

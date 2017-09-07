@@ -1,0 +1,54 @@
+<div class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a href="javascript:;" ng-click="close()"><i class="fa fa-times close"></i></a>
+        <h4 class="modal-title">{{data.modalTitle}}</h4>
+      </div>
+      <div class="modal-body">
+        <form name="editDisputeForm" novalidate>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="well well-sm well-light  bg-greyEEE form-group" ng-class="{'has-error': submitted && editDisputeForm.cbCode.$invalid}">
+                <span class="block ng-binding">{{ "modals.tools.editdispute.chargeback-code" | translate }}:</span>
+                <select class="form-control search-box" name="cbCode" ng-model="dispute.CodeID"
+                        ng-options="code.CodeID as code.name for code in data.codes" required ng-disabled="dispute.DisputeID">
+                  <option value="">-- {{ "modals.tools.editdispute.select-code" | translate }} --</option>
+                </select>
+                <p class="help-block" ng-show="editDisputeForm.cbCode.$error.required">{{ "modals.tools.editdispute.enter-chargeback-code-code-please" | translate }}</p>
+              </div>
+              <div class="well well-sm well-light  bg-greyEEE form-group" ng-class="{'has-error': submitted && editDisputeForm.additionalInfo.$invalid}">
+                <span class="block ng-binding">{{ "modals.tools.editdispute.additional-info" | translate }}:</span>
+                <textarea ng-model="dispute.AdditionalInfo" style="resize: vertical" name="additionalInfo" maxlength="500" class="form-control" required></textarea>
+                <p class="help-block" ng-show="editDisputeForm.additionalInfo.$error.required">{{ "modals.tools.editdispute.enter-additional-info-please" | translate }}</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="well well-sm well-light  bg-greyEEE form-group" ng-class="{'has-error': submitted && editDisputeForm.description.$invalid}">
+                <span class="block ng-binding">{{ "modals.tools.editdispute.description" | translate }}:</span>
+                <textarea ng-model="dispute.Description" name="description" style="height: 176px;resize: vertical;" class="form-control" required></textarea>
+                <p class="help-block" ng-show="editDisputeForm.description.$error.required">{{ "modals.tools.editdispute.enter-description-please" | translate }}</p>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-md-6">
+            <a href="javascript:;" class="btn btn-lg CancelColor full-width"  ng-click="close()">
+              <i class="fa fa-rotate-left"></i>
+              {{ "modals.tools.editdispute.back" | translate }}
+            </a>
+          </div>
+          <div class="col-md-6">
+            <a href="javascript:;" class="btn btn-lg ApplyColor full-width"  ng-click="submitted=true;save(editDisputeForm);">
+              <i class="fa fa-arrow-right"></i>
+              {{ "modals.tools.editdispute.save" | translate }}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

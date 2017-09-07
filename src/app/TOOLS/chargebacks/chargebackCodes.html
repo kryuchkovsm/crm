@@ -1,0 +1,55 @@
+<div class="row">
+  <div class="col-md-12">
+      <!-- BEGIN Portlet PORTLET-->
+      <div class="portlet box">
+        <div crm-portlet-header="" options="{title: 'Manage Chargeback Codes'}"></div>
+        <div ng-if="codes.length==0" class="Metronic-alerts alert alert-warning font-size-15 center-text">
+          {{ "tools.chargebacks.chargebackcodes.no-data" | translate }}
+        </div>
+
+        <div class="portlet-body" style="display: block;" ng-if="codes.length>0">
+          <div st-table="codes" st-safe-src="safeCodes">
+            <a href="javascript:;" class="btn btn-lg ApplyColor margin-bottom-20" ng-click="addEditCode()">
+              <i class="fa fa-plus"></i>
+              {{ "tools.chargebacks.chargebackcodes.add-new" | translate }}
+            </a>
+            <div class="table-scrollable">
+              <table class="table table-striped table-auto-layout">
+                <thead>
+                  <tr class="TitleBars top-radius white">
+                    <th st-ratio="10" st-sort="ChargebackCodeId" class="cursor-pointer">{{ "tools.chargebacks.chargebackcodes.id" | translate }}</th>
+                    <th st-ratio="15" st-sort="ChargebackCodeDesc" class="cursor-pointer">{{ "tools.chargebacks.chargebackcodes.chargeback-code-description" | translate }}</th>
+                    <th st-ratio="5" st-sort="SortOrder" class="cursor-pointer">{{ "tools.chargebacks.chargebackcodes.sort-order" | translate }}</th>
+                    <th st-ratio="15" st-sort="CategoryName" class="cursor-pointer">{{ "tools.chargebacks.chargebackcodes.category-name" | translate }}</th>
+                    <th st-ratio="15" st-sort="DateEntered" class="cursor-pointer">{{ "tools.chargebacks.chargebackcodes.date-entered" | translate }}</th>
+                    <th st-ratio="15" st-sort="DateModified" class="cursor-pointer">{{ "tools.chargebacks.chargebackcodes.date-modified" | translate }}</th>
+                    <th st-ratio="15" st-sort="UserName" class="cursor-pointer">{{ "tools.chargebacks.chargebackcodes.user-name" | translate }}</th>
+                    <th st-ratio="10">{{ "tools.chargebacks.chargebackcodes.action" | translate }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="row in codes">
+                    <td st-ratio="10" ng-bind="row.ChargebackCodeId"></td>
+                    <td st-ratio="15" ng-bind="row.ChargebackCodeDesc"></td>
+                    <td st-ratio="5" ng-bind="row.SortOrder"></td>
+                    <td st-ratio="15" ng-bind="row.CategoryName"></td>
+                    <td st-ratio="15" ng-bind="dateFromServer(row.DateEntered, true)"></td>
+                    <td st-ratio="15" ng-bind="dateFromServer(row.DateModified, true)"></td>
+                    <td st-ratio="15" ng-bind="row.UserName"></td>
+                    <td st-ratio="10" class="center-text">
+                      <a ng-click="addEditCode(row)"><i class="fa fa-pencil"></i></a>
+                      <a ng-click="deleteCode(row)"><i class="fa fa-times"></i></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="center-text">
+              <div  st-items-by-page="20" st-pagination=""></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- END Portlet PORTLET-->
+  </div>
+</div>

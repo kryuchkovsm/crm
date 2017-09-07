@@ -1,0 +1,172 @@
+<div class="row">
+  <div class="col-md-12">
+    <!-- BEGIN Portlet PORTLET-->
+    <div class="portlet box">
+      <div class="portlet-title ThemeColor">
+        <div class="caption">
+          {{editingMode ? 'Edit' : 'Add'}} {{ "crm.customer.editcustomerrecurring.recurring-information" | translate }}
+        </div>
+      </div>
+      <div class="portlet-body" style="display: block;">
+        <div class="row ">
+          <!-- BEGIN Edit Customer Form -->
+          <div class="col-md-12">
+            <form name="editCustomerRecurringForm" ng-model="editCustomerRecurringForm">
+              <div class="well well-sm TitleBars">
+                <span class="block">{{ "crm.customer.editcustomerrecurring.recurring-information" | translate }}</span>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="well well-sm well-light bg-greyEEE form-group" ng-class="{'has-error': submitted && editCustomerRecurringForm.CHARGE.$invalid}" show-errors="">
+                    <span class="block ng-binding">{{ "crm.customer.editcustomerrecurring.charge" | translate }}:</span>
+                    <span class="inline-block pull-right weight-bold ng-binding"></span>
+                    <select class="form-control search-box whole-width" ng-change="chargeChanged(fields.chargeSelectValue)" ng-model="fields.chargeSelectValue" name="CHARGE" required ng-disabled="!fieldOptions.chargeSelectOptions.data.length">
+                      <option ng-selected="!fields.chargeSelectValue" value="">
+                        {{fieldOptions.chargeSelectOptions.data.length ? '-- Select charge --' : 'Site has no recurring charges'}}
+                      </option>
+                      <option ng-selected="fields.chargeSelectValue==chargeOpt.id" ng-repeat="chargeOpt in fieldOptions.chargeSelectOptions.data" value="{{chargeOpt.id}}">
+                        {{chargeOpt.name}}
+                      </option>
+                    </select>
+                    <div class="error-message" ng-show="submitted && editCustomerRecurringForm.CHARGE.$invalid">{{ "crm.customer.editcustomerrecurring.the-charge-is-required" | translate }}</div>
+                  </div>
+                  <div crm-date-picker options="fieldOptions.nextChargeDueDateOptions" value="fields.nextChargeDueDateValue"></div>
+                  <div crm-text-input options="fieldOptions.amountTxtOptions" value="fields.amountTxtValue" ng-if="editingMode"></div>
+                </div>
+                <div class="col-md-4">
+                  <div class="well well-sm well-light bg-greyEEE">
+                    <span class="block full-width">
+                      {{ "crm.customer.editcustomerrecurring.subsequent-charge-interval" | translate }}:
+                    </span>
+                    <div class="row">
+                      <div class="col-md-4 col-sm-4 col-xs-5">
+                        <input type="number" placeholder="0" class="form-control search-box full-width" min="0" positive-number ng-model="fields.subsequentChargeIntervealComboValue.numberValue">
+                      </div>
+                      <div class="col-md-8 col-sm-8 col-xs-7">
+                        <select class="form-control search-box full-width" ng-model="fields.subsequentChargeIntervealComboValue.selectValue"
+                                ng-options="opt as opt.name for opt in fieldOptions.subsequentChargeIntervealComboOptions.data">
+                          <option value="">-- {{ "crm.customer.editcustomerrecurring.select-interval" | translate }} --</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="well well-sm well-light bg-greyEEE" ng-if="editingMode">
+                    <span class="block full-width">
+                      {{ "crm.customer.editcustomerrecurring.retry-attempt-interval" | translate }}:
+                    </span>
+                    <input type="number" placeholder="0" class="form-control search-box first-combo" min="0" positive-number ng-model="fields.retryAtemptIntervalValue">
+                    <a href="javascript:;" class="btn btn-md second-combo CancelColor" ng-click="resetAttempt(fields.retryAtemptIntervalValue)">
+                      <i class="fa fa-rotate-left"></i>
+                      {{ "crm.customer.editcustomerrecurring.reset" | translate }}
+                    </a>
+                  </div>
+                  <div crm-text-input options="fieldOptions.amountTxtOptions" value="fields.amountTxtValue" ng-if="!editingMode"></div>
+                  <div ng-if="editingMode"
+                       crm-date-picker=""
+                       options="fieldOptions.retryChargeDueDateOptions"
+                       value="fields.retryChargeDueDateValue">
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="well well-sm well-light bg-greyEEE form-group" ng-if="editingMode">
+                    <span class="block">{{ "crm.customer.editcustomerrecurring.charge-count" | translate }}:</span>
+                    <div class="disabled-input-value">{{fields.chargeCountTxtValue}}</div>
+                  </div>
+
+                  <div
+                    crm-text-input=""
+                    options="fieldOptions.totalChargesToRunTxtOptions"
+                    value="fields.totalChargesToRunTxtValue"
+                    >
+                  </div>
+                  <div class="margin-bottom-20">
+                    <div crm-checkbox options="fieldOptions.activeCheckboxOptions" value="fields.activeCheckboxValue"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="well well-sm TitleBars" ng-if="retries" style="cursor: pointer;" ng-click="opened.retries=!opened.retries">
+                <span class="block">{{ "crm.customer.editcustomerrecurring.retries" | translate }}</span>
+                <span class="toggle-sitch-panel">
+                  <span ng-hide="opened.retries">{{ "crm.customer.editcustomerrecurring.open" | translate }}</span>
+                  <span ng-show="opened.retries">{{ "crm.customer.editcustomerrecurring.close" | translate }}</span>
+                  <i class="fa" ng-class="{'fa-caret-right': !opened.retries, 'fa-caret-down': opened.retries}"></i>
+                </span>
+              </div>
+              <div ng-show="opened.retries" class="ngFlipX" ng-animate="'animate'">
+                <div class="row" ng-repeat="retry in retries">
+                  <div class="col-md-4">
+                    <p class="col-md-offset-1 margin-top-10 font-md weight-bold">
+                      {{ "crm.customer.editcustomerrecurring.retry-atempt" | translate }} #{{retry.RetryAttemptNumber}}
+                    </p>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="well well-sm well-light bg-greyEEE">
+                      <span class="block full-width">
+                        {{ "crm.customer.editcustomerrecurring.retry-timeframe" | translate }}:
+                      </span>
+                      <div class="row">
+                        <div class="col-md-4 col-sm-4 col-xs-5">
+                          <input type="number" placeholder="0" class="form-control search-box first-combo full-width" ng-model="retry.ChargeInterval" min="0" placeholder="0" positive-number>
+                        </div>
+                        <div class="col-md-8 col-sm-8 col-xs-7">
+                          <select class="form-control search-box second-combo full-width" ng-model="retry.ChargeIntervalID"
+                                  ng-options="opt.id as opt.name for opt in fieldOptions.retryTimeframeComboOptions.data">
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="well well-sm well-light  bg-greyEEE form-group" show-errors="">
+                      <span class="block">{{ "crm.customer.editcustomerrecurring.retry-amount" | translate }}:</span>
+                      <input type="number" class="form-control search-box" ng-model="retry.Amount" min="0" placeholder="0" positive-number>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+
+            <div class="well well-sm TitleBars">
+              <span class="block">{{ "crm.customer.editcustomerrecurring.actions" | translate }}:</span>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4">
+                <a href="javascript:;" class="btn btn-lg CancelColor full-width"  ng-click="close('false')" ng-disabled="savingTransaction || saving">
+                  <i class="fa fa-times"></i>
+                  {{ "crm.customer.editcustomerrecurring.exit" | translate }}
+                </a>
+              </div>
+              <div class="col-md-4 center-text">
+                <div ng-show="editingMode">
+                  <a href="javascript:;" class="btn btn-lg WarningColor full-width"  ng-click="save(true);submitted=true;" ng-disabled="savingTransaction || saving">
+                    <i class="fa fa-arrow-right"></i>
+                    {{savingTransaction ? '...SUBMITTING...' : 'RUN TRANSACTION'}}
+                  </a>
+                  <p class="margin-bottom-20 margin-top-5">({{ "crm.customer.editcustomerrecurring.all-changes-will-be-saved" | translate }})</p>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <a href="javascript:;" class="btn btn-lg ApplyColor full-width"  ng-click="save();submitted=true;" ng-disabled="savingTransaction || saving">
+                  <span ng-show="saving">...{{ "crm.customer.editcustomerrecurring.submitting" | translate }}...</span>
+                <span ng-hide="saving">
+                  <i class="fa fa-save"></i>
+                  {{ "crm.customer.editcustomerrecurring.save" | translate }}
+                </span>
+                </a>
+              </div>
+            </div>
+            <div class="Metronic-alerts alert alert-success fade in font-size-15" ng-show="transactionResponse">
+              <a href="javascript:;" ng-click="transactionResponse=false"><i class="fa text-FontColor fa-times close"></i></a>
+              {{transactionResponse}}
+            </div>
+
+          </div>
+          <!-- END  Edit Customer Form -->
+        </div>
+      </div>
+    </div>
+    <!-- END Portlet PORTLET-->
+  </div>
+</div>

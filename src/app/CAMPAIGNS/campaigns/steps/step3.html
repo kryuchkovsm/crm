@@ -1,0 +1,43 @@
+<div class="well well-sm TitleBars">
+  <span class="block">{{ "campaigns.campaigns.steps.step3.choose-clients-and-sites-to-import-to" | translate }}:</span>
+</div>
+<div class="row" >
+  <div class="col-md-6">
+    <div ng-dropdown-multiselect options="clientsData" selected-model="clientsModel" search-filter="searchFilter.clients" extra-settings="clientsSettings"></div>
+  </div>
+  <div class="col-md-6">
+    <div ng-dropdown-multiselect options="sitesData" selected-model="sitesModel" search-filter="searchFilter.sites" extra-settings="sitesSettings"></div>
+  </div>
+</div>
+
+<div class="panel panel-success" ng-show="sitesModel[0].id">
+  <div class="panel-heading">
+    <h4 class="panel-title">
+      {{ "campaigns.campaigns.steps.step3.selected-siteid" | translate }}: {{sitesModel[0].id}}
+    </h4>
+  </div>
+</div>
+
+<div class="panel panel-warning" ng-show="showClientSiteError && !(sitesModel[0] && clientsModel[0])">
+  <div class="panel-heading">
+    <h4 class="panel-title">
+      {{ "campaigns.campaigns.steps.step3.site-and-client-are-required" | translate }}
+    </h4>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-4 col-md-push-2">
+    <a href="javascript:;" class="btn btn-lg CancelColor margin-bottom-20 full-width" ng-click="nextStep(2)">
+      {{ "campaigns.campaigns.steps.step3.previous" | translate }}
+    </a>
+  </div>
+  <div class="col-md-4 col-md-push-2">
+    <a href="javascript:;" class="btn btn-lg ApplyColor margin-bottom-20 full-width"
+       ng-disabled="checkingStep3"
+       ng-click="showClientSiteError=true;checkStep3(sitesModel[0].id, clientsModel[0].id)">
+      <span ng-hide="checkingStep3">{{ "campaigns.campaigns.steps.step3.next" | translate }}</span>
+      <span ng-show="checkingStep3">...{{ "campaigns.campaigns.steps.step3.loading" | translate }}...</span>
+    </a>
+  </div>
+</div>

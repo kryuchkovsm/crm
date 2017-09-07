@@ -1,0 +1,94 @@
+<div class="row">
+  <div class="col-md-4">
+    <!-- BEGIN Portlet PORTLET-->
+    <div class="portlet box">
+      <div
+        crm-portlet-header=""
+        options="usersHeaderOptions"
+        >
+      </div>
+      <div class="portlet-body">
+        <div
+          ng-dropdown-multiselect=""
+          options="clientsData"
+          selected-model="clientsModel"
+          extra-settings="clientsSettings"
+          >
+        </div>
+      </div>
+    </div>
+    <!-- END Portlet PORTLET-->
+  </div>
+
+  <div class="col-md-8">
+    <!-- BEGIN Portlet PORTLET-->
+    <div class="portlet box">
+      <div
+        crm-portlet-header=""
+        options="manageUsersHeaderOptions"
+        >
+      </div>
+      <div class="portlet-body">
+        <div class="row" st-table="usersTable" st-safe-src="copyUsersTable">
+          <div class="tableSearchInput top-minus-35">
+            <input st-search class="form-control st-search-input" placeholder="Search user"  type="search"/><i class="fa fa-search"></i>
+          </div>
+
+          <a href="javascript:;" class="btn btn-lg ApplyColor pull-left margin-bottom-20" ng-click="addOrEdit()">
+            <i class="fa fa-plus"></i>
+            {{ "administration.users.users.add-new" | translate }}
+          </a>
+
+          <table class="table table-striped" ng-show="usersTable.length>0">
+            <thead>
+              <tr class="TitleBars top-radius white">
+                <th st-ratio="15" class="cursor-pointer" st-sort="UserID">
+                	{{ "administration.users.users.userid" | translate }}
+                </th>
+                <th st-ratio="30" class="cursor-pointer" st-sort="UserName">
+                	{{ "administration.users.users.name" | translate }}
+                </th>
+                <th st-ratio="25" class="cursor-pointer" st-sort="UserType">
+                	{{ "administration.users.users.user-type" | translate }}
+                </th>
+                <th st-ratio="25" class="cursor-pointer" st-sort="LastLogin">
+                	{{ "administration.users.users.last-login" | translate }}
+                </th>
+                <th st-ratio="15">{{ "administration.users.users.actions" | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="row in usersTable">
+              <td st-ratio="15">{{row.UserID}}</td>
+              <td st-ratio="30">{{row.UserName}}</td>
+              <td st-ratio="25">{{row.UserType}}</td>
+              <td st-ratio="25">{{dateFromServer(row.LastLogin, true)}}</td>
+              <td st-ratio="15" class="center-text">
+              	<span ng-if="!row.CanEdit" style="opacity: 0.3;"><i class="fa fa-pencil"></i></span>
+                <a ng-click="addOrEdit(row.UserID)" ng-if="row.CanEdit">
+                	<i class="fa fa-pencil"></i>
+                </a>
+
+                <span ng-if="!row.CanEdit" style="opacity: 0.3;"><i class="fa fa-times"></i></span>
+                <a ng-click="deleteUserRow(row)" ng-if="row.CanEdit">
+                	<i class="fa fa-times"></i>
+                </a>
+              </td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+              <td colspan="5" class="text-center">
+                <div  st-items-by-page="10" st-pagination=""></div>
+              </td>
+            </tr>
+            </tfoot>
+          </table>
+          <div class="alert alert-warning" role="alert" ng-show="fetchedData && !usersTable.length">{{ "administration.users.users.no-data" | translate }}</div>
+        </div>
+      </div>
+    </div>
+    <!-- END Portlet PORTLET-->
+  </div>
+
+</div>

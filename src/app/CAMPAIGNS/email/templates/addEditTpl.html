@@ -1,0 +1,174 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="portlet box">
+      <div
+        crm-portlet-header=""
+        options="{title: 'Email Autoresponders'}"
+        >
+      </div>
+      <div class="portlet-body" style="display: block;">
+        <form name="addEmailAutoresponder" novalidate>
+          <div class="well well-sm TitleBars"><span class="block">{{ "campaigns.email.templates.addedittpl.email-options" | translate }}:</span></div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="well well-sm well-light bg-greyEEE form-group" style="height: 94px;">
+                <span class="block">{{ "campaigns.email.templates.addedittpl.type" | translate }}</span>
+                <div style="padding-top: 14px;">
+                  <label class="radio-inline" ng-click="editingTpl.IsHtml=true">
+                    <div class="radio">
+                      <span  ng-class="{'checked': editingTpl.IsHtml}">
+                        <input type="radio" value="true">
+                      </span>
+                    </div>
+                    {{ "campaigns.email.templates.addedittpl.html" | translate }}
+                  </label>
+                  <label class="radio-inline" ng-click="editingTpl.IsHtml=false">
+                    <div class="radio">
+                      <span ng-class="{'checked': !editingTpl.IsHtml}">
+                        <input type="radio" value="false">
+                      </span>
+                    </div>
+                    {{ "campaigns.email.templates.addedittpl.text" | translate }}
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="well well-sm well-light bg-greyEEE form-group" ng-class="{'has-error': submitted && addEmailAutoresponder.templateTypeID.$invalid}">
+                <span class="block"></span>
+                <span class="block">{{ "campaigns.email.templates.addedittpl.template-type" | translate }}:</span>
+                <select class="form-control search-box whole-width" name="templateTypeID" ng-model="editingTpl.TemplateTypeID"
+                        ng-options="type.id as type.name for type in templateTypes" required ng-change="changeTemplateType(editingTpl.TemplateTypeID)">
+                  <option value="">-- {{ "campaigns.email.templates.addedittpl.select-type" | translate }} --</option>
+                </select>
+                <p class="error-message" ng-show="submitted && addEmailAutoresponder.templateTypeID.$error.required">{{ "campaigns.email.templates.addedittpl.the-template-type-is-required" | translate }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="well well-sm well-light  bg-greyEEE form-group" ng-class="{'has-error': submitted && addEmailAutoresponder.Name.$invalid}">
+                <span class="block">{{ "campaigns.email.templates.addedittpl.template-name" | translate }}:</span>
+                <input type="text" class="form-control search-box" name="Name" ng-model="editingTpl.Name" required>
+                <p class="error-message" ng-show="submitted && addEmailAutoresponder.Name.$error.required">{{ "campaigns.email.templates.addedittpl.the-template-name-is-required" | translate }}</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="well well-sm well-light  bg-greyEEE form-group" ng-class="{'has-error': submitted && addEmailAutoresponder.EmailSubject.$invalid}">
+                <span class="block">{{ "campaigns.email.templates.addedittpl.email-subject" | translate }}:</span>
+                <input type="text" class="form-control search-box" name="EmailSubject" ng-model="editingTpl.EmailSubject" required>
+                <p class="error-message" ng-show="submitted && addEmailAutoresponder.EmailSubject.$error.required">{{ "campaigns.email.templates.addedittpl.the-email-subject-is-required" | translate }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="well well-sm well-light  bg-greyEEE form-group" ng-class="{'has-error': submitted && addEmailAutoresponder.ReplyEmail.$invalid}">
+                <span class="block">{{ "campaigns.email.templates.addedittpl.reply-email" | translate }}:</span>
+                <input type="email" class="form-control search-box" name="ReplyEmail" ng-model="editingTpl.ReplyEmail" vemail required>
+                <p class="error-message" ng-show="submitted && addEmailAutoresponder.ReplyEmail.$error.required">{{ "campaigns.email.templates.addedittpl.the-reply-email-is-required" | translate }}</p>
+                <p class="error-message" ng-show="submitted && !addEmailAutoresponder.ReplyEmail.$error.required && addEmailAutoresponder.ReplyEmail.$error.email">{{ "campaigns.email.templates.addedittpl.enter-valid-email-please" | translate }}</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="well well-sm well-light  bg-greyEEE form-group" ng-class="{'has-error': submitted && addEmailAutoresponder.FromEmail.$invalid}">
+                <span class="block">{{ "campaigns.email.templates.addedittpl.from-email" | translate }}:</span>
+                <input type="email" class="form-control search-box" name="FromEmail" ng-model="editingTpl.FromEmail" vemail required>
+                <p class="error-message" ng-show="submitted && addEmailAutoresponder.FromEmail.$error.required">{{ "campaigns.email.templates.addedittpl.the-from-email-is-required" | translate }}</p>
+                <p class="error-message" ng-show="submitted && !addEmailAutoresponder.FromEmail.$error.required && addEmailAutoresponder.FromEmail.$error.email">{{ "campaigns.email.templates.addedittpl.enter-valid-email-please" | translate }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group well well-sm well-light bg-greyEEE" ng-class="{'has-error': submitted && addEmailAutoresponder.Description.$invalid}">
+                <span class="block">{{ "campaigns.email.templates.addedittpl.template-description" | translate }}:</span>
+                <span class="inline-block pull-right weight-bold"></span>
+                <textarea class="form-control" name="Description" ng-model="editingTpl.Description" required></textarea>
+                <p class="error-message" ng-show="submitted && addEmailAutoresponder.Description.$error.required">{{ "campaigns.email.templates.addedittpl.the-template-description-is-required" | translate }}</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group well well-sm well-light bg-greyEEE" ng-class="{'has-error': submitted && addEmailAutoresponder.FromDescription.$invalid}">
+                <span class="block">{{ "campaigns.email.templates.addedittpl.from-description" | translate }}:</span>
+                <span class="inline-block pull-right weight-bold"></span>
+                <textarea class="form-control" name="FromDescription" ng-model="editingTpl.FromDescription" required></textarea>
+                <p class="error-message" ng-show="submitted && addEmailAutoresponder.FromDescription.$error.required">{{ "campaigns.email.templates.addedittpl.the-from-description-is-required" | translate }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="row email-body-editor" ng-show="editingTpl.IsHtml">
+            <div class="col-md-12">
+              <div class="portlet box">
+                <div class="portlet-title ThemeColor">
+                  <div class="caption">{{ "campaigns.email.templates.addedittpl.html-email-body" | translate }}:
+                  </div>
+                  <a style="margin-top: 3px" class="pull-right btn btn-success" ng-click="opt.enableExts=!opt.enableExts">
+                    <span ng-hide="opt.enableExts">{{ "campaigns.email.templates.addedittpl.view-tokens" | translate }}</span>
+                    <span ng-show="opt.enableExts">{{ "campaigns.email.templates.addedittpl.hide-tokens" | translate }}</span>
+                  </a>
+                </div>
+                <div class="portlet-body" style="display: block;padding: 0px">
+                  <div class="well well-sm well-light bg-greyEEE form-group" style="position: relative;margin-bottom: 0px;" ng-class="{'has-error': submitted && !emailBody.html}">
+                    <div ng-show="opt.enableExts" ng-include src="'tokens.html'"></div>
+                    <textarea ui-tinymce="tinymceOptions" ng-model="emailBody.html"></textarea>
+                  </div>
+                  <p class="error-message" ng-show="submitted && !emailBody.html">{{ "campaigns.email.templates.addedittpl.the-email-body-is-required" | translate }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row email-body-editor" ng-hide="editingTpl.IsHtml">
+            <div class="col-md-12">
+              <div class="portlet box">
+                <div class="portlet-title ThemeColor">
+                  <div class="caption">{{ "campaigns.email.templates.addedittpl.plain-text-email-body" | translate }}:</div>
+                  <a style="margin-top: 3px" class="pull-right btn btn-success" ng-click="opt.enableExts=!opt.enableExts">
+                    <span ng-hide="opt.enableExts">{{ "campaigns.email.templates.addedittpl.view-tokens" | translate }}</span>
+                    <span ng-show="opt.enableExts">{{ "campaigns.email.templates.addedittpl.hide-tokens" | translate }}</span>
+                  </a>
+                </div>
+                <div class="portlet-body" style="display: block;padding: 0px">
+                  <div ng-show="opt.enableExts" ng-include src="'tokens.html'"></div>
+                  <div class="well well-sm well-light bg-greyEEE form-group" ng-class="{'has-error': submitted && !emailBody.text}" style="margin-bottom: 0px">
+                    <textarea class="form-control" name="plainTextBody" id="plain-text-body" ng-model="emailBody.text" style="min-height: 250px;" ng-required="!editingTpl.IsHtml"></textarea>
+                    <p class="error-message" ng-show="submitted && !emailBody.text">{{ "campaigns.email.templates.addedittpl.the-email-body-is-required" | translate }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div ng-class="{'col-md-6': !editingTpl.IsHtml, 'col-md-4': editingTpl.IsHtml}">
+              <a class="btn btn-lg CancelColor full-width" ng-click="cancel()" ng-disabled="savingTpl"><i class="fa fa-times"></i>{{ "campaigns.email.templates.addedittpl.cancel" | translate }}</a>
+            </div>
+            <div class="col-md-4" ng-show="editingTpl.IsHtml">
+              <a class="btn btn-lg WarningColor full-width" ng-click="showPreview()" ng-disabled="savingTpl"><i class="fa fa-eye"></i>{{ "campaigns.email.templates.addedittpl.preview" | translate }}</a>
+            </div>
+            <div ng-class="{'col-md-6': !editingTpl.IsHtml, 'col-md-4': editingTpl.IsHtml}">
+              <a type="submit" ng-click="submitted=true;createOrUpdateTpl(addEmailAutoresponder)" class="btn btn-lg ApplyColor full-width" ng-disabled="savingTpl">
+                <i class="fa fa-floppy-o"></i>{{ "campaigns.email.templates.addedittpl.save" | translate }}</a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/ng-template" id="tokens.html">
+  <div class="draggable-template-extensions TitleBars" draggable options='{containment: ".page-content", scroll: false, cancel: "div.dg-ext-list-container"}'>
+    <div class="dg-ext-body">
+      <p>{{ "campaigns.email.templates.addedittpl.customer-info-plagins" | translate }}:
+        <i class="fa fa-times-circle" ng-click="opt.enableExts=false"></i>
+      </p>
+      <div class="dg-ext-list-container">
+        <ul>
+          <li ng-repeat="ext in exts">
+            <span>{{ext}}</span>
+            <i class="fa fa-plus-circle" ng-click="addExt(ext)"></i>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</script>

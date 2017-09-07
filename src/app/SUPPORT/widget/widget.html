@@ -1,0 +1,84 @@
+<section ng-controller="HcWidget">
+  <div style="position: fixed;right: 1%;bottom: 1%;z-index: 9999;" ng-show="categoryList[currentRouteName]">
+  <img ng-src="/assets/images/section_help.png" style="width: 70px;cursor: pointer;" ng-hide="showSectionsContent" ng-click="changeSectionHelpContent();"/>
+
+  <div set-widget-body-max-height class="hs-widget" ng-class="{'animated flipInY': showAnimated}" ng-show="showSectionsContent" style="box-shadow: 0 0 10px rgba(0,0,0,0.5);background: white;border-radius: 7px;border: 1px solid lightgray;width: 300px;">
+    <section class="tickets-section" ng-show="showTicketsSection">
+      <div class="hs-widget-header ThemeColor" style="border-bottom: 1px solid lightgray;padding: 10px;border-top-right-radius: 5px;border-top-left-radius: 5px;">
+        <span class="sh-widget-category-name" style="font-size: 17px;font-weight: bolder;">{{ "support.widget.widget.create-request" | translate }}</span>
+        <div style="float: right;">
+          <i class="fa fa-times" style="cursor: pointer;color: white;" ng-click="showSectionsContent=false"></i>
+        </div>
+      </div>
+      <div class="hs-widget-body" style="padding: 10px;max-height: {{windowInner.height-140}}px;overflow-y: auto;">
+        <h4 ng-show="sentTicketMessage" style="text-align: center">{{ "support.widget.widget.your-ticket-has-been-successfully-sent!-we'll-notify-you-by-email-when-we-reply" | translate }}</h4>
+        <a class="btn ApplyColor full-width" ng-show="sentTicketMessage" ng-click="sentTicketMessage=false">{{ "support.widget.widget.create-new-ticket" | translate }}</a>
+        <form name="createTicketForm" novalidate ng-hide="sentTicketMessage">
+          <div class="form-group" ng-class="{'has-error': submittedTicketForm && createTicketForm.subject.$invalid}">
+            <label>Subject*</label>
+            <input type="text" ng-model="ticketRequest.Subject" name="subject" class="form-control" required>
+          </div>
+          <div class="form-group" ng-class="{'has-error': submittedTicketForm && createTicketForm.body.$invalid}">
+            <label>{{ "support.widget.widget.how-can-we-help-you?*" | translate }}</label>
+            <textarea class="form-control" name="body" ng-model="ticketRequest.Body" required></textarea>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <button class="btn CancelColor full-width" ng-click="cancelTicketForm()" ng-disabled="sendingTicket">{{ "support.widget.widget.cancel" | translate }}</button>
+            </div>
+            <div class="col-md-6">
+              <button class="btn ApplyColor full-width" ng-click="createTicket(createTicketForm, ticketRequest)" ng-disabled="sendingTicket">{{sendingTicket ? 'Send' : 'Sending'}}</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="articles-section" ng-hide="showTicketsSection">
+      <div class="hs-widget-header ThemeColor" style="height: 70px;border-bottom: 1px solid lightgray;padding: 10px;border-top-right-radius: 5px;border-top-left-radius: 5px;">
+        <span class="sh-widget-category-name" style="font-size: 17px;font-weight: bolder;">{{categoryList[currentRouteName].categoryName}}</span>
+        <div style="float: right;">
+          <i class="fa fa-external-link" style="cursor: pointer;color: white;margin-right: 5px;" ng-show="showArticleItem.id"
+             ng-click="openNewWindow(originUrl+'/#/helpcenter/article?articleId='+showArticleItem.id, showArticleItem.name)"></i>
+          <!--<i class="fa fa-exchange" style="cursor: move;color: white;"></i>-->
+          <i class="fa fa-times" style="cursor: pointer;color: white;" ng-click="showSectionsContent=false"></i>
+        </div>
+        <input class="form-control full-width" placeholder="How can we help?" style="height: 30px" ng-model="searchHCString" enter-input="searchHC(searchHCString, categoryList[currentRouteName].categoryId)"/>
+      </div>
+      <div class="hs-widget-body" ng-style="{'max-height': (windowInner.height-140)+'px', padding: '10px', 'overflow-y': 'auto'}">
+        <div ng-show="searchingHCSections" style="font-size: 15px;font-weight: bolder;text-align: center;color: #4A4949;">...Loading...</div>
+        <section ng-hide="showArticleItem">
+            <section ng-show="showSearchHCResults">
+            <span style="font-size: 14px;color: #4A4949;">{{searchHCResults.length}} results for "{{searchHCStringDup}}": </span>
+            <ul style="padding-left: 0px;list-style-type: none;">
+              <li ng-repeat="searchResult in searchHCResults">
+                <a href="" ng-click="showArticle(searchResult.id)">{{$index+1}} {{searchResult.title}}</a>
+              </li>
+            </ul>
+          </section>
+          <ul style="padding-left: 0px;list-style-type: none;" ng-hide="showSearchHCResults">
+            <li ng-repeat="section in categoryList[currentRouteName].sections">
+              <span class="sh-widget-section-name" ng-show="categoryList[currentRouteName].sections.length>1" style="font-size: 14px;font-weight: bolder;color: #4A4949;">{{section.name}}</span>
+              <ul style="list-style-type: none;padding-left: 14px;">
+                <li ng-repeat="article in section.articles">
+                  <a href="" ng-click="showArticle(article.id)"><span ng-show="section.articles.length>2">{{$index+1}}</span> {{article.name}}</a>
+                </li>
+              </ul>
+              <br />
+            </li>
+          </ul>
+        </section>
+
+        <section ng-show="showArticleItem">
+          <h5 style="font-weight: bolder">{{showArticleItem.name}}</h5>
+          <div class="article-html-body preview-mode" ng-bind-html="trustAsHtml(showArticleItem.body)"></div>
+        </section>
+      </div>
+    </section>
+    <div class="hs-widget-footer" style="height: auto;padding: 5px;text-align: center">
+      <a href="" ng-click="browseKB()" ng-show="showSearchHCResults || showArticleItem">{{ "support.widget.widget.browse-knowledge-base" | translate }}</a>
+      <a class="btn ApplyColor full-width" ng-hide="showTicketsSection || !commonObject().ZendeskAvailable" ng-click="createNewTicket()" style="margin-top: 5px">{{ "support.widget.widget.send-new-request" | translate }}</a>
+    </div>
+  </div>
+</div>
+</section>

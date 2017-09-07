@@ -1,0 +1,60 @@
+<div class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    
+      <div class="modal-header">
+        <a href="javascript:;" ng-click="close('false')" data-dismiss="modal">
+        	<i class="fa fa-times close"></i>
+        </a>
+        <h4 class="modal-title">{{data.modalTitle}}</h4>
+      </div>
+      
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="panel" ng-class="{'panel-info': data.panelInfoClass, 'panel-warning': !data.panelInfoClass && !data.panelSuccessClass, 'panel-success': data.panelSuccessClass}"
+                 ng-if="data.modalTxt">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  {{data.modalTxt}}
+                </h4>
+              </div>
+            </div>
+            <div class="panel" ng-class="{'panel-info': data.panelInfoClass, 'panel-warning': !data.panelInfoClass && !data.panelSuccessClass, 'panel-success': data.panelSuccessClass}"
+                 ng-if="data.modalHtml">
+              <div class="panel-heading">
+                <h4 class="panel-title" ng-bind-html="trustAsHtml(data.modalHtml)"></h4>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-md-12">
+            <div crm-text-input options="confirmTxtOptions" value="confirmValue"></div>
+          </div>
+        </div>
+        
+      </div>
+      
+      <div class="modal-footer">
+        <div class="row">
+          <div ng-class="{'col-md-12': data.hideProceedButton, 'col-md-6': !data.hideProceedButton}">
+            <a href="javascript:;" class="btn btn-lg CancelColor full-width" ng-click="close('false')"  data-dismiss="modal">
+              <i class="fa fa-rotate-left"></i>
+              {{data.cancelButtonText || "modals.common.sure.cancel" | translate }}
+            </a>
+          </div>
+          <div class="col-md-6" ng-hide="data.hideProceedButton">
+            <a href="javascript:;" ng-disabled="confirmValue != ('modals.common.confirm.desired-confirm-value' | translate)"
+            	 class="btn btn-lg ApplyColor full-width" ng-click="close('true')">
+              <i class="fa fa-arrow-right"></i>
+              {{ "modals.common.confirm.understand-proceed" | translate }}
+            </a>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>

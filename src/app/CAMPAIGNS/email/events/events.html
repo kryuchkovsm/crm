@@ -1,0 +1,78 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="portlet box">
+      <div
+        crm-portlet-header=""
+        options="{title: 'Email Autoresponders'}"
+        >
+      </div>
+      <div class="portlet-body" style="display: block;">
+        <div class="well well-sm TitleBars">
+          <span class="block">{{ "campaigns.email.events.events.email-events" | translate }}</span>
+        </div>
+        <section st-table="events" st-safe-src="eventsSafe">
+
+          <div class="row">
+            <div class="col-md-2" style="text-align: center">
+              <a href="javascript:;" class="btn btn-lg ApplyColor margin-bottom-20 full-width" ng-click="addEditEvent()">
+                <i class="fa fa-plus"></i>
+                {{ "campaigns.email.events.events.add-new" | translate }}
+              </a>
+            </div>
+            <div class="col-md-offset-7 col-md-3">
+
+              <select id="is-active-events" style="display: none" st-search="IsActive">
+                <option value="">{{ "campaigns.email.events.events.all" | translate }}</option>
+                <option value="true">{{ "campaigns.email.events.events.true" | translate }}</option>
+                <option value="false">{{ "campaigns.email.events.events.false" | translate }}</option>
+              </select>
+              <div class="center-text margin-top-bottom-7">
+                <div class="btn-group" role="group">
+                  <button type="button" class="btn btn-primary" ng-class="{active: !switchStatus.IsActive}" ng-click="switchStatus.IsActive=''">{{ "campaigns.email.events.events.all" | translate }}</button>
+                  <button type="button" class="btn btn-primary" ng-class="{active: switchStatus.IsActive=='true'}" ng-click="switchStatus.IsActive='true'">{{ "campaigns.email.events.events.active" | translate }}</button>
+                  <button type="button" class="btn btn-primary" ng-class="{active: switchStatus.IsActive=='false'}" ng-click="switchStatus.IsActive='false'">{{ "campaigns.email.events.events.inactive" | translate }}</button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div id="flip-scroll">
+            <table class="table table-striped">
+              <thead>
+                <tr class="TitleBars top-radius white">
+                  <th st-ratio="5" st-sort="id" class="cursor-pointer">{{ "campaigns.email.events.events.id" | translate }}</th>
+                  <th st-ratio="24" st-sort="Name" class="cursor-pointer">{{ "campaigns.email.events.events.name" | translate }}</th>
+                  <th st-ratio="15" st-sort="EventTypeName" class="cursor-pointer">{{ "campaigns.email.events.events.event-type-name" | translate }}</th>
+                  <th st-ratio="15" st-sort="SmtpServer" class="cursor-pointer">{{ "campaigns.email.events.events.smtp-server" | translate }}</th>
+                  <th st-ratio="24" st-sort="TemplateName" class="cursor-pointer">{{ "campaigns.email.events.events.template-name" | translate }}</th>
+                  <th st-ratio="5" st-sort="IsActive" class="cursor-pointer">{{ "campaigns.email.events.events.active" | translate }}</th>
+                  <th st-ratio="7">{{ "campaigns.email.events.events.actions" | translate }}</th>
+                </tr>
+              </thead>
+              <tbody>
+              <tr ng-repeat="row in events">
+                <td st-ratio="5" ng-bind="row.id"></td>
+                <td st-ratio="24" ng-bind="row.name"></td>
+                <td st-ratio="15" ng-bind="row.EventTypeName"></td>
+                <td st-ratio="15" ng-bind="row.SmtpServer"></td>
+                <td st-ratio="24" ng-bind="row.TemplateName"></td>
+                <td st-ratio="5" ng-bind="(row.IsActive ? 'Yes' : 'No')"></td>
+                <td st-ratio="7" class="center-text" style="width: 15%;">
+                  <a ng-click="addEditEvent(row)"><i class="fa fa-pencil"></i></a>
+                  <a ng-click="removeEvent(row)"><i class="fa fa-times"></i></a>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="center-text">
+            <div st-items-by-page="10" st-pagination="" class="ng-isolate-scope"></div>
+          </div>
+        </section>
+        <div class="alert alert-warning" role="alert" ng-hide="eventsSafe.length">{{ "campaigns.email.events.events.no-data" | translate }}</div>
+      </div>
+    </div>
+
+  </div>
+</div>

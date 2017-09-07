@@ -1,0 +1,202 @@
+<div class="portlet box blue">
+  <div crm-portlet-header="" options="portletHeader"></div>
+  <div class="portlet-body no-padding-bottom" style="display: block;">
+    <div class="row" >
+      <div class="col-md-4">
+        <div
+          ng-dropdown-multiselect=""
+          options="clientsData"
+          selected-model="clientsModel"
+          extra-settings="clientsSettings"
+          >
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div
+          ng-dropdown-multiselect=""
+          options="sitesData"
+          selected-model="sitesModel"
+          extra-settings="sitesSettings">
+        </div>
+      </div>
+      <div class="col-md-4 ">
+        <div class="well well-sm well-light bg-greyEEE no-margin">
+          <span class="block margin-bottom-20">{{ "directives.reports.selectclientsdates.selectclientsdatestpl.report-dates" | translate }}:</span>
+          <div class="row ">
+            <div class="col-md-12" style="margin-bottom:5px">
+              <div crm-date-picker options="options.fromDateOptions" value="value.fromDateValue"></div>
+              <div class="divider-vertical  margin-bottom-10"></div>
+              <div crm-date-picker options="options.toDateOptions" value="value.toDateValue"></div>
+            </div>
+          </div>
+        </div>
+        <div class="well well-sm well-light bg-greyEEE" style="margin-top: 15px;" ng-if="options.groupBy" >
+          <span class="block">{{ "directives.reports.selectclientsdates.selectclientsdatestpl.group-by" | translate }}</span>
+          <select class="form-control search-box whole-width" 
+              ng-model="value.groupBySelectValue"
+              ng-options="opt.sName as opt.name for opt in options.groupBySelectOptions">
+            <option ng-if="!value.groupBySelectValue" value=''>- {{ "directives.reports.selectclientsdates.selectclientsdatestpl.group-by" | translate }} -</option>
+          </select>
+        </div>
+        <p class="error-message" ng-show="showTimeframeError" style="position: absolute">{{ "directives.reports.selectclientsdates.selectclientsdatestpl.timeframe-can-not-exceed-90-days" | translate }}</p>
+
+        <div style="margin-top: 18px"></div>
+
+        <a ng-if="
+          !options.advancedSearch && 
+          sitesModel.length && 
+          value.fromDateValue && value.toDateValue && 
+          !showTimeframeError &&
+          (options.groupBy ? value.groupBySelectValue : true)"
+           href="javascript:;"
+           style="margin-top: 0;"
+           class="btn btn-success btn-lg search-box ApplyColor full-width" 
+           ng-click="search()"
+           ng-disabled="searching">
+          <i class="fa fa-arrow-right"></i>
+          {{ "directives.reports.selectclientsdates.selectclientsdatestpl.search" | translate }}
+        </a>
+        
+        <div ng-if="
+          (!sitesModel.length || !value.fromDateValue || !value.toDateValue) || 
+          (options.groupBy ? !value.groupBySelectValue : false)"
+             class="Metronic-alerts alert alert-warning font-size-15 center-text">
+          {{ "directives.reports.selectclientsdates.selectclientsdatestpl.please-select" | translate }} 
+          {{ options.groupBy ? 'Group By, ' : ''}} 
+          {{ "directives.reports.selectclientsdates.selectclientsdatestpl.site-and-dates" | translate }}
+        </div>
+        
+      </div>
+    </div>
+
+    <form name="transactionReportForm" ng-model="transactionReportForm">
+      <div ng-show="sitesModel.length && value.fromDateValue && value.toDateValue && options.advancedSearch">
+        <div class="well well-sm TitleBars margin-top-20">
+          <span class="block">{{ "directives.reports.selectclientsdates.selectclientsdatestpl.advanced-search-options" | translate }}:
+            <a href="javascript:;" class="showMore" ng-click="showAdvancedOptions()">
+              <i class="fa fa-sort-down" ng-if="!value.showAdvanced"></i>
+            </a>
+            <a href="javascript:;" class="showLess" ng-click="showAdvancedOptions()">
+              <i class="fa fa-sort-up" ng-if="value.showAdvanced"></i>
+            </a>
+          </span>
+        </div>
+        <div class="divider-vertical"></div>
+        <div class="row ngFlipX" ng-show="value.showAdvanced"  ng-animate="'animate'">
+          <!--<form name="transactionReportForm" ng-model="transactionReportForm">-->
+            <div class="col-md-4">
+
+              <div class="well well-sm well-light bg-greyEEE">
+                <span class="block">{{statusCheckBoxOptions.label}}</span>
+                <div style="padding-top: 13px;height: 49px;">
+                  <label class="margin-right-8" ng-click="statusCheckBoxValue=!statusCheckBoxValue;
+                         toggleAll('statusCheckBoxValue', statusCheckBoxOptions.data, 'id', statusCheckBoxValue)">
+                    <div class="checker">
+                      <span ng-class="{checked: statusCheckBoxValue || value.statusCheckBoxValue.length==3}"></span>
+                    </div> {{ "directives.reports.selectclientsdates.selectclientsdatestpl.all" | translate }}
+                  </label>
+                  <label class="margin-right-8" ng-repeat="obj in statusCheckBoxOptions.data" ng-click="toggle('statusCheckBoxValue', obj.id)">
+                    <div class="checker">
+                      <span ng-class="{checked: value.statusCheckBoxValue.indexOf(obj.id)>-1}"></span>
+                    </div> {{obj.name}}
+                  </label>
+                </div>
+              </div>
+
+              <div class="well well-sm well-light bg-greyEEE">
+                <span class="block">{{transactionTypeCheckBoxOptions.label}}</span>
+                <div style="padding-top: 13px;height: 49px;">
+                  <label class="margin-right-8" ng-click="transactionTypeCheckBoxValue=!transactionTypeCheckBoxValue;
+                         toggleAll('transactionTypeCheckBoxValue', transactionTypeCheckBoxOptions.data, 'id', transactionTypeCheckBoxValue)">
+                    <div class="checker">
+                      <span ng-class="{checked: transactionTypeCheckBoxValue || value.transactionTypeCheckBoxValue.length==4}"></span>
+                    </div> {{ "directives.reports.selectclientsdates.selectclientsdatestpl.all" | translate }}
+                  </label>
+                  <label class="margin-right-8" ng-repeat="obj in transactionTypeCheckBoxOptions.data" ng-click="toggle('transactionTypeCheckBoxValue', obj.id)">
+                    <div class="checker">
+                      <span ng-class="{checked: value.transactionTypeCheckBoxValue.indexOf(obj.id)>-1}"></span>
+                    </div> {{obj.name}}
+                  </label>
+                </div>
+              </div>
+
+              <div
+                crm-text-input=""
+                options="last4digitsTxtOptions"
+                value="value.last4digitsTxtValue">
+              </div>
+              <div
+                crm-text-input=""
+                options="processorIdTxtOptions"
+                value="value.processorIdTxtValue">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div
+                crm-text-input=""
+                options="affiliateIdTxtOptions"
+                value="value.affiliateIdTxtValue">
+              </div>
+              <div
+                crm-text-input=""
+                options="transactionIdTxtOptions"
+                value="value.transactionIdTxtValue">
+              </div>
+              <div
+                crm-text-input=""
+                options="customerIdTxtOptions"
+                value="value.customerIdTxtValue">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div
+                crm-text-input=""
+                options="lastNameTxtOptions"
+                value="value.lastNameTxtValue">
+              </div>
+              <div
+                crm-text-input=""
+                options="emailTxtOptions"
+                value="value.emailTxtValue">
+              </div>
+              <div class="well well-sm well-light  bg-greyEEE form-">
+                <span class="block full-width">{{amountTxtRangeOptions.label}}</span>
+                <div class="row margin-top-bottom-5">
+                  <div class="col-md-6">
+                    <div class="input-group">
+                      <span class="input-group-addon">$</span>
+                      <input type="number" placeholder="From" class="form-control left-side-no-radius" ng-model="value.amountTxtRangeValue[0]"
+                             name="amountTxtRangeValue_0"
+                             ng-min="0"
+                             ng-max="{{value.amountTxtRangeValue[1] || 0 }}"
+                             min="0"
+                             max="{{value.amountTxtRangeValue[1] || 0 }}"
+                             positive-number>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-group">
+                      <span class="input-group-addon">$</span>
+                      <input type="number" class="form-control left-side-no-radius" placeholder="To" ng-model="value.amountTxtRangeValue[1]" min="0" positive-number>
+                    </div>
+                  </div>
+                </div>
+                <p class="error-message" ng-show="transactionReportForm.amountTxtRangeValue_0.$invalid">{{ "directives.reports.selectclientsdates.selectclientsdatestpl.max-should-be-bigger-than-min" | translate }}</p>
+              </div>
+            </div>
+          <!--</form>-->
+        </div>
+      </div>
+      <div class="center-text">
+        <a ng-if="options.advancedSearch && sitesModel.length && value.fromDateValue && value.toDateValue"
+           href="javascript:;"
+           class="btn btn-success btn-lg ApplyColor margin-bottom-20"
+           ng-click="searchAdvanced(transactionReportForm)"
+           style="width: 300px">
+          <i class="fa fa-arrow-right"></i>
+          {{ "directives.reports.selectclientsdates.selectclientsdatestpl.search" | translate }}
+        </a>
+      </div>
+    </form>
+  </div>
+</div>

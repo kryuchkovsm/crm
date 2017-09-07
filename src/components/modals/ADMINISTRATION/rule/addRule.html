@@ -1,0 +1,98 @@
+<div class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a href="javascript:;" ng-click="close()"><i class="fa fa-times close"></i></a>
+        <h4 ng-if="!isEdit" class="modal-title">{{ "modals.administration.rule.addrule.add-new-rule" | translate }}</h4>
+        <h4 ng-if="isEdit" class="modal-title">{{ "modals.administration.rule.addrule.edit-rule" | translate }}</h4>
+      </div>
+
+      <!--Modal header end-->
+      <!--Modal body-->
+      <div class="modal-body">
+        <div class="row create-rule-container">
+          <div class="col-md-3 col-sm-6 col-xs-6">
+            <h3 style="border-bottom: 1px solid lightgrey" class="margin-bottom-10">
+              {{ "modals.administration.rule.addrule.processors" | translate }}
+            </h3>
+            <div class="checkbox-list" style="max-height: 300px; overflow: auto;">
+              <label ng-class="{'opacity-2': !processor.IsActive, 'cursor-pointer': processor.IsActive}" 
+                ng-repeat="processor in data.processors" ng-click="toggleProcessor(processor)">
+                <div class="checker">
+                  <span ng-class="{checked: (selectedProcessors | filterByField: {ProcessorID: processor.ProcessorID}).length>0}"></span>
+                </div> {{processor.ProcessorName}}
+              </label>
+            </div>
+          </div>
+          <div class="col-md-3 col-sm-6 col-xs-6">
+            <h3 style="border-bottom: 1px solid lightgrey" class="margin-bottom-10">
+              {{ "modals.administration.rule.addrule.charges" | translate }}
+            </h3>
+            <ul style="list-style-type: none;" class="no-padding">
+              <li class="weight-bold" ng-repeat="charge in data.charges">{{charge.Name}}</li>
+            </ul>
+          </div>
+          <div class="col-md-6 col-sm-12 col-xs-12">
+            <h3 style="border-bottom: 1px solid lightgrey" class="margin-bottom-10">
+              {{ "modals.administration.rule.addrule.rules" | translate }}
+            </h3>
+            <section ng-show="selectedProcessors.length>0">
+              <table st-table="selectedProcessors" st-safe-src="selectedProcessorsSafe" class="table table-stripped">
+                <thead>
+                  <tr class="TitleBars top-radius white">
+                    <th st-ratio="33" st-sort="ProcessorName" class="cursor-pointer">{{ "modals.administration.rule.addrule.processor-name" | translate }}</th>
+                    <th st-ratio="34">{{ "modals.administration.rule.addrule.load-percentage" | translate }}</th>
+                    <th st-ratio="33">{{ "modals.administration.rule.addrule.advanced-rules" | translate }}</th>
+                  </tr>
+                </thead>
+                <tbody style="max-height: 261px; overflow: auto;">
+                  <tr ng-repeat="processor in selectedProcessors">
+                    <td st-ratio="33">{{processor.ProcessorName}}</td>
+                    <td st-ratio="34"><input type="text" ng-model="processor.percentage" class="form-control" valid-number></td>
+                    <td st-ratio="33">
+                      <span ng-hide="(rules | filterByField: {ProcessorID: processor.ProcessorID}).length>0">{{ "modals.administration.rule.addrule.n/a-before-save" | translate }}</span>
+                      <a href="" ng-click="data.advancedRules((rules | filterByField: {ProcessorID: processor.ProcessorID})[0].ProcessorsAdvancedRuleID)" 
+                      ng-show="(rules | filterByField: {ProcessorID: processor.ProcessorID}).length>0">
+                        <i class="fa fa-pencil cursor-pointer"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="alert alert-warning alert-dismissible" role="alert" ng-show="commonPerc!=100">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                {{ "modals.administration.rule.addrule.total-load-%-must-be-equal-to-100" | translate }}. {{ "modals.administration.rule.addrule.currently" | translate }}: {{commonPerc || 0}}.
+              </div>
+              <div class="alert alert-success alert-dismissible" role="alert" ng-show="showSuccess">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                {{ "modals.administration.rule.addrule.successfully-updated!" | translate }}
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+      <!--Modal body end-->
+
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-md-offset-4 col-md-12">
+            <a href="javascript:;" class="btn btn-lg CancelColor col-md-2" ng-click="close()">
+              <i class="fa fa-rotate-left"></i>
+              {{ "modals.administration.rule.addrule.cancel" | translate }}
+            </a>
+            <a href="javascript:;" class="btn btn-lg ApplyColor col-md-2" 
+              ng-disabled="commonPerc!=100 || saving" 
+              ng-click="isEdit ? editRule() : save()">
+              <span ng-show="saving">{{ "modals.administration.rule.addrule.saving" | translate }}</span>
+              <span ng-hide="saving">
+                <i class="fa fa-arrow-right"></i>
+                {{ "modals.administration.rule.addrule.save" | translate }}
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

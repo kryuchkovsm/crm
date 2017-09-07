@@ -1,0 +1,267 @@
+<div class="row">
+  <div class="col-md-12">
+    <!-- BEGIN Portlet PORTLET1-->
+    <div class="portlet box blue">
+      <div crm-portlet-header options="portletHeader"></div>
+      <div class="portlet-body no-padding-bottom" style="display: block;">
+        <div class="row" >
+          <div class="col-md-4">
+            <div
+              ng-dropdown-multiselect
+              options="clientsData"
+              selected-model="clientsModel"
+              extra-settings="clientsSettings">
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div
+              ng-dropdown-multiselect=""
+              options="sitesData"
+              selected-model="sitesModel"
+              extra-settings="sitesSettings">
+            </div>
+          </div>
+          
+          <div class="col-md-4 ">
+            <div class="well well-sm well-light bg-greyEEE no-margin">
+              <span class="block margin-bottom-20">{{ "directives.reports.selectclientsdates.selectclientsdatestpl.report-dates" | translate }}:</span>
+              <div class="row ">
+                <div class="col-md-12 margin-bottom-20">
+                  <div crm-date-picker options="options.fromDateOptions" value="value.fromDateValue"></div>
+                  <div class="divider-vertical  margin-bottom-10"></div>
+                  <div crm-date-picker options="options.toDateOptions" value="value.toDateValue"></div>
+                </div>
+              </div>
+            </div>
+            
+            <a ng-if="sitesModel.length && value.fromDateValue && value.toDateValue && value.groupBySelectValue"
+               href="javascript:;"
+               class="btn btn-success btn-lg search-box ApplyColor full-width" style="margin-top: 24px;"
+               ng-click="search()"
+               ng-disabled="searching">
+              <i class="fa fa-arrow-right"></i>
+              {{ "directives.reports.selectclientsdates.selectclientsdatestpl.search" | translate }}
+            </a>
+            
+            <div class="Metronic-alerts alert alert-warning font-size-15 center-text" style="margin-top: 15px"
+              ng-if="!sitesModel.length || !value.fromDateValue || !value.toDateValue || !value.groupBySelectValue">
+              {{ "directives.reports.selectclientsdates.selectclientsdatestpl.groupby-site-and-dates" | translate }}
+            </div>
+          </div>
+        </div>
+        
+        <div class="row" >
+          <div class="col-md-4">
+            <div class="well well-sm well-light bg-greyEEE">
+              <span class="block">{{ "directives.reports.selectclientsdates.selectclientsdatestpl.group-by" | translate }}:</span>
+              <div>
+                <select class="form-control search-box whole-width" 
+                    ng-model="value.groupBySelectValue"
+                    ng-options="opt.sName as opt.name for opt in options.groupBySelectOptions">
+                  <option ng-if="!value.groupBySelectValue" value=''>- {{ "directives.reports.selectclientsdates.selectclientsdatestpl.group-by" | translate }} -</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="well well-sm well-light bg-greyEEE">
+              <span class="block">{{ "directives.reports.selectclientsdates.selectclientsdatestpl.signups-in-range" | translate }}:</span>
+              <div>
+                <label class="default" ng-click="value.signupFlag = !value.signupFlag"
+                  style="margin-top: 12px;font-size: 18px;margin-bottom: 12px;">
+                  <div class="checker">
+                    <span ng-class="{checked: value.signupFlag}"></span>
+                  </div> {{ "reports.billingreport.billingreport.s/u" | translate }}
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- END Portlet PORTLET1-->
+
+    <!-- BEGIN Portlet PORTLET2-->
+    <div class="portlet box"  ng-show="dataReady">
+      <div crm-portlet-header options="portletHeaderOptions2"></div>
+      <div class="portlet-body" style="display: block;">
+        <div class="row" >
+          <div class="col-md-4 margin-bottom-20">
+            <span class="block margin-bottom-20 text-FontColor center-text">{{ "reports.billingreport.billingreport.overall-activity" | translate }}</span>
+            <div crm-donutchart="" options="donutchartOptions"></div>
+          </div>
+          <div class="col-md-4 margin-bottom-20">
+            <span class="block margin-bottom-20 text-FontColor center-text">{{ "reports.billingreport.billingreport.signup-trends" | translate }}</span>
+            <div
+              ng-if="haveSignupData"
+              crm-dotted-linechart=""
+              options="dottedLinechartOptions1">
+            </div>
+            <div ng-if="!haveSignupData"
+                 class="Metronic-alerts alert alert-warning font-size-15 center-text" >
+              {{ "reports.billingreport.billingreport.no-data" | translate }}
+            </div>
+          </div>
+          <div class="col-md-4 margin-bottom-20">
+            <span class="block margin-bottom-20 text-FontColor center-text">{{ "reports.billingreport.billingreport.approval-trends" | translate }}</span>
+            <div
+              ng-if="haveApprovalData"
+              crm-dotted-linechart=""
+              options="dottedLinechartOptions2"
+              >
+            </div>
+            <div ng-if="!haveApprovalData"
+                 class="Metronic-alerts alert alert-warning font-size-15 center-text">
+              {{ "reports.billingreport.billingreport.no-data" | translate }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END Portlet PORTLET2-->
+    
+    <!-- BEGIN Portlet PORTLET3-->
+    <div class="portlet box"  ng-show="dataReady">
+      
+      <div crm-portlet-header options="portletHeaderOptions3"></div>
+      
+      <div class="portlet-body" style="display: block;">
+        <div ng-hide="tableObjSafe.length" class="Metronic-alerts alert alert-warning font-size-15 center-text">
+          {{ "reports.billingreport.billingreport.no-data" | translate }}
+        </div>
+        
+        <div st-table="tableObj" st-safe-src="tableObjSafe" ng-if="tableObjSafe.length">
+          <div class="row">
+            <div class="col-md-12 padding-left-right-3">
+              <div class="fixed-table-header">
+                <table class="table scrollable table-striped" heq="1" table-height="400" fixed-header arr="tableObj">
+                  <thead>
+                  <tr class="TitleBars top-radius white">
+                    <th class="cursor-pointer" colspan="1" st-sort="KeyID">{{keyID || 'Offer'}} {{ "reports.billingreport.billingreport.id" | translate }}</th>
+                    <th class="cursor-pointer" colspan="1" st-sort="KeyName"
+                      ng-if="tableObjSafe[0].KeyName">{{ "reports.billingreport.billingreport.name" | translate }}</th>
+                    <th class="cursor-pointer" colspan="1" st-sort="SignUps">S/U</th>
+                    <th colspan="2">{{ "reports.billingreport.billingreport.active-signups" | translate }}</th>
+                    <th colspan="2">{{ "reports.billingreport.billingreport.recurring-attempt" | translate }}</th>
+                    <th colspan="3">{{ "reports.billingreport.billingreport.recurring-approved" | translate }}</th>
+                    <th colspan="2">{{ "reports.billingreport.billingreport.recurring-declined" | translate }}</th>
+                    <th colspan="3">{{ "reports.billingreport.billingreport.recurring-refunds" | translate }}</th>
+                    <th colspan="2">{{ "reports.billingreport.billingreport.disputes" | translate }}</th>
+                    <th colspan="1" st-sort="IncomePerCustomer" class="cursor-pointer">{{ "reports.billingreport.billingreport.inc/cust" | translate }}</th>
+                  </tr>
+                  <tr class="TitleBars white">
+                    <th>&nbsp;</th>
+                    <th ng-show="tableObjSafe[0].KeyName"></th>
+                    <th>&nbsp;</th>
+
+                    <th st-sort="ActiveSignups" class="cursor-pointer">#</th>
+                    <th st-sort="ActiveSignUpPercent" class="cursor-pointer">%</th>
+
+                    <th st-sort="RecurringAttempts" class="cursor-pointer">#</th>
+                    <th st-sort="RecurringAttemptDollars" class="cursor-pointer">$</th>
+
+                    <th st-sort="RecurringApproved" class="cursor-pointer">#</th>
+                    <th st-sort="RecurringApprovedDollars" class="cursor-pointer">$</th>
+                    <th st-sort="RecurringApprovedPercent" class="cursor-pointer">%</th>
+
+                    <th st-sort="RecurringDeclined" class="cursor-pointer">#</th>
+                    <th st-sort="RecurringDeclinedDollars" class="cursor-pointer">$</th>
+
+                    <th st-sort="RecurringRefunds" class="cursor-pointer">#</th>
+                    <th st-sort="RecurringRefundsDollars" class="cursor-pointer">$</th>
+                    <th st-sort="RecurringRefundsPercent" class="cursor-pointer">%</th>
+
+                    <th st-sort="Disputes" class="cursor-pointer">#</th>
+                    <th st-sort="DisputesPercent" class="cursor-pointer">%</th>
+
+                    <th>&nbsp;</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr ng-repeat="row in tableObj">
+                    <td>
+                      <span ng-show="false">{{row.KeyName}} {{row.KeyName == true}}</span>
+                      <span ng-if="keyID!='Affiliate'">{{row.KeyID}}</span>
+                      <a ng-if="keyID=='Affiliate'" ng-click="showSummaryDetails({ 'KeyID': row.KeyID, Column: 'affiliate' } )">{{row.KeyID}}</a>
+                    </td>
+                    
+                    <td nowrap ng-if="row.KeyName && value.groupBySelectValue == 'offer'">
+                      <a href="{{row.DomainURL}}" target="_blank">{{row.KeyName}}</a>
+                    </td>
+                    
+                    <td nowrap ng-if="row.KeyName && value.groupBySelectValue != 'offer'">
+                      {{row.KeyName}}
+                    </td>
+
+                    <td>
+                      <a ng-click="showSummaryDetails({ 'KeyID': row.KeyID, Column: 'signups' } )">{{row.SignUps}}</a>
+                    </td>
+                    
+                    <td>
+                      <a ng-click="showSummaryDetails({ 'KeyID': row.KeyID, Column: 'activesignups' } )">{{row.ActiveSignups}}</a></td>
+                    
+                    <td ng-init="normPercents(row.KeyID, 'ActiveSignUpPercent')">{{row.ActiveSignUpPercent}}</td>
+                    <td>
+                      <a ng-click="showSummaryDetails({ 'KeyID': row.KeyID, Column: 'recurringattempts' })">{{row.RecurringAttempts}}</a></td>
+                    
+                    <td ng-init="normCurrency(row.KeyID, 'RecurringAttemptDollars')">{{row.RecurringAttemptDollars}}</td>
+                    
+                    <td>
+                      <a ng-click="showSummaryDetails({ 'KeyID': row.KeyID, Column: 'recurringapproved' } )">{{row.RecurringApproved}}</a></td>
+                    
+                    <td ng-init="normCurrency(row.KeyID, 'RecurringApprovedDollars')">{{row.RecurringApprovedDollars}}</td>
+                    <td ng-init="normPercents(row.KeyID, 'RecurringApprovedPercent')">{{row.RecurringApprovedPercent}}</td>
+                    
+                    <td>
+                      <a ng-click="showSummaryDetails({ 'KeyID': row.KeyID, Column: 'recurringdeclined' } )">{{row.RecurringDeclined}}</a></td>
+                    
+                    <td ng-init="normCurrency(row.KeyID, 'RecurringDeclinedDollars')">{{row.RecurringDeclinedDollars}}</td>
+                    
+                    <td>
+                      <a ng-click="showSummaryDetails({ 'KeyID': row.KeyID, Column: 'recurringrefunds' } )">{{row.RecurringRefunds}}</a></td>
+                    
+                    <td ng-init="normCurrency(row.KeyID, 'RecurringRefundsDollars')">{{row.RecurringRefundsDollars}}</td>
+                    <td ng-init="normPercents(row.KeyID, 'RecurringRefundsPercent')">{{row.RecurringRefundsPercent}}</td>
+                    
+                    <td>
+                      <a ng-click="showSummaryDetails({ 'KeyID': row.KeyID, Column: 'disputes' } )">{{row.Disputes}}</a></td>
+                    
+                    <td ng-init="normPercents(row.KeyID, 'DisputesPercent')">{{row.DisputesPercent}}</td>
+                    <td ng-init="normCurrency(row.KeyID, 'IncomePerCustomer')">{{row.IncomePerCustomer}}</td>
+                  </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td class="TitleBars white"><b>Totals: </b></td>
+                      <td class="TitleBars white" ng-show="tableObjSafe[0].KeyName"></td>
+                      <td class="TitleBars white">{{gridTotal['SignUps']}}</td>
+                      <td class="TitleBars white">{{gridTotal['ActiveSignups']}}</td>
+                      <td class="TitleBars white"></td>
+                      <td class="TitleBars white">{{gridTotal['RecurringAttempts']}}</td>
+                      <td class="TitleBars white">{{gridTotal['RecurringAttemptDollars']}}</td>
+                      <td class="TitleBars white">{{gridTotal['RecurringApproved']}}</td>
+                      <td class="TitleBars white">{{gridTotal['RecurringApprovedDollars']}}</td>
+                      <td class="TitleBars white"></td>
+                      <td class="TitleBars white">{{gridTotal['RecurringDeclined']}}</td>
+                      <td class="TitleBars white">{{gridTotal['RecurringDeclinedDollars']}}</td>
+                      <td class="TitleBars white">{{gridTotal['RecurringRefunds']}}</td>
+                      <td class="TitleBars white">{{gridTotal['RecurringRefundsDollars']}}</td>
+                      <td class="TitleBars white"></td>
+                      <td class="TitleBars white">{{gridTotal['Disputes']}}</td>
+                      <td class="TitleBars white"></td>
+                      <td class="TitleBars white"></td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END Portlet PORTLET3-->
+  </div>
+</div>

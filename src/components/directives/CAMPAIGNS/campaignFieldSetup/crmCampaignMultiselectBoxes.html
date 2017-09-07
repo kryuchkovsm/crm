@@ -1,0 +1,20 @@
+<div class="countries-selector">
+  <div class="row">
+    <div class="col-md-5 col-sm-5 col-xs-5 col-mobile">
+      <select ng-options="item as item.name for item in defaultSelectedArr|orderBy:'id'" ng-model="leftSelected" multiple></select>
+    </div>
+    <div class="col-md-2 col-sm-2 col-xs-2 col-mobile">
+      <div class="middle-buttons">
+        <div class="top-button-container">
+          <i class="fa fa-chevron-circle-right" ng-click="addSelected(leftSelected)"></i>
+        </div>
+        <div class="bottom-button-container">
+          <i class="fa fa-chevron-circle-left" ng-click="removeSelected(rightSelected)"></i>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5 col-sm-5 col-xs-5 col-mobile">
+      <select ng-options="item as item.name for item in selectedArr" ng-model="rightSelected" multiple></select>
+    </div>
+  </div>
+</div>

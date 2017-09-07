@@ -1,0 +1,463 @@
+<div class="modal fade" xmlns="http://www.w3.org/1999/html">
+  <div class="modal-dialog">
+    <div class="modal-content modal-middle-width">
+      <!--Modal header-->
+      <div class="modal-header no-padding no-border">
+        <a href="javascript:;" ng-click="changeTab('clientInfo')">
+          <div class="header-button ActiveElementHoverColor" ng-class="clientInfo"  style="width: 31%; margin-right: 2px;">
+            {{ "modals.administration.client.editclient.information" | translate }}
+          </div>
+        </a>
+        <a href="javascript:;" ng-click="changeTab('apiTab')">
+          <div class="header-button ActiveElementHoverColor" ng-class="apiTab" style="width: 31%; margin-right: 2px;">
+            {{ "modals.administration.client.editclient.api" | translate }}
+          </div>
+        </a>
+        <a href="javascript:;" ng-click="changeTab('clientDetails')">
+          <div class="header-button ActiveElementHoverColor" ng-class="clientDetails"  style="width: 31%;">
+            {{ "modals.administration.client.editclient.details" | translate }}
+          </div>
+        </a>
+      </div>
+      <!--Modal header end-->
+
+      <!--Modal body-->
+      <div class="modal-body">
+        <!--First tab-->
+        <div class="center-text" ng-show="saving">
+          <div class="cssload-loader" style="margin-top: 10%">...{{ "modals.administration.client.editclient.saving" | translate }}...</div>
+        </div>
+        <section ng-class="{'opacity-2': saving}" class="row">
+          <div class="col-md-12" ng-show="clientInfo">
+            <div class="row">
+              <form name="editClientForm" ng-model="editClientForm">
+                <div class="col-md-6">
+                  <div
+                    crm-text-input=""
+                    options="fieldOptions1.companynameTxtOptions"
+                    value="fields1.companynameTxtValue"
+                    >
+                  </div>
+                  <div
+                    crm-text-input=""
+                    options="fieldOptions1.firstnameTxtOptions"
+                    value="fields1.firstnameTxtValue"
+                    >
+                  </div>
+                  <div
+                    crm-text-input=""
+                    options="fieldOptions1.lastnameTxtOptions"
+                    value="fields1.lastnameTxtValue"
+                    >
+                  </div>
+                  <!--<div crm-text-input="" options="fieldOptions1.primaryContactTxtOptions" value="fields1.primaryContactTxtValue">-->
+                  <!--</div>-->
+                  <div
+                    crm-text-input=""
+                    options="fieldOptions1.emailTxtOptions"
+                    value="fields1.emailTxtValue"
+                    >
+                  </div>
+                  <div
+                    crm-text-input=""
+                    options="fieldOptions1.cityTxtOptions"
+                    value="fields1.cityTxtValue"
+                    >
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div
+                    crm-text-input=""
+                    options="fieldOptions1.phoneTxtOptions"
+                    value="fields1.phoneTxtValue"
+                    >
+                  </div>
+                  <div
+                    crm-text-input=""
+                    options="fieldOptions1.address1TxtOptions"
+                    value="fields1.address1TxtValue"
+                    >
+                  </div>
+                  <div
+                    crm-text-input=""
+                    options="fieldOptions1.address2TxtOptions"
+                    value="fields1.address2TxtValue"
+                    >
+                  </div>
+                  <div
+                    crm-text-input=""
+                    options="fieldOptions1.stateTxtOptions"
+                    value="fields1.stateTxtValue"
+                    >
+                  </div>
+                  <div
+                    crm-text-input=""
+                    options="fieldOptions1.zipTxtOptions"
+                    value="fields1.zipTxtValue"
+                    >
+                  </div>
+                  <div
+                    crm-radio-list=""
+                    options="fieldOptions1.activeRLOptions"
+                    value="fields1.activeRLValue">
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!--Second tab-->
+          <div class="col-md-12" ng-show="apiTab">
+              <!--Api-->
+              <div class="well well-sm TitleBars">
+                <span class="block">{{ "modals.administration.client.editclient.api-credentials" | translate }}:</span>
+              </div>
+              <div class="row">
+                <form name="apiForm" ng-model="apiForm">
+                  <div class="col-md-6">
+                    <div
+                      crm-text-input=""
+                      options="fieldOptions3.loginTxtOptions"
+                      value="fields3.loginTxtValue"
+                      >
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div
+                      crm-text-input=""
+                      options="fieldOptions3.passwordTxtOptions"
+                      value="fields3.passwordTxtValue"
+                      >
+                    </div>
+                  </div>
+                </form>
+              </div>
+          </div>
+
+          <!--Third tab-->
+          <div class="col-md-12" ng-show="clientDetails">
+            <div class="row no-margin">
+              <form name="detailsForm" ng-model="detailsForm">
+              <div class="well well-sm TitleBars">
+                <span class="block">{{ "modals.administration.client.editclient.client-details" | translate }}:</span>
+              </div>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div
+                      crm-text-input=""
+                      options="fieldOptions4.dateCreatedNoEditTxtOptions"
+                      value="fields4.dateCreatedNoEditTxtValue"
+                      >
+                    </div>
+                    <div
+                      crm-text-input=""
+                      options="fieldOptions4.dateEditedNoEditTxtOptions"
+                      value="fields4.dateEditedNoEditTxtValue"
+                      >
+                    </div>
+                    <div
+                      crm-text-input=""
+                      options="fieldOptions4.termsTxtOptions"
+                      value="fields4.termsTxtValue"
+                      >
+                    </div>
+                    <div
+                      crm-text-input=""
+                      options="fieldOptions4.paymentMethodTxtOptions"
+                      value="fields4.paymentMethodTxtValue"
+                      >
+                    </div>
+                    <div
+                      crm-text-input=""
+                      options="fieldOptions4.accountNumberTxtOptions"
+                      value="fields4.accountNumberTxtValue"
+                      >
+                    </div>
+                    <div
+                      crm-text-input=""
+                      options="fieldOptions4.routingNumberTxtOptions"
+                      value="fields4.routingNumberTxtValue"
+                      >
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div
+                      crm-text-input=""
+                      options="fieldOptions4.licenseFeeTxtOptions"
+                      value="fields4.licenseFeeTxtValue"
+                      >
+                    </div>
+                    <div
+                      crm-text-input=""
+                      options="fieldOptions4.transactionFeeTxtOptions"
+                      value="fields4.transactionFeeTxtValue"
+                      >
+                    </div>
+                    <div
+                      crm-text-input=""
+                      options="fieldOptions4.siteSetupFeeTxtOptions"
+                      value="fields4.siteSetupFeeTxtValue"
+                      >
+                    </div>
+                    <div
+                      crm-text-input=""
+                      options="fieldOptions4.programmingFeeTxtOptions"
+                      value="fields4.programmingFeeTxtValue"
+                      >
+                    </div>
+                    <div
+                      crm-text-input=""
+                      options="fieldOptions4.clickFeeTxtOptions"
+                      value="fields4.clickFeeTxtValue"
+                      >
+                    </div>
+                    <div
+                      crm-text-input=""
+                      options="fieldOptions4.referralSourceTxtOptions"
+                      value="fields4.referralSourceTxtValue"
+                      >
+                    </div>
+
+                    <!--<div-->
+                      <!--crm-text-input=""-->
+                      <!--options="fieldOptions4.otherFee2TxtOptions"-->
+                      <!--value="fields4.otherFee2TxtValue">-->
+                    <!--</div>-->
+                  </div>
+                  <div class="col-md-4">
+                    <div
+                      crm-date-picker=""
+                      options="fieldOptions4.expirationDateOptions"
+                      value="fields4.expirationDateValue"
+                      >
+                    </div>
+                    <div
+                      crm-text-input=""
+                      options="fieldOptions4.accountManagerTxtOptions"
+                      value="fields4.accountManagerTxtValue"
+                      >
+                    </div>
+                    <div
+                      crm-text-input=""
+                      options="fieldOptions4.fraudFeeTxtOptions"
+                      value="fields4.fraudFeeTxtValue"
+                      >
+                    </div>
+                    <div
+                      crm-text-input=""
+                      options="fieldOptions4.bandwidthFeeTxtOptions"
+                      value="fields4.bandwidthFeeTxtValue"
+                      >
+                    </div>
+                    <div
+                      crm-text-input=""
+                      options="fieldOptions4.otherFee1TxtOptions"
+                      value="fields4.otherFee1TxtValue"
+                      >
+                    </div>
+                    <div
+                      crm-select=""
+                      options="fieldOptions4.countrySelectOptions"
+                      value="fields4.countrySelectValue"
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="well well-sm TitleBars">
+                  <span class="block">{{ "modals.administration.client.editclient.services" | translate }}:</span>
+                </div>
+                <div class="row margin-bottom-20">
+                  <div class="col-md-6">
+                    <div
+                      crm-checkbox=""
+                      options="fieldOptions4.services1CheckboxOptions"
+                      value="fields4.crmCheckboxValue">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div
+                      crm-checkbox=""
+                      options="fieldOptions4.services2CheckboxOptions"
+                      value="fields4.crmCheckboxValue">
+                    </div>
+                  </div>
+                </div>
+                <div class="well well-sm TitleBars">
+                  <span class="block">{{ "modals.administration.client.editclient.contacts" | translate }}:</span>
+                </div>
+                <div class="row no-margin">
+                  <div class="font-sans-serif size-15 weight-bold inline margin-bottom-right-20">
+                    {{ "modals.administration.client.editclient.primary" | translate }}:
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div
+                        crm-text-input=""
+                        options="fieldOptions4.primaryNameTxtOptions"
+                        value="fields4.primaryNameTxtValue"
+                        >
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div
+                        crm-text-input=""
+                        options="fieldOptions4.primaryEmailTxtOptions"
+                        value="fields4.primaryEmailTxtValue"
+                        >
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div
+                        crm-text-input=""
+                        options="fieldOptions4.primaryPhoneTxtOptions"
+                        value="fields4.primaryPhoneTxtValue"
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <div class="font-sans-serif size-15 weight-bold inline margin-bottom-right-20">
+                    {{ "modals.administration.client.editclient.technical" | translate }}:
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div
+                        crm-text-input=""
+                        options="fieldOptions4.technicalNameTxtOptions"
+                        value="fields4.technicalNameTxtValue"
+                        >
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div
+                        crm-text-input=""
+                        options="fieldOptions4.technicalEmailTxtOptions"
+                        value="fields4.technicalEmailTxtValue"
+                        >
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div
+                        crm-text-input=""
+                        options="fieldOptions4.technicalPhoneTxtOptions"
+                        value="fields4.technicalPhoneTxtValue"
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <div class="font-sans-serif size-15 weight-bold inline margin-bottom-right-20">
+                    {{ "modals.administration.client.editclient.billing" | translate }}:
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div
+                        crm-text-input=""
+                        options="fieldOptions4.billingNameTxtOptions"
+                        value="fields4.billingNameTxtValue"
+                        >
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div
+                        crm-text-input=""
+                        options="fieldOptions4.billingEmailTxtOptions"
+                        value="fields4.billingEmailTxtValue"
+                        >
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div
+                        crm-text-input=""
+                        options="fieldOptions4.billingPhoneTxtOptions"
+                        value="fields4.billingPhoneTxtValue"
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <div class="font-sans-serif size-15 weight-bold inline margin-bottom-right-20">
+                    {{ "modals.administration.client.editclient.admin" | translate }}:
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div
+                        crm-text-input=""
+                        options="fieldOptions4.adminNameTxtOptions"
+                        value="fields4.adminNameTxtValue"
+                        >
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div
+                        crm-text-input=""
+                        options="fieldOptions4.adminEmailTxtOptions"
+                        value="fields4.adminEmailTxtValue"
+                        >
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div
+                        crm-text-input=""
+                        options="fieldOptions4.adminPhoneTxtOptions"
+                        value="fields4.adminPhoneTxtValue"
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <div class="font-sans-serif size-15 weight-bold inline margin-bottom-right-20">
+                    {{ "modals.administration.client.editclient.ops" | translate }}:
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div
+                        crm-text-input=""
+                        options="fieldOptions4.opsNameTxtOptions"
+                        value="fields4.opsNameTxtValue"
+                        >
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div
+                        crm-text-input=""
+                        options="fieldOptions4.opsEmailTxtOptions"
+                        value="fields4.opsEmailTxtValue"
+                        >
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div
+                        crm-text-input=""
+                        options="fieldOptions4.opsPhoneTxtOptions"
+                        value="fields4.opsPhoneTxtValue"
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+        <div class="alert alert-info center-text" role="alert" ng-show="saving">
+          ...{{ "modals.administration.client.editclient.saving" | translate }}...
+        </div>
+      </div>
+      <!--Modal body end-->
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-md-6">
+            <a href="javascript:;" class="btn btn-lg CancelColor full-width" ng-click="close()" data-dismiss="modal">
+              <i class="fa fa-times"></i>
+              {{ "modals.administration.client.editclient.cancel" | translate }}
+            </a>
+          </div>
+          <div class="col-md-6">
+            <a href="javascript:;" class="btn btn-lg ApplyColor full-width" ng-click="save()" ng-disabled="saving">
+              <i class="fa fa-arrow-right"></i>
+              {{ "modals.administration.client.editclient.save" | translate }}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

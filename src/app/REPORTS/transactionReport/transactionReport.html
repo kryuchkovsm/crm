@@ -1,0 +1,170 @@
+<div class="row">
+  <div class="col-md-12">
+    <!-- BEGIN Portlet PORTLET1-->
+    <div
+      id="search-container"
+      crm-select-clients-dates=""
+      options="clientDatesOptions"
+      value="clientDatesValue"
+      searchf="search()"
+      >
+    </div>
+    <!-- END Portlet PORTLET1-->
+
+    <div id="bottom"></div>
+
+    <div ng-show="dataReady == 'No' && tableObj && !tableObj.length"
+         class="Metronic-alerts alert alert-warning font-size-15 margin-top-32 center-text"
+      >
+      {{ "reports.transactionreport.transactionreport.no-data.-please-select-different-query-parameters." | translate }}
+    </div>
+    <!-- BEGIN Portlet PORTLET2-->
+    <div class="portlet box" ng-show="dataReady && tableObjSafe.length">
+      <div
+        crm-portlet-header=""
+        options="portletHeaderOptions2"
+        >
+      </div>
+      <div class="portlet-body" style="display: block;">
+          <div class="tablePortletButtons">
+            <a
+              href="javascript:;"
+              ng-csv="exportToExcel(keysHeader)"
+              filename="export.csv"
+              csv-header="exportToExcel(keysHeader,true)">
+              <i class="fa fa-file-excel-o"></i>
+            </a>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <a
+                href="javascript:;"
+                ng-csv="exportToExcel(keysHeader)"
+                filename="export.csv"
+                csv-header="exportToExcel(keysHeader,true)"
+                class="btn btn-lg ApplyColor pull-left margin-bottom-20"
+                >
+                <i class="fa fa-arrow-down"></i>
+                {{ "reports.transactionreport.transactionreport.download-data-as-csv" | translate }}
+              </a>
+              <a ng-show="clientDatesValue.showAdvanced"
+                href="javascript:;"
+                class="btn btn-lg CancelColor pull-right margin-bottom-20"
+                ng-click="hideSearchFields()"
+                >
+                <i class="fa fa-times"></i>
+                {{ "reports.transactionreport.transactionreport.hide-search-fields" | translate }}
+              </a>
+            </div>
+          </div>
+          <div class="row" ng-if="tableObjSafe.length" st-table="tableObj" st-safe-src="tableObjSafe">
+            <div class="col-md-12">
+              <div class="fixed-table-header">
+                <table class="table scrollable table-striped" table-height="400" fixed-header arr="tableObj">
+                  <thead>
+                    <tr class="TitleBars top-radius white">
+                      <th st-ratio="3"></th>
+                      <th st-ratio="8" st-sort="Status" class="cursor-pointer">{{ "reports.transactionreport.transactionreport.status" | translate }}</th>
+                      <th st-ratio="11" st-sort="TransactionID" class="cursor-pointer">{{ "reports.transactionreport.transactionreport.trans.id" | translate }}</th>
+                      <th st-ratio="11" st-sort="CustomerID" class="cursor-pointer">{{ "reports.transactionreport.transactionreport.customer-id" | translate }}</th>
+                      <th st-ratio="11" st-sort="FirstName" class="cursor-pointer">{{ "reports.transactionreport.transactionreport.customer" | translate }}</th>
+                      <th st-ratio="11" st-sort="Details" class="cursor-pointer">{{ "reports.transactionreport.transactionreport.details" | translate }}</th>
+                      <th st-ratio="10" st-sort="Processor" class="cursor-pointer">{{ "reports.transactionreport.transactionreport.processor" | translate }}</th>
+                      <th st-ratio="10" st-sort="AffiliateID" class="cursor-pointer">{{ "reports.transactionreport.transactionreport.affiliate" | translate }}</th>
+                      <th st-ratio="9" st-sort="Time" class="cursor-pointer">{{ "reports.transactionreport.transactionreport.date" | translate }}</th>
+                      <th st-ratio="6" st-sort="Amount" class="cursor-pointer">{{ "reports.transactionreport.transactionreport.amount" | translate }}</th>
+                      <!--<th st-ratio="4">CB</th>-->
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat-start="row in tableObj">
+                      <td st-ratio="3">
+                        <a ng-show="!row.expanded" href="javascript:;" ng-click="expandRow(row, true)">
+                          <i class="fa fa-plus-circle"></i>
+                        </a>
+                        <a ng-show="row.expanded" href="javascript:;" ng-click="expandRow(row, false)">
+                          <i class="fa fa-minus-circle"></i>
+                        </a>
+                      </td>
+                      <td st-ratio="8">
+                        {{::row.TransactionType}} <br />
+                        {{::row.Status}} 
+                      </td>
+                      <td st-ratio="9" ng-bind="row.TransactionID"></td>
+                      <td st-ratio="11">
+                        <a href="javascript:;" ng-click="goToCustomer( row.CustomerGUID )">
+                          {{::row.CustomerID}}
+                        </a>
+                      </td>
+                      <td st-ratio="11">
+                        {{::row.FirstName}} {{::row.LastName}} <br />
+                        <a href="mailto:{{::row.CustomerEmail}}" class="font-size-11">
+                          {{::row.CustomerEmail}}
+                        </a>
+                      </td>
+                      <td st-ratio="10" ng-bind="row.Details"></td>
+                      <td st-ratio="10" ng-bind="row.Processor"></td>
+                      <td st-ratio="10" ng-bind="row.AffiliateID"></td>
+                      <td st-ratio="9" ng-bind="toDateFormat(row.Time * 1000)"></td>
+                      <td st-ratio="6" ng-bind="row.Amount"></td>
+                    </tr>
+                    <tr ng-repeat-end ng-if="row.expanded">
+                      <td st-ratio="100" colspan="11">
+                        <div class="row">
+                          <div class="col-md-3 col-sm-3 col-xs-3">
+                            <b>{{ "reports.transactionreport.transactionreport.transaction-details" | translate }}:</b>                     <br />
+                            {{ "reports.transactionreport.transactionreport.merchant" | translate }}: {{::row.Merchant}}                    <br />
+                            {{ "reports.transactionreport.transactionreport.date/time" | translate }}: {{toDateFormat(row.Time * 1000)}}  <br />
+                            {{ "reports.transactionreport.transactionreport.transaction-id" | translate }}: {{::row.TransactionID}}         <br />
+                            {{ "reports.transactionreport.transactionreport.transaction-type" | translate }}: {{::row.TransactionType}}     <br />
+                            {{ "reports.transactionreport.transactionreport.status" | translate }}: {{row.Status}}                          <br />
+                          </div>
+                          <div class="col-md-3 col-sm-3 col-xs-3">
+                            <b>{{ "reports.transactionreport.transactionreport.credit-card-info" | translate }}:</b>                        <br />
+                            {{ "reports.transactionreport.transactionreport.cc-type" | translate }}: {{::row.CCType}}                       <br />
+                            {{ "reports.transactionreport.transactionreport.cc-no.-(last-4)" | translate }}: {{::row.CCNumber}}             <br />
+                            {{ "reports.transactionreport.transactionreport.cc-expiration" | translate }}: {{::row.CCExpiration}}           <br />
+                            {{ "reports.transactionreport.transactionreport.avs-status" | translate }}: {{::row.AVSStatus}}                 <br />
+                            {{ "reports.transactionreport.transactionreport.cvv-status" | translate }}: {{::row.CVVStatus}}                 <br />
+                            {{ "reports.transactionreport.transactionreport.processor" | translate }}: {{::row.Processor}}                  <br />
+                            {{ "reports.transactionreport.transactionreport.currency" | translate }}: {{::row.Currency}}
+                          </div>
+                          <div class="col-md-3 col-sm-3 col-xs-3">
+                            <b>{{ "reports.transactionreport.transactionreport.customer-info" | translate }}:</b>                           <br />
+                            {{ "reports.transactionreport.transactionreport.customer-id" | translate }}: {{::row.CustomerID}}                <br />
+                            {{ "reports.transactionreport.transactionreport.name" | translate }}: {{::row.FirstName}} {{::row.LastName}}    <br />
+                            {{ "reports.transactionreport.transactionreport.email" | translate }}: <a href="mailto:{{::row.CustomerEmail}}"
+                                      class="font-size-11"
+                                    >
+                                     {{::row.CustomerEmail}}
+                                   </a>                                     <br />
+                            {{ "reports.transactionreport.transactionreport.customer-billing-phone" | translate }}: {{::row.TransactionType}} <br />
+                            {{ "reports.transactionreport.transactionreport.address" | translate }}: {{row.Address1}} {{row.Address2}}      <br />
+                            {{ "reports.transactionreport.transactionreport.affiliate-id" | translate }}: {{::row.AffiliateID}}             <br />
+                            {{ "reports.transactionreport.transactionreport.affiliate-subid" | translate }}: {{row.AffiliateSubID}}         <br />
+                          </div>
+                          <div class="col-md-3 col-sm-3 col-xs-3">
+                            <b>{{ "reports.transactionreport.transactionreport.order-info" | translate }}:</b>                              <br />
+                            {{ "reports.transactionreport.transactionreport.order-id" | translate }}: {{::row.OrderID}}                     <br />
+                            {{ "reports.transactionreport.transactionreport.order-description" | translate }}: {{::row.OrderDescription}}   <br />
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr class="TitleBars top-radius white">
+                      <th colspan="9">Total Records: {{tableObjSafe.length}}</th>
+                      <th>Total: {{ AmountTotal }}</th>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+    <!-- END Portlet PORTLET2-->
+  </div>
+</div>

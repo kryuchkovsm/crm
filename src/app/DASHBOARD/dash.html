@@ -1,0 +1,321 @@
+<div class="row" >
+  <div class="col-md-12">
+    <div class="alert alert-info margin-top-20" role="alert" ng-show="noData">
+      <h3 class="center-text">
+        {{ "dashboard.dash.no-data" | translate }}
+      </h3>
+    </div>
+    <section ng-if="dataReady">
+    <!-- 1st -->
+    <!-- BEGIN Portlet PORTLET-->
+    <div class="portlet box">
+      <div class="portlet-title ThemeColor">
+        <ul class="dashboard-section-header">
+          <li class="mobile-full-width percents-20 ">
+            <span class="caption">{{ "dashboard.dash.conversion-viewer" | translate }}</span>
+          </li>
+          <li class="mobile-full-width percents-20 padding-left-5">
+            <div crm-date-picker options="fromDateOptions" value="fields.fromDateValue1" class="margin-top-2"></div>
+          </li>
+          <li class="mobile-full-width percents-20 padding-left-5">
+            <div crm-date-picker options="toDateOptions" value="fields.toDateValue1" class="margin-top-2"></div>
+          </li>
+          <li ng-if="(authSections | searchAuthSection: {RouteName: 'main.conversionreport'})" class="mobile-full-width percents-40">
+            <div href="javascript:;" ng-click="goToPage('conversionreport')" class="mobile-full-width portlet-button">
+              <i class="fa fa-arrow-right"></i>
+              <span>{{ "dashboard.dash.view-full-conversion-report" | translate }}</span>
+            </div>
+          </li>
+        </ul>
+
+      </div>
+      <div class="portlet-body" style="display: block;">
+        <img ng-src="/assets/images/chart-preloader.gif" class="chart-preloader" ng-show="loadingSection.Conversions">
+        <div style="min-height: 250px;width:100%" ng-class="{'opacity-2': loadingSection.Conversions}">
+          <div class="row margin-bottom-20">
+            <div class="col-md-6 initial">
+              <!-- BEGIN CHART-->
+              <div ng-if="dottedLinechartOptions1" crm-dotted-linechart options="dottedLinechartOptions1"></div>
+              <!-- END CHART-->
+            </div>
+            <div class="col-md-3 initial">
+              <!-- BEGIN CHART-->
+              <div ng-if="linechartOptions1" crm-linechart options="linechartOptions1"></div>
+              <!-- END CHART-->
+            </div>
+            <div class="col-md-3 initial">
+              <!-- BEGIN CHART-->
+              <div ng-if="linechartOptions3" crm-linechart options="linechartOptions3"></div>
+              <!-- END CHART-->
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 initial">
+              <!-- BEGIN CHART-->
+              <div ng-if="linechartOptions2" crm-linechart options="linechartOptions2"></div>
+              <!-- END CHART-->
+            </div>
+            <div class="col-md-3 initial">
+              <!-- BEGIN CHART-->
+              <div ng-if="linechartOptions4" crm-linechart options="linechartOptions4"></div>
+              <!-- END CHART-->
+            </div>
+            <div class="col-md-3 initial">
+              <div ng-if="donutchartOptions1" crm-donutchart options="donutchartOptions1"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END Portlet PORTLET-->
+
+    <!-- 2nd -->
+    <!-- BEGIN Portlet PORTLET-->
+    <div class="portlet box">
+      <div class="portlet-title ThemeColor">
+        <ul class="dashboard-section-header">
+          <li class="mobile-full-width percents-20">
+            <span class="caption">{{ "dashboard.dash.billing-viewer" | translate }}</span>
+          </li>
+          <li class="mobile-full-width percents-20 padding-left-5">
+            <div crm-date-picker options="fromDateOptions" value="fields.fromDateValue2" class="margin-top-2"></div>
+          </li>
+          <li class="mobile-full-width percents-20 padding-left-5">
+            <div crm-date-picker options="toDateOptions" value="fields.toDateValue2" class="margin-top-2"></div>
+          </li>
+          <li ng-if="(authSections | searchAuthSection: {RouteName: 'main.billingreport'})" class="mobile-full-width percents-40">
+            <div>
+              <div href="javascript:;" ng-click="goToPage('billingreport')" class="mobile-full-width portlet-button">
+                <i class="fa fa-arrow-right"></i>
+                <span>{{ "dashboard.dash.view-full-billing-report" | translate }}</span>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="portlet-body" style="display: block;">
+        <img ng-src="/assets/images/chart-preloader.gif" class="chart-preloader" ng-show="loadingSection.Billing">
+        <div style="min-height: 250px;width:100%" ng-class="{'opacity-2': loadingSection.Billing}">
+          <div class="row">
+            <div class="col-md-6 initial">
+              <!-- BEGIN CHART-->
+              <div ng-if="dottedLinechartOptions2"
+                crm-dotted-linechart=""
+                options="dottedLinechartOptions2"
+                >
+              </div>
+              <!-- END CHART-->
+            </div>
+            <div class="col-md-3 initial">
+              <!-- BEGIN CHART-->
+              <div ng-if="linechartOptions5"
+                crm-linechart=""
+                options="linechartOptions5"
+                >
+              </div>
+              <!-- END CHART-->
+            </div>
+            <div class="col-md-3 initial">
+              <!-- BEGIN CHART-->
+              <div ng-if="linechartOptions6"
+                crm-linechart=""
+                options="linechartOptions6"
+                >
+              </div>
+              <!-- END CHART-->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END Portlet PORTLET-->
+
+    <!-- 3rd -->
+    <!-- BEGIN Portlet PORTLET-->
+    <div class="portlet box">
+      <div class="portlet-title ThemeColor">
+
+        <ul class="dashboard-section-header">
+          <li class="mobile-full-width percents-20 ">
+            <span class="caption">{{ "dashboard.dash.processing-viewer" | translate }}</span>
+          </li>
+          <li class="mobile-full-width percents-20 padding-left-5">
+            <div crm-date-picker options="fromDateOptions" value="fields.fromDateValue3" class="margin-top-2"></div>
+          </li>
+          <li class="mobile-full-width percents-20 padding-left-5">
+            <div crm-date-picker options="toDateOptions" value="fields.toDateValue3" class="margin-top-2"></div>
+          </li>
+          <li ng-if="(authSections | searchAuthSection: {RouteName: 'main.processingreport'})" class="mobile-full-width percents-40">
+            <div href="javascript:;" ng-click="goToPage('processingreport')" class="mobile-full-width portlet-button">
+              <i class="fa fa-arrow-right"></i>
+              <span>{{ "dashboard.dash.view-full-processing-report" | translate }}</span>
+            </div>
+          </li>
+        </ul>
+     </div>
+      <div class="portlet-body" style="display: block;">
+        <img ng-src="/assets/images/chart-preloader.gif" class="chart-preloader" ng-show="loadingSection.Processing">
+        <div style="min-height: 250px;width:100%" ng-class="{'opacity-2': loadingSection.Processing}">
+          <div class="row">
+            <div class="col-md-6 initial">
+              <!-- BEGIN CHART-->
+              <div ng-if="dottedLinechartOptions3"
+                crm-dotted-linechart=""
+                options="dottedLinechartOptions3"
+                >
+              </div>
+              <!-- END CHART-->
+            </div>
+            <div class="col-md-3 initial">
+              <!-- BEGIN CHART-->
+              <div ng-if="linechartOptions7"
+                crm-linechart=""
+                options="linechartOptions7"
+                >
+              </div>
+              <!-- END CHART-->
+            </div>
+            <div class="col-md-3 initial">
+              <!-- BEGIN CHART-->
+              <div ng-if="linechartOptions8"
+                crm-linechart=""
+                options="linechartOptions8"
+                >
+              </div>
+              <!-- END CHART-->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END Portlet PORTLET-->
+
+    <div class="row">
+      <div class="col-md-6 initial">
+        <!-- BEGIN LEFT SECTION-->
+        <!-- 4th -->
+        <!-- BEGIN Portlet PORTLET-->
+        <div class="portlet box">
+          <div class="portlet-title ThemeColor">
+            <ul class="dashboard-section-header">
+              <li class="mobile-full-width percents-30 ">
+                <span class="caption">{{ "dashboard.dash.projection-viewer" | translate }}</span>
+              </li>
+              <li ng-if="(authSections | searchAuthSection: {RouteName: 'main.projectionreport'})" class="mobile-full-width percents-70">
+                <div href="javascript:;" ng-click="goToPage('projectionreport')" class="mobile-full-width portlet-button">
+                  <i class="fa fa-arrow-right"></i>
+                  <span>{{ "dashboard.dash.view-full-projection-report" | translate }}</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="portlet-body" style="display: block;">
+            <div class="row margin-bottom-10">
+              <div class="col-md-6 col-sm-6">
+                <div crm-date-picker options="fromDateOptions" value="fields.fromDateValue4" class="margin-top-2"></div>
+              </div>
+              <div class="col-md-6 col-sm-6">
+                <div crm-date-picker options="toDateOptions" value="fields.toDateValue4" class="margin-top-2"></div>
+              </div>
+            </div>
+            <img ng-src="/assets/images/chart-preloader.gif" class="chart-preloader" ng-show="loadingSection.Projection">
+            <div style="min-height: 250px;width:100%" ng-class="{'opacity-2': loadingSection.Projection}">
+              <div class="row">
+                <div class="col-md-6 initial">
+                  <!-- BEGIN CHART-->
+                  <div  ng-if="linechartOptions9"
+                    crm-linechart=""
+                    options="linechartOptions9"
+                    >
+                  </div>
+                  <!-- END CHART-->
+                </div>
+                <div class="col-md-6 initial">
+                  <!-- BEGIN CHART-->
+                  <div ng-if="linechartOptions10"
+                    crm-linechart=""
+                    options="linechartOptions10"
+                    >
+                  </div>
+                  <!-- END CHART-->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <!-- END Portlet PORTLET-->
+      <!-- END LEFT SECTION-->
+      </div>
+
+      <div class="col-md-6">
+        <!-- BEGIN RIGHT SECTION-->
+        <!-- 5th -->
+        <!-- BEGIN Portlet PORTLET-->
+        <div class="portlet box">
+          <div class="portlet-title ThemeColor">
+            <ul class="dashboard-section-header">
+              <li class="mobile-full-width percents-30 ">
+                <span class="caption">{{ "dashboard.dash.user-viewer" | translate }}</span>
+              </li>
+              <li ng-if="(authSections | searchAuthSection: {RouteName: 'main.userreport'})" class="mobile-full-width percents-70">
+                <div href="javascript:;" ng-click="goToPage('userreport')" class="mobile-full-width portlet-button">
+                  <i class="fa fa-arrow-right"></i>
+                  <span>{{ "dashboard.dash.view-full-user-report" | translate }}</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="portlet-body" style="display: block;">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="row margin-bottom-10">
+                  <div class="col-md-6 col-sm-6">
+                    <div crm-date-picker options="fromDateOptions" value="fields.fromDateValue5"></div>
+                  </div>
+                  <div class="col-md-6 col-sm-6">
+                    <div crm-date-picker options="toDateOptions" value="fields.toDateValue5"></div>
+                  </div>
+                </div>
+                <img ng-src="/assets/images/chart-preloader.gif" class="chart-preloader" ng-show="loadingSection.User">
+                <div class="row" ng-class="{'opacity-2': loadingSection.User}">
+                  <div class="col-md-12">
+                    <section st-table="userGrid" st-safe-src="safeUserGrid" ng-show="safeUserGrid.length">
+                      <div class="table-scrollable">
+                        <table class="table table-striped">
+                          <thead class="TitleBars white">
+                          <th st-ratio="30" st-sort="UserName" class="cursor-pointer">{{ "dashboard.dash.name" | translate }}</th>
+                          <th st-ratio="38" st-sort="CompanyName" class="cursor-pointer">{{ "dashboard.dash.company" | translate }}</th>
+                          <th st-ratio="20" st-sort="CountOfAttempts" class="cursor-pointer">{{ "dashboard.dash.attempts" | translate }}</th>
+                          <th st-ratio="10" st-sort="IsActive" class="cursor-pointer">{{ "dashboard.dash.user-viewer.active" | translate }}</th>
+                          </thead>
+                          <tbody>
+                          <tr ng-repeat="grid in userGrid">
+                            <td st-ratio="30">{{grid.UserName}}</td>
+                            <td st-ratio="38" nowrap>{{grid.CompanyName}}</td>
+                            <td st-ratio="20">{{grid.CountOfAttempts}}</td>
+                            <td st-ratio="10">
+                              <i class="fa fa-circle" 
+                                 ng-class="{'green-color': grid.IsActive, 'red-color': !grid.IsActive}"></i>
+                             </td>
+                          </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="center-text">
+                        <div  st-items-by-page="5" st-pagination=""></div>
+                      </div>
+                    </section>
+                    <div class="alert alert-warning" role="alert" ng-hide="safeUserGrid.length">{{ "dashboard.dash.no-data" | translate }}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- END Portlet PORTLET-->
+        <!-- END RIGHT SECTION-->
+      </div>
+    </div>
+  </section>
+  </div>
+</div>

@@ -1,0 +1,119 @@
+<div class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content modal-middle-width">
+      <div class="modal-header">
+        <a href="javascript:;" ng-click="close('false')" data-dismiss="modal"><i class="fa fa-times close"></i></a>
+        <h4 class="modal-title">{{modalTitle}}</h4>
+      </div>
+      <div class="modal-body">
+        <form ng-model="form">
+          <section st-table="groupsWithChargesCopy" st-safe-src="groupsWithCharges">
+            <table class="table table-stripped left-align">
+              <thead>
+                <th class="left-text" st-ratio="10"></th>
+                <th class="left-text" st-ratio="60">{{ "modals.crm.customer.addnewtransaction.group" | translate }}</th>
+                <th class="left-text" st-ratio="30">{{ "modals.crm.customer.addnewtransaction.total" | translate }}</th>
+              </thead>
+              <tbody >
+                <tr ng-repeat-start="group in groupsWithChargesCopy" ng-init="num = $index">
+                  <td class="left-text" st-ratio="10">
+                    <i class="fa cursor-pointer" ng-class="{'fa-plus-square': !openCharges[num], 'fa-minus-square': openCharges[num]}"
+                       ng-click="openCharges[num]=!openCharges[num]"></i>
+                  </td>
+                  <td class="left-text" st-ratio="70">
+                    <div class="checker cursor-pointer" ng-click="toggleGroup(group)">
+                      <span ng-class="{checked: group.checked}"></span>
+                    </div>
+                    {{group.Name}}
+                  </td>
+                  <td class="left-text" st-ratio="20">
+                    {{getAmount(group)}}
+                  </td>
+                </tr>
+                <tr ng-repeat-end ng-repeat="charge in group.Charges" ng-show="openCharges[num]">
+                  <th class="left-text" st-ratio="10"></th>
+                  <td class="left-text" st-ratio="60" style="padding-top: 14px;">
+                    <div class="checker cursor-pointer" ng-click="toggleCharge(charge, group)">
+                      <span ng-class="{checked: charge.checked}"></span>
+                    </div>
+                    {{charge.ChargeName}}
+                  </td>
+                  <td class="left-text" st-ratio="30"><input ng-model="charge.Amount" class="form-control"/></td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="center-text">
+              <div st-items-by-page="10" st-pagination=""></div>
+            </div>
+          </section>
+
+          <div class="text-left">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="well well-sm TitleBars">
+                  <span class="block">{{ "modals.crm.customer.addnewtransaction.affiliate-tracking" | translate }}:</span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="well well-sm well-light bg-greyEEE">
+                  <span class="block">
+                    {{ "modals.crm.customer.addnewtransaction.affiliate-id" | translate }}:
+                  </span>
+                  <label class="font-sans-serif input-container-right-checkbox" ng-click="enableAffilate=!enableAffilate">
+                    <div class="checker">
+                      <span ng-class="{checked: enableAffilate}"></span>
+                    </div> {{ "modals.crm.customer.addnewtransaction.select-checkbox-to-edit" | translate }}
+                  </label>
+                  <input class="form-control search-box" type="text" ng-model="fields.Affiliate" ng-disabled="!enableAffilate" />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="well well-sm well-light bg-greyEEE">
+                    <span class="block">
+                      {{ "modals.crm.customer.addnewtransaction.sub-affiliate-id" | translate }}:
+                    </span>
+                  <label class="font-sans-serif input-container-right-checkbox" ng-click="enableSubAffilate=!enableSubAffilate">
+                    <div class="checker">
+                      <span ng-class="{checked: enableSubAffilate}"></span>
+                    </div> {{ "modals.crm.customer.addnewtransaction.select-checkbox-to-edit" | translate }}
+                  </label>
+                  <input class="form-control search-box" type="text" ng-model="fields.SubAffiliate" ng-disabled="!enableSubAffilate" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="panel panel-warning" ng-show="submitted && !fields.Charges.length" style="max-height: 100px">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  {{ "modals.crm.customer.addnewtransaction.charges-can't-be-empty!" | translate }}
+                </h4>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer margin-top-minus-15 padding-bottom-15">
+        <div class="row">
+          <div class="col-md-6 col-sm-6 margin-bottom-10">
+            <a href="javascript:;" class="btn btn-lg CancelColor full-width" ng-click="close('false')"  data-dismiss="modal">
+              <i class="fa fa-times"></i>
+              {{ "modals.crm.customer.addnewtransaction.exit" | translate }}
+            </a>
+          </div>
+          <div class="col-md-6 col-sm-6">
+            <a href="javascript:;" class="btn btn-lg ApplyColor full-width" ng-click="submitted=true;save()" ng-disabled="processing">
+              <i class="fa fa-arrow-right"></i>
+              {{processing ? '...Submitting...' : 'SUBMIT TRANSACTION'}}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

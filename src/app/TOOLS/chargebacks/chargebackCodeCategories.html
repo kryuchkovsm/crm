@@ -1,0 +1,60 @@
+<div class="row">
+  <div class="col-md-12">
+      <div class="portlet box" ng-if="codeCategories.length>0">
+        <div crm-portlet-header="" options="{title: 'Chargeback Code Categories List'}"></div>
+        <div class="portlet-body" style="display: block;">
+          <a href="javascript:;" class="btn btn-lg ApplyColor pull-left margin-bottom-20" ng-click="addEditCBCC()">
+            <i class="fa fa-plus"></i>
+            {{ "tools.chargebacks.chargebackcodecategories.add-new" | translate }}
+          </a>
+          <section st-table="codeCategories" st-safe-src="safeCodeCategories">
+            <div class="table-scrollable">
+              <table class="table table-striped table-auto-layout">
+                <thead>
+                  <tr class="TitleBars top-radius white">
+                    <th st-ratio="5" st-sort="CategoryID" class="cursor-pointer">{{ "tools.chargebacks.chargebackcodecategories.id" | translate }}</th>
+                    <th st-ratio="20" st-sort="CategoryName" class="cursor-pointer">{{ "tools.chargebacks.chargebackcodecategories.name" | translate }}</th>
+                    <th st-ratio="30" st-sort="DisputeId" class="cursor-pointer">{{ "tools.chargebacks.chargebackcodecategories.dispute" | translate }}</th>
+                    <th st-ratio="10" st-sort="IsActive" class="cursor-pointer">{{ "tools.chargebacks.chargebackcodecategories.active" | translate }}</th>
+                    <th st-ratio="15" st-sort="DateEntered" class="cursor-pointer">{{ "tools.chargebacks.chargebackcodecategories.entered" | translate }}</th>
+                    <th st-ratio="15" st-sort="DateModified" class="cursor-pointer" st-sort-default="reverse">{{ "tools.chargebacks.chargebackcodecategories.modified" | translate }}</th>
+                    <th st-ratio="10">{{ "tools.chargebacks.chargebackcodecategories.edit" | translate }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="row in codeCategories track by row.CategoryID">
+                  <td st-ratio="5" ng-bind="row.CategoryID"></td>
+                  <td st-ratio="20">
+                    <span>{{row.CategoryName}}</span>
+                  </td>
+                  <td st-ratio="30" style="text-align: left !important;">
+                    <read-more hmtext="{{(disputes | filter:{DisputeId: row.DisputeId})[0].DisputeDesc}}" hmlimit="75" hm-more-text="more" hm-less-text="less"></read-more>
+                  </td>
+                  <td st-ratio="10">
+                    {{row.IsActive ? 'Yes' : 'No'}}
+                    <!--<input class="disabled" disabled type="checkbox" ng-model="row.IsActive">-->
+                  </td>
+                  <td st-ratio="15">
+                    <span ng-if="row.DateEntered">{{dateFromServer(row.DateEntered, true)}}</span>
+                  </td>
+                  <td st-ratio="15">
+                    <span ng-if="row.DateModified">{{dateFromServer(row.DateModified, true)}}</span>
+                  </td>
+                  <td st-ratio="10" class="center-text">
+                    <a href="javascript:;"  ng-click="addEditCBCC(row)">
+                      <i class="fa fa-pencil"></i>
+                    </a>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="center-text">
+              <div st-items-by-page="10" st-pagination=""></div>
+            </div>
+          </section>
+        </div>
+      </div>
+      <!-- END Portlet PORTLET-->
+  </div>
+</div>

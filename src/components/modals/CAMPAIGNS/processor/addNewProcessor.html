@@ -1,0 +1,94 @@
+<div class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a href="javascript:;" ng-click="close('false')" data-dismiss="modal"><i class="fa fa-times close"></i></a>
+        <h4 class="modal-title">{{modalTitle}}</h4>
+      </div>
+      <div class="modal-body">
+        <form name="addProcessorForm" ng-model="addProcessorForm"  novalidate>
+          <div class="row" ng-if="!saved && !error">
+            <div class="col-md-6">
+              <div
+                crm-text-input=""
+                options="fieldOptions.usernameTxtOptions"
+                value="fields.usernameTxtValue"
+                >
+              </div>
+              <div
+                 crm-text-input=""
+                 options="fieldOptions.passwordTxtOptions"
+                 value="fields.passwordTxtValue"
+                >
+              </div>
+              <div
+                 crm-text-input=""
+                 options="fieldOptions.processorNameTxtOptions"
+                 value="fields.processorNameTxtValue"
+                >
+              </div>
+              <div
+                 crm-text-input=""
+                 options="fieldOptions.processorIdTxtOptions"
+                 value="fields.processorIdTxtValue"
+                >
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div
+                crm-text-input=""
+                options="fieldOptions.monthlyLimitTxtOptions"
+                value="fields.monthlyLimitTxtValue"
+                >
+              </div>
+              <div crm-radio-list=""
+                 options="fieldOptions.currencyRLOptions"
+                 value="fields.currencyRLValue">
+              </div>
+              <div crm-radio-list=""
+                 options="fieldOptions.stickyRLOptions"
+                 value="fields.stickyRLValue">
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="panel panel-success" ng-if="saved">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              {{savedMessage}}
+            </h4>
+          </div>
+        </div>
+        <div class="panel panel-warning" ng-if="error">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              {{errorMessage}}
+            </h4>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-md-6">
+            <a href="javascript:;" class="btn btn-lg CancelColor full-width"  ng-click="close('false')"  data-dismiss="modal">
+              <i class="fa fa-rotate-left"></i>
+              {{ "modals.campaigns.processor.addnewprocessor.back" | translate }}
+            </a>
+          </div>
+          <div class="col-md-6" ng-show="!saved && !error">
+            <a href="javascript:;" class="btn btn-lg ApplyColor full-width"  ng-click="save()">
+              <i class="fa fa-arrow-right"></i>
+              {{ "modals.campaigns.processor.addnewprocessor.save" | translate }}
+            </a>
+          </div>
+          <div class="col-md-6" ng-show="saved || error">
+            <a href="javascript:;" class="btn btn-lg ApplyColor full-width"  ng-click="addAnother()">
+              <i class="fa fa-arrow-right"></i>
+              {{ "modals.campaigns.processor.addnewprocessor.add-another" | translate }}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

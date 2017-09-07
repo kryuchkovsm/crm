@@ -1,0 +1,388 @@
+<div class="row">
+  <div class="col-md-12 padding-left-right-10">
+    <div class="bg-greyEEE padding-top-left-right-10 padding-bottom-10 rounded-3" style="overflow: hidden">
+
+      <!-- Label with edit button-->
+      <section ng-if="!options.isMDF">
+        <a ng-hide="isEditLabel" href="javascript:;" ng-click="isEditLabel=true;"> <i class="fa fa-pencil"></i> </a>
+        <span ng-hide="isEditLabel" class="campaign-setup-form-label">{{value.Label}}</span>
+        <a ng-show="isEditLabel" href="javascript:;" ng-click="options.Label=value.Label;isEditLabel=false;"> <i class="fa fa-save"></i> </a>
+        <input ng-show="isEditLabel" type="text" class="small-input" ng-model="value.Label" focus-me="{{isEditLabel}}">
+      </section>
+      <span ng-if="options.isMDF" class="campaign-setup-form-label margin-right-5">{{value.Label}}</span>
+      <!-- MDF's Type Radiolist Select-->
+      <div class="inline-block" ng-if="options.mdfType">
+        <div class="inline margin-right-20">
+          <div class="radio pointer" ng-click="setMdfTypeFields('input')">
+              <span ng-class="{'checked': options.mdfType === 'input'}"><input type="radio" id="0" value="text"></span>
+          </div>
+          <div class="font-sans-serif size-15 inline pointer" ng-click="setMdfTypeFields('text')">
+            {{ "directives.campaigns.campaignfieldsetup.campaignfieldsetuptpl.input-field" | translate }}
+          </div>
+        </div>
+        <div class="inline margin-right-20">
+          <div class="radio pointer" ng-click="setMdfTypeFields('select')">
+              <span ng-class="{'checked': options.mdfType === 'select'}"><input type="radio" id="1" value="select"></span>
+          </div>
+          <div class="font-sans-serif size-15 inline pointer" ng-click="setMdfTypeFields('select')">
+            {{ "directives.campaigns.campaignfieldsetup.campaignfieldsetuptpl.select-box" | translate }}
+          </div>
+        </div>
+        <div class="inline margin-right-20">
+          <div class="radio pointer" ng-click="setMdfTypeFields('checkbox')">
+              <span ng-class="{'checked': options.mdfType === 'checkbox'}"><input type="radio" id="2" value="checkbox"></span>
+          </div>
+          <div class="font-sans-serif size-15 inline pointer" ng-click="setMdfTypeFields('checkbox')">
+            {{ "directives.campaigns.campaignfieldsetup.campaignfieldsetuptpl.checkbox" | translate }}
+          </div>
+        </div>
+        <div class="inline margin-right-20">
+          <div class="radio pointer" ng-click="setMdfTypeFields('radio')">
+              <span ng-class="{'checked': options.mdfType === 'radio'}"><input type="radio" id="3" value="radio"></span>
+          </div>
+          <div class="font-sans-serif size-15 inline pointer" ng-click="setMdfTypeFields('radio')">
+            {{ "directives.campaigns.campaignfieldsetup.campaignfieldsetuptpl.radio" | translate }}
+          </div>
+        </div>
+      </div>
+
+      <div class="campaign-container-action">
+        <div>
+          <a href="javascript:;" style="float: right;" ng-click="hideme({id:options.id})"
+             ng-hide="(pageType=='singlepage' || pageType=='twopages') && requiredFields.indexOf(options.Name)>-1 && !enableRequired">
+            <i class="fa fa-arrow-right text-FontColor"></i>
+          </a>
+          <div class="my-handle">
+            <i class="fa fa-exchange text-FontColor"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="row margin-top-10">
+        <div class="col-md-2">
+          <!-- Required -->
+          <div ng-if="options.needRequired" class="margin-bottom-10">
+            <div class="checker" ng-click="value.Properties.Required=!value.Properties.Required"
+                 ng-disabled="(pageType=='singlepage' || pageType=='twopages') && requiredFields.indexOf(options.Name)>-1 && !enableRequired">
+              <span ng-class="{checked: value.Properties.Required}"></span>
+            </div>
+
+            <!--<input class="checkbox-inline" type="checkbox" ng-model="value.Properties.Required"-->
+                   <!--ng-disabled="(pageType=='singlepage' || pageType=='twopages') && requiredFields.indexOf(options.Name)>-1 && !enableRequired">-->
+            <span>{{ "directives.campaigns.campaignfieldsetup.campaignfieldsetuptpl.required" | translate }}</span>
+          </div>
+        </div>
+        <div class="margin-bottom-10 col-md-7">
+          <!-- Max/min range -->
+          <div ng-if="options.needRange" ng-hide="value.Properties.maskRequired" class="row">
+            <div class="col-md-6 col-sm-6" ng-init="value.Properties.setMin = checkIfDefined(value.Properties.setMin) ? value.Properties.setMin : true">
+              <div class="row">
+                <div class="col-md-7 col-sm-4 col-xs-5">
+                  <div class="checker" ng-click="value.Properties.setMin=!value.Properties.setMin">
+                    <span ng-class="{checked: value.Properties.setMin}"></span>
+                  </div>
+                  <!--<input class="checkbox-inline" type="checkbox" ng-model="value.Properties.setMin">-->
+                  <span>{{ "directives.campaigns.campaignfieldsetup.campaignfieldsetuptpl.min-length" | translate }}:</span>
+                </div>
+                <div class="col-md-5 col-sm-8 col-xs-6 margin-bottom-10">
+                  <input type="number" min="1" class="width-50 small-input full-width" id="min" ng-model="value.Properties.MinLength">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-6" ng-init="value.Properties.setMax = checkIfDefined(value.Properties.setMax) ? value.Properties.setMax : true">
+              <div class="row">
+                <div class="col-md-7 col-sm-4 col-xs-5">
+                  <div class="checker" ng-click="value.Properties.setMax=!value.Properties.setMax">
+                    <span ng-class="{checked: value.Properties.setMax}"></span>
+                  </div>
+                  <!--<input class="checkbox-inline" type="checkbox" ng-model="value.Properties.setMax">-->
+                  <span>{{ "directives.campaigns.campaignfieldsetup.campaignfieldsetuptpl.max-length" | translate }}:</span>
+                </div>
+                <div class="col-md-5 col-sm-8 col-xs-6">
+                  <input type="number" min="1" class="width-50 small-input full-width" id="max" ng-model="value.Properties.MaxLength">
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Countries Multyselect -->
+          <crm-campaign-multiselect-boxes
+            ng-if="options.needCountries"
+            ng-model="value.Properties.options"
+            countries="countries">
+          </crm-campaign-multiselect-boxes>
+          <!-- CC Number Mod-->
+          <div ng-if="options.needMod">
+            <div class="checker" ng-click="value.Properties.ModValidation=!value.Properties.ModValidation">
+              <span ng-class="{checked: value.Properties.ModValidation}"></span>
+            </div>
+            <!--<input class="checkbox-inline" type="checkbox" ng-model="value.Properties.ModValidation">-->
+            <span>{{ "directives.campaigns.campaignfieldsetup.campaignfieldsetuptpl.mod10-validation" | translate }}</span>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <!-- Alphanumeric -->
+          <div ng-if="options.needAlphanumeric">
+            <div class="checker" ng-click="value.Properties.Alphanumeric=!value.Properties.Alphanumeric">
+              <span ng-class="{checked: value.Properties.Alphanumeric}"></span>
+            </div>
+            <!--<input class="checkbox-inline" type="checkbox" ng-model="value.Properties.Alphanumeric">-->
+            <span>{{ "directives.campaigns.campaignfieldsetup.campaignfieldsetuptpl.alphanumeric" | translate }}</span>
+          </div>
+          <!-- Mask Options -->
+          <div ng-if="options.needMask">
+            <span class="full-width inline-block margin-bottom-3">{{ "directives.campaigns.campaignfieldsetup.campaignfieldsetuptpl.mask-options" | translate }}:</span>
+            <div class="full-width inline-block line-height-17">
+              <input class="margin-top-2" type="radio" ng-model="value.Properties.maskRequired" ng-checked="!value.Properties.maskRequired" ng-value="">
+              <span class="vertical-align-top">{{ "directives.campaigns.campaignfieldsetup.campaignfieldsetuptpl.none" | translate }}</span>
+            </div>
+            <div class="full-width inline-block line-height-17">
+              <input class="margin-top-2" type="radio" ng-model="value.Properties.maskRequired" ng-value="'(xxx) xxx - xxxx'">
+              <span class="vertical-align-top">{{ "directives.campaigns.campaignfieldsetup.campaignfieldsetuptpl.us" | translate }}: (xxx) xxx - xxxx</span>
+            </div>
+            <div class="full-width inline-block margin-bottom-10 line-height-17">
+              <input class="margin-top-2" type="radio" ng-model="value.Properties.maskRequired" ng-value="'(xx) xxxx - xxxx'">
+              <span class="vertical-align-top">{{ "directives.campaigns.campaignfieldsetup.campaignfieldsetuptpl.au" | translate }}: (xx) xxxx - xxxx</span>
+            </div>
+          </div>
+          <!-- CC Number Auto-Select-->
+          <div ng-if="options.needAutoSelect">
+            <div class="checker" ng-click="value.Properties.autoSelect=!value.Properties.autoSelect">
+              <span ng-class="{checked: value.Properties.autoSelect}"></span>
+            </div>
+            <!--<input class="checkbox-inline" type="checkbox" ng-model="value.Properties.autoSelect">-->
+
+            <span>{{ "directives.campaigns.campaignfieldsetup.campaignfieldsetuptpl.auto-select-card-type" | translate }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-offset-9 col-md-3 margin-bottom-10" ng-if="options.Name=='NameOnCard'">
+          <div class="checker" ng-click="value.Properties.AutoName=!value.Properties.AutoName">
+            <span ng-class="{checked: value.Properties.AutoName}"></span>
+          </div>
+          <span>{{ "directives.campaigns.campaignfieldsetup.campaignfieldsetuptpl.auto-name" | translate }}</span>
+        </div>
+      </div>
+
+      <div class="row" ng-show="!value.Properties.Required && requiredFields.indexOf(options.Name)>-1 && !hideRecommend">
+        <div class="col-md-12">
+          <div class="alert alert-warning" role="alert" style="margin-bottom: 0px;">
+            {{ "directives.campaigns.campaignfieldsetup.campaignfieldsetuptpl.i-would-not-recommend-to-uncheck-required-option-from-this-field.-this-field-should-be-required." | translate }}
+          </div>
+        </div>
+      </div>
+
+      <div class="row" ng-if="value.Properties.autoSelect">
+        <div class="col-md-12">
+          <div class="inline-block margin-bottom-10 line-height-17" ng-init="
+          value.Properties.autoSelectCardTypes['Visa']=checkIfDefined(value.Properties.autoSelectCardTypes['Visa']) ? value.Properties.autoSelectCardTypes['Visa'] : true;
+          value.Properties.autoSelectCardTypes['Master Card']=checkIfDefined(value.Properties.autoSelectCardTypes['Master Card']) ? value.Properties.autoSelectCardTypes['Master Card'] : true;
+          value.Properties.autoSelectCardTypes['American Express']=checkIfDefined(value.Properties.autoSelectCardTypes['American Express']) ? value.Properties.autoSelectCardTypes['American Express'] : true;
+          value.Properties.autoSelectCardTypes['Discover']=checkIfDefined(value.Properties.autoSelectCardTypes['Discover']) ? value.Properties.autoSelectCardTypes['Discover'] : true;
+          value.Properties.autoSelectCardTypes['Maestro']=checkIfDefined(value.Properties.autoSelectCardTypes['Maestro']) ? value.Properties.autoSelectCardTypes['Maestro'] : true;">
+            <ul class="campaign-card-types">
+              <li class="margin-right-20">
+                <span class="vertical-align-top">{{ "directives.campaigns.campaignfieldsetup.campaignfieldsetuptpl.card-types" | translate }}: </span>
+              </li>
+              <li class="margin-right-20">
+                <label>
+                  <div class="checker" ng-click="value.Properties.autoSelectCardTypes['Visa']=!value.Properties.autoSelectCardTypes['Visa']">
+                    <span ng-class="{checked: value.Properties.autoSelectCardTypes['Visa']}"></span>
+                  </div>
+
+                  <!--<input class="margin-top-2" type="checkbox" ng-model="value.Properties.autoSelectCardTypes['Visa']">-->
+                  <span class="vertical-align-top">{{ "directives.campaigns.campaignfieldsetup.campaignfieldsetuptpl.visa" | translate }}</span>
+                </label>
+              </li>
+              <li class="margin-right-20">
+                <label>
+                  <div class="checker" ng-click="value.Properties.autoSelectCardTypes['Master Card']=!value.Properties.autoSelectCardTypes['Master Card']">
+                    <span ng-class="{checked: value.Properties.autoSelectCardTypes['Master Card']}"></span>
+                  </div>
+
+                  <!--<input class="margin-top-2" type="checkbox" ng-model="value.Properties.autoSelectCardTypes['Master Card']">-->
+                  <span class="vertical-align-top">{{ "directives.campaigns.campaignfieldsetup.campaignfieldsetuptpl.mastercard" | translate }}</span>
+                </label>
+              </li>
+              <li class="margin-right-20">
+                <label>
+                  <div class="checker" ng-click="value.Properties.autoSelectCardTypes['American Express']=!value.Properties.autoSelectCardTypes['American Express']">
+                    <span ng-class="{checked: value.Properties.autoSelectCardTypes['American Express']}"></span>
+                  </div>
+
+                  <!--<input class="margin-top-2" type="checkbox" ng-model="value.Properties.autoSelectCardTypes['American Express']">-->
+                  <span class="vertical-align-top">{{ "directives.campaigns.campaignfieldsetup.campaignfieldsetuptpl.american-express" | translate }}</span>
+                </label>
+              </li>
+              <li class="margin-right-20">
+                <label>
+                  <div class="checker" ng-click="value.Properties.autoSelectCardTypes['Discover']=!value.Properties.autoSelectCardTypes['Discover']">
+                    <span ng-class="{checked: value.Properties.autoSelectCardTypes['Discover']}"></span>
+                  </div>
+
+                  <!--<input class="margin-top-2" type="checkbox" ng-model="value.Properties.autoSelectCardTypes['Discover']">-->
+                  <span class="vertical-align-top">{{ "directives.campaigns.campaignfieldsetup.campaignfieldsetuptpl.discover" | translate }}</span>
+                </label>
+              </li>
+              <li class="margin-right-20">
+                <label>
+                  <div class="checker" ng-click="value.Properties.autoSelectCardTypes['Maestro']=!value.Properties.autoSelectCardTypes['Maestro']">
+                    <span ng-class="{checked: value.Properties.autoSelectCardTypes['Maestro']}"></span>
+                  </div>
+
+                  <!--<input class="margin-top-2" type="checkbox" ng-model="value.Properties.autoSelectCardTypes['Maestro']">-->
+                  <span class="vertical-align-top">{{ "directives.campaigns.campaignfieldsetup.campaignfieldsetuptpl.maestro" | translate }}</span>
+                </label>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- CC Types -->
+      <div class="row margin-top-5" ng-if="options.needCardTypes">
+        <div class="col-md-12">
+          <div class="inline-block margin-bottom-10 line-height-17" ng-init="
+          value.Properties.cardTypes['Visa']=checkIfDefined(value.Properties.cardTypes['Visa']) ? value.Properties.cardTypes['Visa'] : true;
+          value.Properties.cardTypes['Master Card']=checkIfDefined(value.Properties.cardTypes['Master Card']) ? value.Properties.cardTypes['Master Card'] : true;
+          value.Properties.cardTypes['American Express']=checkIfDefined(value.Properties.cardTypes['American Express']) ? value.Properties.cardTypes['American Express'] : true;
+          value.Properties.cardTypes['Discover']=checkIfDefined(value.Properties.cardTypes['Discover']) ? value.Properties.cardTypes['Discover'] : true;
+          value.Properties.cardTypes['Maestro']=checkIfDefined(value.Properties.cardTypes['Maestro']) ? value.Properties.cardTypes['Maestro'] : true;">
+            <ul class="campaign-card-types">
+              <li class="margin-right-20">
+                <span class="vertical-align-top">{{ "directives.campaigns.campaignfieldsetup.campaignfieldsetuptpl.card-types" | translate }}: </span>
+              </li>
+              <li class="margin-right-20">
+                <label>
+                  <div class="checker" ng-click="value.Properties.cardTypes['Visa']=!value.Properties.cardTypes['Visa']">
+                    <span ng-class="{checked: value.Properties.cardTypes['Visa']}"></span>
+                  </div>
+
+                  <!--<input class="margin-top-2" type="checkbox" ng-model="value.Properties.cardTypes['Visa']">-->
+                  <span class="vertical-align-top">{{ "directives.campaigns.campaignfieldsetup.campaignfieldsetuptpl.visa" | translate }}</span>
+                </label>
+              </li>
+              <li class="margin-right-20">
+                <label>
+                  <div class="checker" ng-click="value.Properties.cardTypes['Master Card']=!value.Properties.cardTypes['Master Card']">
+                    <span ng-class="{checked: value.Properties.cardTypes['Master Card']}"></span>
+                  </div>
+
+                  <!--<input class="margin-top-2" type="checkbox" ng-model="value.Properties.cardTypes['Master Card']">-->
+                  <span class="vertical-align-top">{{ "directives.campaigns.campaignfieldsetup.campaignfieldsetuptpl.mastercard" | translate }}</span>
+                </label>
+              </li>
+              <li class="margin-right-20">
+                <label>
+                  <div class="checker" ng-click="value.Properties.cardTypes['American Express']=!value.Properties.cardTypes['American Express']">
+                    <span ng-class="{checked: value.Properties.cardTypes['American Express']}"></span>
+                  </div>
+
+                  <!--<input class="margin-top-2" type="checkbox" ng-model="value.Properties.cardTypes['American Express']">-->
+                  <span class="vertical-align-top">{{ "directives.campaigns.campaignfieldsetup.campaignfieldsetuptpl.american-express" | translate }}</span>
+                </label>
+              </li>
+              <li class="margin-right-20">
+                <label>
+                  <div class="checker" ng-click="value.Properties.cardTypes['Discover']=!value.Properties.cardTypes['Discover']">
+                    <span ng-class="{checked: value.Properties.cardTypes['Discover']}"></span>
+                  </div>
+
+                  <!--<input class="margin-top-2" type="checkbox" ng-model="value.Properties.cardTypes['Discover']">-->
+                  <span class="vertical-align-top">{{ "directives.campaigns.campaignfieldsetup.campaignfieldsetuptpl.discover" | translate }}</span>
+                </label>
+              </li>
+              <li class="margin-right-20">
+                <label>
+                  <div class="checker" ng-click="value.Properties.cardTypes['Maestro']=!value.Properties.cardTypes['Maestro']">
+                    <span ng-class="{checked: value.Properties.cardTypes['Maestro']}"></span>
+                  </div>
+
+                  <!--<input class="margin-top-2" type="checkbox" ng-model="value.Properties.cardTypes['Maestro']">-->
+                  <span class="vertical-align-top">{{ "directives.campaigns.campaignfieldsetup.campaignfieldsetuptpl.maestro" | translate }}</span>
+                </label>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- MDF's Name Label & Single Value-->
+      <form name="{{'mdfForm' + options.id}}">
+        <div class="row">
+          <div class="col-md-4 margin-bottom-10" ng-if="options.needNameLabel">
+            <div class="row">
+              <div class="col-md-5 col-sm-2 col-xs-5">
+                <div class=" margin-top-2">{{ "directives.campaigns.campaignfieldsetup.campaignfieldsetuptpl.label-text" | translate }}:</div>
+              </div>
+              <div class="col-md-7 col-sm-9 col-xs-6 no-padding" ng-init="value.Properties.labelText = checkIfDefined(value.Properties.labelText) ? value.Properties.labelText : value.Label.replace(':','')">
+                <input type="text" class="pull-right small-input full-width" ng-class="{'submitted': submitted}" name="labelText" ng-model="value.Properties.labelText" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4" ng-if="options.needSingleValue">
+            <div class="row">
+              <div class="col-md-4 col-sm-2 col-xs-5">
+                <span class="margin-top-2">{{ "directives.campaigns.campaignfieldsetup.campaignfieldsetuptpl.value" | translate }}:</span>
+              </div>
+              <div class="col-md-8 col-sm-9 col-xs-6 no-padding">
+                <input type="text" class="pull-right small-input full-width" ng-class="{'submitted': submitted}" name="singleValue" ng-model="value.Properties.singleValue" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-8" ng-if="options.needMultiOptionsValue">
+            <div class="row">
+              <div class="col-md-4 margin-bottom-10 padding-top-2">
+                <div class="row">
+                  <div class="col-md-7 col-sm-2 col-xs-5">
+                    <span class="margin-top-2">{{ "directives.campaigns.campaignfieldsetup.campaignfieldsetuptpl.option" | translate }}:</span>
+                  </div>
+                  <div class="col-md-5 col-sm-9 col-xs-6 no-padding">
+                    <span class="margin-top-2 full-width">{{ "directives.campaigns.campaignfieldsetup.campaignfieldsetuptpl.option" | translate }}{{value.Properties.options.length + 1}}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 margin-bottom-10">
+                <div class="row">
+                  <div class="col-md-5 col-sm-2 col-xs-5">
+                    <div class=" margin-top-2">{{ "directives.campaigns.campaignfieldsetup.campaignfieldsetuptpl.value" | translate }}:</div>
+                  </div>
+                  <div class="col-md-7 col-sm-9 col-xs-6 no-padding">
+                    <input type="text" class="pull-right small-input full-width" ng-class="{'submitted': submitted}" name="newMultiOptionsValue" ng-model="newMultiOptions.value" required>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3" ng-if="options.needMultiOptionsValue">
+                <a href="javascript:;" class="btn ApplyColor full-width add-mdf" ng-click="addMultiOptionsValue({{'mdfForm'+options.id}})">
+                  <i class="fa fa-plus"></i>
+                  {{ "directives.campaigns.campaignfieldsetup.campaignfieldsetuptpl.add" | translate }}
+                </a>
+              </div>
+            </div>
+
+            <div class="multiSelect" ng-if="value.Properties.options.length">
+              <div class="row margin-top-10">
+                <div class="col-md-offset-4 col-md-7">
+                  <div style="background: white">
+                    <div ng-repeat="row in value.Properties.options track by $index" ng-class="{'gray-border-bottom': !$last}" style="padding: 5px;">
+                      <span class=" margin-top-2">{{ "directives.campaigns.campaignfieldsetup.campaignfieldsetuptpl.option" | translate }}{{$index + 1}}</span>
+                      =
+                      <span class=" margin-top-2">"{{row}}"</span>
+                      <i class="fa fa-times cursor-pointer" style="float: right;color: red" ng-click="value.Properties.options.splice($index,1)"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </form>
+
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,35 @@
+<div class="margin-top-bottom-50">&nbsp;</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="col-md-4 col-md-push-4">
+      <div class="margin-20">
+        <form name="loginForm">
+          <div class="form-login font-white noTail FormBackground FormBackgroundTopBorder">
+            <div class="input-group top bottom">
+              <span class="input-group-addon top bottom">
+                <span class="fa fa-key"></span>
+              </span>
+              <input type="password" class="form-control top bottom" name="password" placeholder="Enter new password" ng-model="password" required/>
+            </div>
+            <p class="font-white bold" ng-show="submitted && loginForm.password.$invalid">{{ "common.auth.setnewpassword.setnewpass.enter-password-please" | translate }}</p>
+            <div class="margin-top-5" ng-show="successRestoreReq">
+              <small >
+                {{ "common.auth.setnewpassword.setnewpass.password-saved" | translate }}.
+              </small>
+            </div>
+            <div class="margin-top-5" ng-show="errorRestoreReq">
+              <small >
+                {{ "common.auth.setnewpassword.setnewpass.error" | translate }}. {{errorMessage}}
+              </small>
+            </div>
+            <div class="wrapper margin-top-10" ng-click="saveNewPasswordToServerAndLogin(loginForm.$invalid)">
+                <span class="group-btn">
+                  <a href="javascript:;" class="btn login-box"><i class="fa fa-arrow-right"></i>{{ "common.auth.setnewpassword.setnewpass.continue" | translate }}</a>
+                </span>
+            </div>
+          </div>
+        </form>
+    </div>
+    </div>
+</div>
+</div>

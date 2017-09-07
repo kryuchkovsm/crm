@@ -1,0 +1,42 @@
+<div class="form-group" ng-class="{'has-error': newValue.$invalid && options.showError, 'well well-sm well-light  bg-greyEEE': !options.inline}"
+     SHOW-ERRORS="" ng-show="options.type!='noEditTxt'" style="width: 100%;position: relative" xmlns:>
+
+  <section ng-if="!options.inline" style="max-width: 100% !important;;">
+    <span class="block">{{options.label | translate}}</span>
+    <p class="pull-right" ng-if="options.upperTip">{{::options.upperTip}}</p>
+  </section>
+
+  <input
+     style="max-width: 100% !important;"
+     type="{{::options.type || 'text'}}"
+     step="any"
+     class="form-control search-box"
+     id="inputTxtId{{::name}}"
+     name="{{::name}}"
+     ng-model="value"
+     placeholder="{{::options.placeholder || ''}}"
+     ng-min="{{options.valMin==0 || options.valMin ? options.valMin : false}}"
+     ng-max="{{options.valMax==0 || options.valMax ? options.valMax : false}}"
+     min="{{options.valMin==0 || options.valMin ? options.valMin : false}}"
+     max="{{options.valMax==0 || options.valMax ? options.valMax : false}}"
+     ng-attr-vemail="options.valEmail"
+     my-maxlength="{{::options.maxlength || false}}"
+     ng-required="{{::options.valRequired || false}}"
+     ng-disabled="{{::options.disabled || false}}"
+     ng-pattern="patternVal">
+
+  <p class="" ng-if="options.tip">{{::options.tip}}</p>
+  <p class="help-block" ng-if="newValue.$invalid && newValue.$error.required">The {{::options.label.replace(':', '')}} is required</p>
+  <p class="help-block" ng-if="newValue.$invalid && newValue.$error.email">The EMAIL is invalid</p>
+  <p class="help-block" ng-if="newValue.$invalid && newValue.$error.number && !newValue.$error.min && !newValue.$error.max">The {{::options.label.replace(':', '')}} is invalid</p>
+  <p class="help-block" ng-if="newValue.$invalid && newValue.$error.pattern">The {{::options.label.replace(':', '')}} is invalid</p>
+  <p class="help-block" ng-if="newValue.$invalid && newValue.$error.min">Minimum value is {{::options.valMin}}</p>
+  <p class="help-block" ng-if="newValue.$invalid && newValue.$error.max">Maximum value is {{::options.valMax}}</p>
+  <p class="help-block" ng-if="newValue.$invalid && newValue.$error.cardNumber">Enter valid CARD please</p>
+  <p class="error-message" ng-if="!error.required && error.equals && options.equals">Enter correct CONFIRMATION value</p>
+</div>
+
+<div class="well well-sm well-light bg-greyEEE form-group" ng-show="options.type=='noEditTxt'">
+  <span class="block" ng-bind="options.label"></span>
+  <span class="form-control search-box">{{value}}</span>
+</div>

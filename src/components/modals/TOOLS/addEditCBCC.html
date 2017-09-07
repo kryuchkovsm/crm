@@ -1,0 +1,86 @@
+<div class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a href="javascript:;" ng-click="close(false)"><i class="fa fa-times close"></i></a>
+        <h4 class="modal-title">{{data.modalTitle}}</h4>
+      </div>
+      <div class="modal-body">
+
+        <form name="addEditCBCCForm" novalidate>
+          <div class="row" >
+            <div class="col-md-6">
+              <div class="well well-sm well-light  bg-greyEEE form-group" ng-class="{'has-error': submittedCbCC && addEditCBCCForm.name.$error.required}">
+                <span class="block">{{ "modals.tools.addeditcbcc.name" | translate }}:</span>
+                <input type="text" class="form-control search-box" name="name" ng-model="cbCodeCategory.Name" required>
+                <p class="help-block" ng-show="submittedCbCC && addEditCBCCForm.name.$error.required">{{ "modals.tools.addeditcbcc.enter-name-please" | translate }}</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="well well-sm well-light bg-greyEEE form-group" ng-class="{'has-error': submittedCbCC && addEditCBCCForm.dispute.$error.required}">
+                <span class="block">{{ "modals.tools.addeditcbcc.dispute" | translate }}:</span>
+                <span class="inline-block pull-right weight-bold"></span>
+                <select class="form-control" name="dispute" ng-model="cbCodeCategory.DisputeID" required>
+                  <option value="" ng-selected="!cbCodeCategory.DisputeID">-- {{ "modals.tools.addeditcbcc.select-please" | translate }} --</option>
+                  <option ng-repeat="dispute in data.disputes" ng-selected="dispute.DisputeId==cbCodeCategory.DisputeID" value="{{dispute.DisputeId}}">{{dispute.Description | characters:40 }}</option>
+                </select>
+                <p class="help-block" ng-show="submittedCbCC && addEditCBCCForm.dispute.$error.required">{{ "modals.tools.addeditcbcc.enter-dispute-please" | translate }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="row" ng-if="cbCodeCategory.CategoryID">
+            <div class="col-md-6">
+              <div class="well well-sm well-light bg-greyEEE no-margin">
+                <span class="block">{{ "modals.tools.addeditcbcc.is-active" | translate }}</span>
+                <div class=" ">
+                  <label class="radio-inline">
+                    <div class="radio" ng-click="cbCodeCategory.IsActive=true">
+                        <span ng-class="{checked: cbCodeCategory.IsActive}">
+                          <input type="radio" ng-model="cbCodeCategory.IsActive" ng-value="true">
+                        </span>
+                    </div>
+                    {{ "modals.tools.addeditcbcc.yes" | translate }}
+                  </label>
+                  <label class="ng-binding ng-scope radio-inline">
+                    <div class="radio" ng-click="cbCodeCategory.IsActive=false">
+                        <span ng-class="{checked: !cbCodeCategory.IsActive}">
+                            <input type="radio" ng-model="cbCodeCategory.IsActive" ng-value="false">
+                        </span>
+                    </div>
+                    {{ "modals.tools.addeditcbcc.no" | translate }}
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </form>
+
+        <div class="panel panel-warning no-margin margin-top-20 ngFlipY" ng-if="newChargebackCodeAdded"  ng-animate="'animate'">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              {{ "modals.tools.addeditcbcc.new-chargeback-code-category-successfully-added!" | translate }}
+            </h4>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-md-6 margin-bottom-10">
+            <a href="javascript:;" class="btn btn-lg full-width CancelColor" ng-click="close(false)">
+              <i class="fa fa-rotate-left"></i>
+              {{ "modals.tools.addeditcbcc.back" | translate }}
+            </a>
+          </div>
+          <div class="col-md-6">
+            <a href="javascript:;" class="btn btn-lg full-width ApplyColor"  ng-click="insert(addEditCBCCForm);submittedCbCC=true;">
+              <i class="fa fa-save"></i>
+              {{ "modals.tools.addeditcbcc.save" | translate }}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

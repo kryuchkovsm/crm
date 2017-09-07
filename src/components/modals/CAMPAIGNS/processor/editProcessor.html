@@ -1,0 +1,82 @@
+<div class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a href="javascript:;" ng-click="close('false')" data-dismiss="modal"><i class="fa fa-times close"></i></a>
+        <h4 class="modal-title">{{modalTitle}}</h4>
+      </div>
+      <div class="modal-body">
+        <form name="editProcessorForm" ng-model="editProcessorForm"  novalidate>
+          <div class="row">
+            <div class="col-md-6">
+              <div
+                crm-text-input=""
+                options="fieldOptions.usernameTxtOptions"
+                value="fields.usernameTxtValue"
+                >
+              </div>
+              <div
+                crm-text-input=""
+                options="fieldOptions.passwordTxtOptions"
+                value="fields.passwordTxtValue"
+                >
+              </div>
+              <div
+                crm-text-input=""
+                options="fieldOptions.processorNameTxtOptions"
+                value="fields.processorNameTxtValue"
+                >
+              </div>
+              <div
+                crm-text-input=""
+                options="fieldOptions.processorIdTxtOptions"
+                value="fields.processorIdTxtValue"
+                >
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div
+                crm-text-input=""
+                options="fieldOptions.monthlyLimitTxtOptions"
+                value="fields.monthlyLimitTxtValue"
+                >
+              </div>
+              <div crm-radio-list=""
+                   options="fieldOptions.currencyRLOptions"
+                   value="fields.currencyRLValue">
+              </div>
+              <div crm-radio-list=""
+                   options="fieldOptions.stickyRLOptions"
+                   value="fields.stickyRLValue">
+              </div>
+              <div
+                crm-radio-list=""
+                options="fieldOptions.activeRLOptions"
+                value="fields.activeRLValue">
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-md-6">
+            <a href="javascript:;" class="btn btn-lg CancelColor full-width" ng-click="close('false')">
+              <i class="fa fa-rotate-left"></i>
+              {{ "modals.campaigns.processor.editprocessor.back" | translate }}
+            </a>
+          </div>
+          <div class="col-md-6">
+            <a href="javascript:;" class="btn btn-lg ApplyColor full-width"  ng-click="save()" ng-disabled="saving">
+              <span ng-hide="saving">
+                <i class="fa fa-arrow-right"></i>
+                {{ "modals.campaigns.processor.editprocessor.save" | translate }}
+              </span>
+              <span ng-show="saving">...{{ "modals.campaigns.processor.editprocessor.saving" | translate }}...</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

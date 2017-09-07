@@ -1,0 +1,81 @@
+<div class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a href="javascript:;" data-dismiss="modal"><i class="fa fa-times close"></i></a>
+        <h4 class="modal-title">{{data.title}}</h4>
+      </div>
+      <div class="modal-body">
+        <div class="center-text" ng-show="loading">
+          <div class="cssload-loader" style="margin-top: 10%">...{{ "modals.campaigns.offerimageandterms.addeditimageterms.loading" | translate }}...</div>
+        </div>
+
+        <div class="portlet-body" style="display: block;">
+          <form name="addEditItem" ng-class="{'opacity-2': loading}">
+            <div class="row image-terms-form">
+              <div class="col-md-7">
+                <div class="well well-sm well-light bg-greyEEE form-group" ng-class="{'has-error': submitted && addEditItem.OfferName.$invalid}">
+                  <span class="block">{{ "modals.campaigns.offerimageandterms.addeditimageterms.offer-name" | translate }}:</span>
+                  <input type="text" class="form-control search-box" name="OfferName" ng-model="fields.OfferName" placeholder="Offer Name" required>
+                  <p class="error-message" ng-show="submitted && addEditItem.OfferName.$error.required">{{ "modals.campaigns.offerimageandterms.addeditimageterms.the-offer-name-is-required" | translate }}</p>
+                </div>
+                <div class="well well-sm well-light bg-greyEEE form-group" ng-class="{'has-error': submitted && addEditItem.Domain.$invalid}">
+                  <span class="block">{{ "modals.campaigns.offerimageandterms.addeditimageterms.domain-url" | translate }}:</span>
+                  <input type="url" class="form-control search-box" ng-pattern="urlPattern" name="Domain" ng-model="fields.Domain" placeholder="http://example.com" required>
+                  <p class="error-message" ng-show="submitted && addEditItem.Domain.$error.required">{{ "modals.campaigns.offerimageandterms.addeditimageterms.the-domain-url-is-required" | translate }}</p>
+                  <p class="error-message" ng-show="submitted && addEditItem.Domain.$error.pattern && !addEditItem.Domain.$error.required">{{ "modals.campaigns.offerimageandterms.addeditimageterms.the-domain-url-is-invalid" | translate }}</p>
+                </div>
+
+                <div class="well well-sm well-light bg-greyEEE">
+                  <span class="block full-width">
+                    {{ "modals.campaigns.offerimageandterms.addeditimageterms.image-path" | translate }}:
+                  </span>
+                  <div class="row">
+                    <div class="col-md-4 col-sm-4">
+                      <span class="btn ApplyColor full-width btn-file">
+                          <span>{{ "modals.campaigns.offerimageandterms.addeditimageterms.choose-file" | translate }}</span>
+                          <input type="file" name="{{docType}}" ng-model="imageFile"
+                                 onchange="angular.element(this).scope().setFile(this.name, this.files)"/>
+                      </span>
+                    </div>
+                    <div class="col-md-8 col-sm-8">
+                      <div class="image-name-container" style="color: #000000;">
+                        {{imageFile.name}}
+                      </div>
+                    </div>
+                  </div>
+                  <p class="error-message">{{fileError}}</p>
+                  <p class="error-message" ng-show="submitted && !fields.FileContentBase64">{{ "modals.campaigns.offerimageandterms.addeditimageterms.chose-image-please" | translate }}</p>
+                </div>
+
+                <div class="well well-sm well-light bg-greyEEE form-group"  ng-class="{'has-error': submitted && addEditItem.Terms.$invalid}">
+                  <span class="block">{{ "modals.campaigns.offerimageandterms.addeditimageterms.terms-and-conditions" | translate }}:</span>
+                  <textarea class="form-control" style="height:152px;resize: vertical;" name="Terms" ng-model="fields.Terms" required></textarea>
+                  <p class="error-message" ng-show="submitted && addEditItem.Terms.$error.required">{{ "modals.campaigns.offerimageandterms.addeditimageterms.terms-are-required" | translate }}</p>
+                </div>
+              </div>
+              <div class="col-md-5">
+                <div class="well well-sm well-light bg-greyEEE form-group payment-box center-text">
+                  <div class="title">{{ "modals.campaigns.offerimageandterms.addeditimageterms.preview" | translate }}</div>
+                  <img class="offer-image-preview" ng-src="{{fields.FileContentBase64}}"/>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <a href="javascript:;" class="btn btn-lg btn-rounded search-box CancelColor full-width" style="font-weight: bold;" data-dismiss="modal">EXIT</a>
+              </div>
+              <div class="col-md-6">
+                <a href="javascript:;" class="btn btn-lg btn-rounded search-box ApplyColor full-width" ng-click="submitted=true;save(addEditItem)"
+                   ng-disabled="saving" style="font-weight: bold;">
+                  <span ng-hide="saving">{{ "modals.campaigns.offerimageandterms.addeditimageterms.save" | translate }}</span>
+                  <span ng-show="saving">...{{ "modals.campaigns.offerimageandterms.addeditimageterms.saving" | translate }}...</span>
+                </a>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

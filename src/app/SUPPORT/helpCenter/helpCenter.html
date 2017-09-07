@@ -1,0 +1,55 @@
+<div class="row" ng-hide="currentStateName=='main.helpcenter.article'">
+  <div class="col-md-12">
+    <div class="portlet box">
+      <div crm-portlet-header options="{title: 'Knowledge Base'}"></div>
+      <div class="portlet-body" style="display: block;">
+        <div class="row">
+          <div class="col-md-offset-1 col-md-10">
+            <div class="inner-addon left-addon">
+              <i class="fa fa-search"></i>
+              <input type="text" class="form-control" ng-model="searchHCString" enter-input="searchHC(searchHCString)" placeholder="Search"/>
+            </div>
+
+            <section class="margin-top-20" ng-hide="showSearchHCResults">
+              <div class="row" ng-repeat="section in sections" ng-if="$index % 2 == 0" ng-class="{'bg-greyEEE': $index % 4 == 0}">
+                <div class="col-md-6">
+                  <h4 style="border-bottom: 1px solid lightgrey">{{section.name}} ({{section.articles.length}})</h4>
+                  <ul style="list-style-type: none;padding-left: 0px;">
+                    <li style="margin-top: 2px;margin-bottom: 2px;" ng-repeat="article in section.articles">
+                      <a href="" ng-click="goToArticle(article.id)">
+                        <i class="fa fa-file-text"></i>
+                        {{article.title}}</a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-md-6" ng-if="sections[$index+1]">
+                  <h4 style="border-bottom: 1px solid lightgrey">{{sections[$index+1].name}} ({{sections[$index+1].articles.length}})</h4>
+                  <ul style="list-style-type: none;padding-left: 0px;">
+                    <li style="margin-top: 2px;margin-bottom: 2px;" ng-repeat="article in sections[$index+1].articles">
+                      <a href="" ng-click="goToArticle(article.id)">
+                        <i class="fa fa-file-text"></i>
+                        {{article.title}}</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+            <section ng-show="showSearchHCResults" class="margin-top-20">
+              {{searchHCResults.length}} results for "{{searchHCStringCopy}}"
+              <ul style="list-style-type: none;padding-left: 0px;">
+                <li style="margin-top: 2px;margin-bottom: 2px;" ng-repeat="searchResult in searchHCResults">
+                  <a href="" ng-click="goToArticle(searchResult.id)">{{searchResult.title}}</a>
+                </li>
+              </ul>
+              <a href="" ng-click="browseKB()" class="btn ApplyColor">{{ "support.helpcenter.helpcenter.browse-knowledge-base" | translate }}</a>
+            </section>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div ui-view></div>

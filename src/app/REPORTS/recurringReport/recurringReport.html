@@ -1,0 +1,197 @@
+<div class="row">
+  <div class="col-md-12">
+    <!-- BEGIN Portlet PORTLET1-->
+    <div crm-select-clients-dates type-of-report="'recurring'" options="clientDatesOptions" value="clientDatesValue" searchf="search()"></div>
+
+    <div id="bottom"></div>
+      
+    <div class="portlet box" ng-show="dataReady">
+      <div crm-portlet-header options="{title: 'Recurring Details'}"></div>
+      <div class="portlet-body" style="display: block;">
+        <div class="tablePortletButtons">
+          <a
+            href="javascript:;"
+            ng-csv="exportToExcel(keysHeader)"
+            filename="export.csv"
+            csv-header="exportToExcel(keysHeader, true)"
+            >
+            <i class="fa fa-file-excel-o"></i>
+          </a>
+        </div>
+        <div ng-hide="tableObjSafe.length" class="Metronic-alerts alert alert-warning font-size-15 center-text">
+          {{ "reports.incomereport.incomereport.no-data" | translate }}
+        </div>
+        <div ng-show="tableObjSafe.length">
+          <div class="row">
+            <div class="col-md-12 padding-left-right-3">
+                <div class="fixed-table-header" st-table="tableObj" st-safe-src="tableObjSafe">
+                  <table class="table scrollable table-striped" table-height="400" fixed-header>
+                  <thead>
+                    <tr class="TitleBars top-radius white">
+                      <th st-sort="ID" class="cursor-pointer">ID</th>
+                      <th st-sort="Name" class="cursor-pointer">Name</th>
+                      <th class="cursor-pointer">1#</th>
+                      <th class="cursor-pointer">1$</th>
+                      <th class="cursor-pointer">2#</th>
+                      <th class="cursor-pointer">2$</th>
+                      <th class="cursor-pointer">3#</th>
+                      <th class="cursor-pointer">3$</th>
+                      <th class="cursor-pointer">4#</th>
+                      <th class="cursor-pointer">4$</th>
+                      <th class="cursor-pointer">5#</th>
+                      <th class="cursor-pointer">5$</th>
+                      <th class="cursor-pointer">6#</th>
+                      <th class="cursor-pointer">6$</th>
+                      <th class="cursor-pointer">7#</th>
+                      <th class="cursor-pointer">7$</th>
+                      <th class="cursor-pointer">8#</th>
+                      <th class="cursor-pointer">8$</th>
+                      <th class="cursor-pointer">9#</th>
+                      <th class="cursor-pointer">9$</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="row in tableObj" ng-if="row.ID != 'Totals:'">
+                      <td><a ng-click="showSubTable(row.ID)">{{ row.ID }}</a></td>
+                      <td>{{ row.Name }}</td>
+                      <td><a ng-click="showMainCountDetails(row.ID, 1)">{{row.arrAttempt[0].Key}}</a></td>
+                      <td>{{ row.arrAttempt[0].Value }}</td>
+                      <td><a ng-click="showMainCountDetails(row.ID, 2)">{{row.arrAttempt[1].Key}}</a></td>
+                      <td>{{ row.arrAttempt[1].Value }}</td>
+                      <td><a ng-click="showMainCountDetails(row.ID, 3)">{{row.arrAttempt[2].Key}}</a></td>
+                      <td>{{ row.arrAttempt[2].Value }}</td>
+                      <td><a ng-click="showMainCountDetails(row.ID, 4)">{{row.arrAttempt[3].Key}}</a></td>
+                      <td>{{ row.arrAttempt[3].Value }}</td>
+                      <td><a ng-click="showMainCountDetails(row.ID, 5)">{{row.arrAttempt[4].Key}}</a></td>
+                      <td>{{ row.arrAttempt[4].Value }}</td>
+                      <td><a ng-click="showMainCountDetails(row.ID, 6)">{{row.arrAttempt[5].Key}}</a></td>
+                      <td>{{ row.arrAttempt[5].Value }}</td>
+                      <td><a ng-click="showMainCountDetails(row.ID, 7)">{{row.arrAttempt[6].Key}}</a></td>
+                      <td>{{ row.arrAttempt[6].Value }}</td>
+                      <td><a ng-click="showMainCountDetails(row.ID, 8)">{{row.arrAttempt[7].Key}}</a></td>
+                      <td>{{ row.arrAttempt[7].Value }}</td>
+                      <td><a ng-click="showMainCountDetails(row.ID, 9)">{{row.arrAttempt[8].Key}}</a></td>
+                      <td>{{ row.arrAttempt[8].Value }}</td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td class="TitleBars white"><b>Totals: </b></td>
+                      <td class="TitleBars white"></td>
+                      <td class="TitleBars white"><a ng-click="showMainCountDetails(row.ID, 1, true)">{{gridTotal['c1']}}</a></td>
+                      <td class="TitleBars white">{{gridTotal['v1']}}</td>
+                      <td class="TitleBars white"><a ng-click="showMainCountDetails(row.ID, 2, true)">{{gridTotal['c2']}}</a></td>
+                      <td class="TitleBars white">{{gridTotal['v2']}}</td>
+                      <td class="TitleBars white"><a ng-click="showMainCountDetails(row.ID, 3, true)">{{gridTotal['c3']}}</a></td>
+                      <td class="TitleBars white">{{gridTotal['v3']}}</td>
+                      <td class="TitleBars white"><a ng-click="showMainCountDetails(row.ID, 4, true)">{{gridTotal['c4']}}</a></td>
+                      <td class="TitleBars white">{{gridTotal['v4']}}</td>
+                      <td class="TitleBars white"><a ng-click="showMainCountDetails(row.ID, 5, true)">{{gridTotal['c5']}}</a></td>
+                      <td class="TitleBars white">{{gridTotal['v5']}}</td>
+                      <td class="TitleBars white"><a ng-click="showMainCountDetails(row.ID, 6, true)">{{gridTotal['c6']}}</a></td>
+                      <td class="TitleBars white">{{gridTotal['v6']}}</td>
+                      <td class="TitleBars white"><a ng-click="showMainCountDetails(row.ID, 7, true)">{{gridTotal['c7']}}</a></td>
+                      <td class="TitleBars white">{{gridTotal['v7']}}</td>
+                      <td class="TitleBars white"><a ng-click="showMainCountDetails(row.ID, 8, true)">{{gridTotal['c8']}}</a></td>
+                      <td class="TitleBars white">{{gridTotal['v8']}}</td>
+                      <td class="TitleBars white"><a ng-click="showMainCountDetails(row.ID, 9, true)">{{gridTotal['c9']}}</a></td>
+                      <td class="TitleBars white">{{gridTotal['v9']}}</td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="portlet-body" style="display: block;">
+        <div ng-show="subTableObjSafe.length">
+          <div class="row">
+            <div class="col-md-12 padding-left-right-3">
+                <div class="fixed-table-header" st-table="subTableObj" st-safe-src="subTableObjSafe">
+                  <table class="table scrollable table-striped" table-height="400" fixed-header>
+                  <thead>
+                    <tr class="TitleBars top-radius white">
+                      <th st-sort="ID" class="cursor-pointer">ID</th>
+                      <th st-sort="Name" class="cursor-pointer">Name</th>
+                      <th class="cursor-pointer">1#</th>
+                      <th class="cursor-pointer">1$</th>
+                      <th class="cursor-pointer">2#</th>
+                      <th class="cursor-pointer">2$</th>
+                      <th class="cursor-pointer">3#</th>
+                      <th class="cursor-pointer">3$</th>
+                      <th class="cursor-pointer">4#</th>
+                      <th class="cursor-pointer">4$</th>
+                      <th class="cursor-pointer">5#</th>
+                      <th class="cursor-pointer">5$</th>
+                      <th class="cursor-pointer">6#</th>
+                      <th class="cursor-pointer">6$</th>
+                      <th class="cursor-pointer">7#</th>
+                      <th class="cursor-pointer">7$</th>
+                      <th class="cursor-pointer">8#</th>
+                      <th class="cursor-pointer">8$</th>
+                      <th class="cursor-pointer">9#</th>
+                      <th class="cursor-pointer">9$</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="row in subTableObj" ng-if="row.ID != 'Totals:'">
+                      <td>{{ row.ID }}</td>
+                      <td>{{ row.Name }}</td>
+                      <td><a ng-click="showSubCountDetails(row.ID, 1)">{{row.arrAttempt[0].Key}}</a></td>
+                      <td>{{ row.arrAttempt[0].Value }}</td>
+                      <td><a ng-click="showSubCountDetails(row.ID, 2)">{{row.arrAttempt[1].Key}}</a></td>
+                      <td>{{ row.arrAttempt[1].Value }}</td>
+                      <td><a ng-click="showSubCountDetails(row.ID, 3)">{{row.arrAttempt[2].Key}}</a></td>
+                      <td>{{ row.arrAttempt[2].Value }}</td>
+                      <td><a ng-click="showSubCountDetails(row.ID, 4)">{{row.arrAttempt[3].Key}}</a></td>
+                      <td>{{ row.arrAttempt[3].Value }}</td>
+                      <td><a ng-click="showSubCountDetails(row.ID, 5)">{{row.arrAttempt[4].Key}}</a></td>
+                      <td>{{ row.arrAttempt[4].Value }}</td>
+                      <td><a ng-click="showSubCountDetails(row.ID, 6)">{{row.arrAttempt[5].Key}}</a></td>
+                      <td>{{ row.arrAttempt[5].Value }}</td>
+                      <td><a ng-click="showSubCountDetails(row.ID, 7)">{{row.arrAttempt[6].Key}}</a></td>
+                      <td>{{ row.arrAttempt[6].Value }}</td>
+                      <td><a ng-click="showSubCountDetails(row.ID, 8)">{{row.arrAttempt[7].Key}}</a></td>
+                      <td>{{ row.arrAttempt[7].Value }}</td>
+                      <td><a ng-click="showSubCountDetails(row.ID, 9)">{{row.arrAttempt[8].Key}}</a></td>
+                      <td>{{ row.arrAttempt[8].Value }}</td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td class="TitleBars white"><b>Totals: </b></td>
+                      <td class="TitleBars white"></td>
+                      <td class="TitleBars white"><a ng-click="showSubCountDetails(row.ID, 1, true)">{{subGridTotal['c1']}}</a></td>
+                      <td class="TitleBars white">{{subGridTotal['v1']}}</td>
+                      <td class="TitleBars white"><a ng-click="showSubCountDetails(row.ID, 2, true)">{{subGridTotal['c2']}}</a></td>
+                      <td class="TitleBars white">{{subGridTotal['v2']}}</td>
+                      <td class="TitleBars white"><a ng-click="showSubCountDetails(row.ID, 3, true)">{{subGridTotal['c3']}}</a></td>
+                      <td class="TitleBars white">{{subGridTotal['v3']}}</td>
+                      <td class="TitleBars white"><a ng-click="showSubCountDetails(row.ID, 4, true)">{{subGridTotal['c4']}}</a></td>
+                      <td class="TitleBars white">{{subGridTotal['v4']}}</td>
+                      <td class="TitleBars white"><a ng-click="showSubCountDetails(row.ID, 5, true)">{{subGridTotal['c5']}}</a></td>
+                      <td class="TitleBars white">{{subGridTotal['v5']}}</td>
+                      <td class="TitleBars white"><a ng-click="showSubCountDetails(row.ID, 6, true)">{{subGridTotal['c6']}}</a></td>
+                      <td class="TitleBars white">{{subGridTotal['v6']}}</td>
+                      <td class="TitleBars white"><a ng-click="showSubCountDetails(row.ID, 7, true)">{{subGridTotal['c7']}}</a></td>
+                      <td class="TitleBars white">{{subGridTotal['v7']}}</td>
+                      <td class="TitleBars white"><a ng-click="showSubCountDetails(row.ID, 8, true)">{{subGridTotal['c8']}}</a></td>
+                      <td class="TitleBars white">{{subGridTotal['v8']}}</td>
+                      <td class="TitleBars white"><a ng-click="showSubCountDetails(row.ID, 9, true)">{{subGridTotal['c9']}}</a></td>
+                      <td class="TitleBars white">{{subGridTotal['v9']}}</td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    <!-- END Portlet PORTLET3-->
+
+  </div>
+</div>

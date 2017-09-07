@@ -1,0 +1,272 @@
+<div class="row" ng-if="!hideContent">
+  <div class="col-md-12">
+      <!-- BEGIN Portlet PORTLET1-->
+      <div class="portlet box">
+        <div
+          crm-portlet-header=""
+          options="portletHeaderOptions"
+          >
+        </div>
+        <div class="portlet-body no-padding-bottom" style="display: block;">
+          <form name="exportForm" ng-model="exportForm">
+            <div class="row">
+              <div class="col-md-4">
+                <div
+                  ng-dropdown-multiselect=""
+                  options="clientsData"
+                  selected-model="clientsModel"
+                  extra-settings="fieldOptions.clientsSettings"
+                  >
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div
+                  ng-dropdown-multiselect=""
+                  options="sitesData"
+                  selected-model="sitesModel"
+                  extra-settings="fieldOptions.sitesSettings">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div
+                  ng-dropdown-multiselect=""
+                  options="fieldOptions.ReportOptions"
+                  selected-model="reportOptionsModel"
+                  extra-settings="fieldOptions.reportOptionsSettings">
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4" ng-hide="hideChargeTypes">
+                <div
+                  ng-dropdown-multiselect=""
+                  options="fieldOptions.ChargeTypes"
+                  selected-model="chargeTypeModel"
+                  extra-settings="fieldOptions.chargeTypeSettings">
+                </div>
+              </div>
+              <div class="col-md-4" ng-if="!hideAdditional">
+                <div ng-dropdown-multiselect=""
+                     options="fieldOptions.TransactionTypes"
+                     selected-model="transactionTypeModel"
+                     extra-settings="fieldOptions.transactionTypeSettings">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div ng-hide="hideAdditional"
+                     ng-dropdown-multiselect=""
+                     options="fieldOptions.TransactionResults"
+                     selected-model="transactionResultModel"
+                     extra-settings="fieldOptions.transactionResultSettings">
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4" ng-show="reportOptionsModel[0].id=='custom'">
+                <div ng-dropdown-multiselect=""
+                     options="fieldOptions.StepType"
+                     selected-model="stepTypeModel"
+                     extra-settings="fieldOptions.stepTypeSettings">
+                </div>
+              </div>
+              <div class="col-md-8">
+                <section ng-hide="hideAdditional">
+                  <div
+                    crm-radio-list=""
+                    options="fieldOptions.activeRLOptions"
+                    value="obj.activeRLValue">
+                  </div>
+                </section>
+                <section ng-include src="'dates.html'"></section>
+              </div>
+            </div>
+
+            <div class="row margin-top-20">
+              <div class="col-md-6" ng-show="fieldOptions.firstColumnCBs.length">
+                <div class="row no-margin" >
+                  <div class="col-md-12 bg-grey-portlet">
+                    <div class="well well-sm TitleBars">
+                      <span class="block">{{ "crm.export.export.export-data-common-fields" | translate }}:</span>
+                    </div>
+                    <div class="margin-bottom-left-right-10">
+
+                      <div class="font-sans-serif size-15 weight-bold inline margin-bottom-right-10">
+                        {{ "crm.export.export.select-the-fields-to-include-in-your-report" | translate }}:
+
+                        <label class="weight-bold cursor-pointer" ng-click="setAllCommon(fieldOptions.firstColumnCBs.length!=firstColumnSelectedCBs.length)">
+                          <div class="checker">
+                            <span ng-class="{checked:  fieldOptions.firstColumnCBs.length == firstColumnSelectedCBs.length}"></span>
+                          </div> {{ "crm.export.export.check-all" | translate }}
+                        </label>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-4">
+                          <div class="checkbox-list">
+                            <label class="default" 
+                                 ng-repeat="option in fieldOptions.firstColumnCBs" 
+                                 ng-if="$index <= 12"
+                                 ng-click="setSelectedItem(option.id, 'firstColumnSelectedCBs')">
+                              <div class="checker">
+                                <span ng-class="{checked: firstColumnSelectedCBs.indexOf(option.id)>-1}"></span>
+                              </div> {{option.displayName}}
+                            </label>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="checkbox-list">
+                            <label class="default" 
+                                ng-repeat="option in fieldOptions.firstColumnCBs" 
+                                ng-if="$index > 10 && $index <= 20"
+                                ng-click="setSelectedItem(option.id, 'firstColumnSelectedCBs')">
+                              <div class="checker">
+                                <span ng-class="{checked: firstColumnSelectedCBs.indexOf(option.id)>-1}"></span>
+                              </div> {{option.displayName}}
+                            </label>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="checkbox-list">
+                            <label class="default" ng-repeat="option in fieldOptions.firstColumnCBs" ng-if="$index > 20"
+                                   ng-click="setSelectedItem(option.id, 'firstColumnSelectedCBs')">
+                              <div class="checker">
+                                <span ng-class="{checked: firstColumnSelectedCBs.indexOf(option.id)>-1}"></span>
+                              </div> {{option.displayName}}
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="col-md-6">
+
+
+                <div class="row no-margin"  ng-show="fieldOptions.secondColumnCBs.length">
+                  <div class="col-md-12 bg-grey-portlet">
+                    <div class="well well-sm TitleBars">
+                      <span class="block">{{ "crm.export.export.export-data-transaction-fields" | translate }}:</span>
+                    </div>
+                    <div class="margin-bottom-left-right-10">
+
+                      <div class="font-sans-serif size-15 weight-bold inline margin-bottom-right-10">
+                        {{ "crm.export.export.select-the-fields-to-include-in-your-report" | translate }}:
+                        <label class="weight-bold cursor-pointer" 
+                          ng-click="setAllTrans(fieldOptions.secondColumnCBs.length!=secondColumnSelectedCBs.length)">
+                          <div class="checker">
+                            <span ng-class="{checked: fieldOptions.secondColumnCBs.length == secondColumnSelectedCBs.length}"></span>
+                          </div> {{ "crm.export.export.check-all" | translate }}
+                        </label>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-4">
+                          <div class="checkbox-list">
+                            <label class="default" 
+                                ng-repeat="option in fieldOptions.secondColumnCBs" 
+                                ng-if="$index <= 12"
+                                ng-click="setSelectedItem(option.id, 'secondColumnSelectedCBs')">
+                              <div class="checker">
+                                <span ng-class="{checked: secondColumnSelectedCBs.indexOf(option.id)>-1}"></span>
+                              </div> {{option.displayName}}
+                            </label>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="checkbox-list">
+                            <label class="default" 
+                                ng-repeat="option in fieldOptions.secondColumnCBs" 
+                                ng-if="$index > 12 && $index <= 22"
+                                ng-click="setSelectedItem(option.id, 'secondColumnSelectedCBs')">
+                              <div class="checker">
+                                <span ng-class="{checked: secondColumnSelectedCBs.indexOf(option.id)>-1}"></span>
+                              </div> {{option.displayName}}
+                            </label>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div class="checkbox-list">
+                            <label class="default" 
+                                ng-repeat="option in fieldOptions.secondColumnCBs" 
+                                ng-if="$index > 22"
+                                ng-click="setSelectedItem(option.id, 'secondColumnSelectedCBs')">
+                              <div class="checker">
+                                <span ng-class="{checked: secondColumnSelectedCBs.indexOf(option.id)>-1}"></span>
+                              </div> {{option.displayName}}
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <p class="error-message" ng-show="formSubmitted && !validColumns()">
+              {{ "crm.export.export.select-columns-please" | translate }}
+            </p>
+            <div class="row no-margin" >
+              <div class="col-md-12 bg-grey-portlet">
+                <div class="well well-sm TitleBars">
+                  <span class="block">{{ "crm.export.export.finish-export" | translate }}</span>
+                </div>
+                <div class="row margin-10">
+                  <div class="col-md-offset-4 col-md-3">
+                    <a href="javascript:;" class="btn btn-lg full-width ApplyColor " 
+                      ng-disabled="loadingExport || loadingReport || showDatesError" ng-click="download(false)">
+                      <span ng-show="loadingExport">...{{ "crm.export.export.loading" | translate }}...</span>
+                      <span ng-hide="loadingExport">{{ "crm.export.export.download" | translate }}</span>
+                    </a>
+                    <div id="downloadcsv" style="display:none" 
+                      ng-csv="csvdata" csv-header="csvheader" filename="exported_report.csv"></div>
+                  </div>
+                </div>
+                <div class="center-text" ng-show="show.emptyContent">
+                  <div class="alert alert-warning alert-dismissible" role="alert" style="width: 80%;">
+                    <button type="button" class="close" ng-click="show.emptyContent=false">&times;</button>
+                    {{ "crm.export.export.no-data-to-export" | translate }}
+                  </div>
+                </div>
+                <div class="alert alert-success alert-dismissible" role="alert" ng-show="show.sentEmail">
+                  <button type="button" class="close" ng-click="show.sentEmail=false">&times;</button>
+                  <h4 style="text-align: center" class="success-text">{{ "crm.export.export.success!-email-has-been-sent." | translate }}</h4>
+                </div>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+      <!-- END Portlet PORTLET1-->
+  </div>
+</div>
+<script type="text/ng-template" id="dates.html">
+  <div class="well well-sm well-light bg-greyEEE no-margin">
+    <span class="block margin-bottom-20">{{ "crm.export.export.report-dates" | translate }}:</span>
+    <div class="row" ng-style="styleDates">
+      <div class="col-md-10 col-md-push-1 margin-bottom-20">
+        <div
+          crm-date-picker=""
+          options="fieldOptions.fromDateOptions"
+          value="dates.fromDateValue"
+          >
+        </div>
+        <div class="divider-vertical  margin-bottom-10"></div>
+        <div
+          crm-date-picker=""
+          options="fieldOptions.toDateOptions"
+          value="dates.toDateValue"
+          >
+        </div>
+        <p class="error-message" style="position: absolute;margin-top:5px;" ng-show="showDatesError"> {{ "crm.export.export.'from'-date-should-be-less-than-'to'-date" | translate }}</p>
+      </div>
+    </div>
+    <p class="error-message" ng-if="formSubmitted && (!dates.fromDateValue || !dates.toDateValue)">
+      {{ "crm.export.export.the-dates-are-required" | translate }}</p>
+  </div>
+</script>

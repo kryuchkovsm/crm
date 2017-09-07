@@ -1,0 +1,68 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="portlet box">
+      <div
+        crm-portlet-header=""
+        options="{title: 'Email Autoresponders'}"
+        >
+      </div>
+      <div class="portlet-body" style="display: block;">
+        <div class="well well-sm TitleBars">
+          <span class="block">{{ "campaigns.email.smtp.smtp.smtp-mail-servers" | translate }}</span>
+        </div>
+
+        <div class="row">
+          <div class="col-md-2" style="text-align: center">
+            <a href="" class="btn btn-lg ApplyColor margin-bottom-20 full-width" ng-click="addEditSmtp()">
+              <i class="fa fa-plus"></i>
+              {{ "campaigns.email.smtp.smtp.add-new" | translate }}
+            </a>
+          </div>
+        </div>
+
+        <div class="alert alert-warning" role="alert" ng-hide="copySmtpServers.length">
+          {{ "campaigns.email.smtp.smtp.no-data" | translate }}
+        </div>
+        <section st-table="smtpServers"  st-safe-src="copySmtpServers" ng-show="copySmtpServers.length">
+          <div id="flip-scroll">
+            <table class="table table-striped">
+              <thead>
+                <tr class="TitleBars top-radius white">
+                  <th st-sort="id" class="cursor-pointer">{{ "campaigns.email.smtp.smtp.id" | translate }}</th>
+                  <th st-sort="name" class="cursor-pointer">{{ "campaigns.email.smtp.smtp.name" | translate }}</th>
+                  <th st-sort="Username" class="cursor-pointer">{{ "campaigns.email.smtp.smtp.user-name" | translate }}</th>
+                  <th st-sort="DateModified" class="cursor-pointer">{{ "campaigns.email.smtp.smtp.last-update" | translate }}</th>
+                  <th st-sort="IsActive" class="cursor-pointer">{{ "campaigns.email.smtp.smtp.active" | translate }}</th>
+                  <th st-sort="IsConfirmed" class="cursor-pointer">{{ "campaigns.email.smtp.smtp.confirmed" | translate }}</th>
+                  <th>{{ "campaigns.email.smtp.smtp.actions" | translate }}</th>
+                </tr>
+              </thead>
+              <tbody>
+              <tr ng-repeat="row in smtpServers">
+                <td ng-bind="row.id"></td>
+                <td ng-bind="row.name"></td>
+                <td ng-bind="row.Username"></td>
+                <td>{{dateFromServer(row.DateModified, true)}}</td>
+                <td ng-bind="(row.IsActive ? 'Yes' : 'No')"></td>
+                <td style="padding-top: 4px;padding-bottom: 0px;">
+                  <button class="btn btn-sm ApplyColor" ng-disabled="row.IsConfirmed" ng-click="confirmSmtp(row.id)">
+                    {{row.IsConfirmed ? 'Confirmed' : 'Confirm'}}
+                  </button>
+                </td>
+                <td class="center-text" style="width: 15%;">
+                  <a ng-click="addEditSmtp(row)"><i class="fa fa-pencil"></i></a>
+                  <a ng-click="deleteSmtp(row)"><i class="fa fa-times"></i></a>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="center-text">
+            <div st-items-by-page="10" st-pagination="" class="ng-isolate-scope"></div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+  </div>
+</div>

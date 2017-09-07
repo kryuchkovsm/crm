@@ -1,0 +1,406 @@
+<div class="row">
+  <div class="col-md-12" ng-if="newSiteId.show">
+    <div class="Metronic-alerts alert alert-success fade in font-size-15">
+      <a href="javascript:;" ng-click="closeNewSiteIDNotice()"><i class="fa text-FontColor fa-times close"></i></a>
+      {{ "campaigns.sites.siteoptions.your-new-site-id" | translate }}: {{newSiteId.id}}
+    </div>
+  </div>
+  <div class="col-md-4" ng-show="!mDFieldsShow">
+      <!-- BEGIN Portlet PORTLET-->
+      <div class="portlet box">
+        <div
+          crm-portlet-header=""
+          options="selectSitePortletHeaderOptions"
+          >
+        </div>
+        <div class="portlet-body" style="display: block;">
+          <div
+            ng-dropdown-multiselect=""
+            options="clientsData"
+            selected-model="clientsModel"
+            extra-settings="clientsSettings"
+            >
+          </div>
+          <div class="panel panel-warning" ng-if="showAddClient">
+            <div class="panel-heading">
+              <h4 class="panel-title">
+                {{ "campaigns.sites.siteoptions.select-one-client-please!" | translate }}
+              </h4>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- END Portlet PORTLET-->
+  </div>
+  <div ng-class="siteOptionsFormClass" ng-show="showForm">
+      <!-- BEGIN Portlet PORTLET-->
+      <div class="portlet box">
+        <div crm-portlet-header options="setSitePortletHeaderOptions"></div>
+        <div class="portlet-body" style="display: block;">
+          <form name="siteOptionsForm" ng-model="siteOptionsForm">
+            <div crm-text-input options="siteNameTxtOptions" value="fields.siteNameTxtValue"></div>
+            <div crm-text-input options="domainUrlTxtOptions" value="fields.domainUrlTxtValue"></div>
+            <div crm-text-input options="siteTitleTxtOptions" value="fields.siteTitleTxtValue"></div>
+            <div crm-radio-list options="deliveryMethodRLOptions" value="fields.deliveryMethodRLValue"></div>
+            <div crm-radio-list options="isActiveOptions" value="fields.isActiveValue"></div>
+          </form>
+          <div class="row"  ng-if="!mDFieldsShow">
+            <div class="col-md-6 col-sm-6" >
+              <a href="javascript:;" class="btn btn-lg margin-bottom-20 CancelColor full-width" ng-click="reset()"  ng-disabled="saving">
+                <i class="fa fa-rotate-left"></i>
+                {{ "campaigns.sites.siteoptions.clear" | translate }}
+              </a>
+            </div>
+            <div class="col-md-6 col-sm-6">
+              <a href="javascript:;" class="btn btn-success btn-lg ApplyColor full-width" ng-click="save()" ng-if="!mDFieldsShow" ng-disabled="saving">
+                <span ng-hide="saving">
+                  <i class="fa fa-arrow-right"></i>
+                  {{ "campaigns.sites.siteoptions.save" | translate }}
+                </span>
+                <span ng-show="saving">...{{ "campaigns.sites.siteoptions.saving" | translate }}...</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- END Portlet PORTLET-->
+  </div>
+  <div class="col-md-6" ng-if="mDFieldsShow">
+    <!-- BEGIN Portlet PORTLET-->
+    <div class="portlet box">
+      <div
+        crm-portlet-header=""
+        options="mDFieldsPHeader"
+        >
+      </div>
+      <div class="portlet-body" style="display: block;">
+        <div class="row" ng-if="!clientMDFs.length">
+          <div class="col-md-12">
+            {{ "campaigns.sites.siteoptions.client-does-not-have-mdfs" | translate }}.
+            <a href="javascript:;" ng-click="addMDFs()">{{ "campaigns.sites.siteoptions.add-mdfs" | translate }}</a>
+          </div>
+        </div>
+        <div class="row" ng-if="siteMDFs.length">
+          <table st-table="siteMDFs" st-safe-src="siteMDFsSafe" class="table table-striped crmTable">
+            <thead>
+              <tr class="TitleBars top-radius white">
+                <th st-sort="Name" class="cursor-pointer" st-ratio="50">{{ "campaigns.sites.siteoptions.name" | translate }}</th>
+                <th st-ratio="50">{{ "campaigns.sites.siteoptions.delete" | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="row1 in siteMDFs track by $index">
+                <td st-ratio="50">
+                  {{row1.Name}}
+                </td>
+                <td st-ratio="50" class="center-text">
+                  <a href="javascript:;" ng-click="deleteMdf(row1)"><i class="fa fa-times delete-icon"></i></a>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="6" class="text-center">
+                  <div st-items-by-page="20" st-pagination=""></div>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <div class="row" ng-show="addSelectClientMDFs.length">
+          <div class="col-md-12 margin-top-bottom-right-10 bold">
+            {{ "campaigns.sites.siteoptions.add-mdf" | translate }}:
+          </div>
+          <div class="col-md-12">
+            <select class="whole-width"
+                    ng-model="fields.addMDFSelectModel"
+                    ng-options="opt1 as opt1.Name for opt1 in addSelectClientMDFs | filter: {Name: '!true'} | orderBy:'Name'" >
+                      <option value=''>-- {{ "campaigns.sites.siteoptions.select-mdf-to-add-to-the-site" | translate }} --</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END Portlet PORTLET-->
+  </div>
+  <div class="col-md-12" ng-if="mDFieldsShow">
+    <!-- BEGIN Portlet PORTLET-->
+    <div class="portlet box">
+      <div
+        crm-portlet-header=""
+        options="setupPGroupPHeader"
+        >
+      </div>
+      <div class="portlet-body" style="display: block;">
+        <div class="row" ng-if="!clientProductGroups.length">
+          <div class="col-md-12">
+            {{ "campaigns.sites.siteoptions.client-does-not-have-product-groups" | translate }}.
+            <a href="javascript:;" ng-click="addPGs()">{{ "campaigns.sites.siteoptions.add-product-groups" | translate }}</a>
+          </div>
+        </div>
+        <section class="margin-top-20" st-table="sitePGs" st-safe-src="sitePGsSafe" ng-if="sitePGsSafe.length">
+          <div class="table-scrollable">
+            <table class="table table-striped table-auto-layout">
+            <thead>
+              <tr class="TitleBars top-radius white">
+                <th st-sort="ID" class="cursor-pointer">{{ "campaigns.sites.siteoptions.id" | translate }}</th>
+                <th st-sort="Name" class="cursor-pointer">{{ "campaigns.sites.siteoptions.name" | translate }}</th>
+                <th>{{ "campaigns.sites.siteoptions.charges" | translate }}</th>
+                <th>{{ "campaigns.sites.siteoptions.with-recurrings" | translate }}</th>
+                <th st-sort="isActive" class="cursor-pointer">{{ "campaigns.sites.siteoptions.active" | translate }}</th>
+                <th>{{ "campaigns.sites.siteoptions.product-api-key" | translate }}</th>
+                <th>{{ "campaigns.sites.siteoptions.delete" | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="row2 in sitePGs">
+                <td>{{row2.ID}}</td>
+                <td>{{row2.Name}}</td>
+                <td class="text-center">
+                  <a href="" ng-click="showChargesOrReccurings(row2.ID, 'charges')">{{ "campaigns.sites.siteoptions.view" | translate }}</a>
+                </td>
+                <td class="text-center">
+                  <a href="" ng-show="row2.WithRecurrings" ng-click="showChargesOrReccurings(row2.ID, 'recurrings')">{{ "campaigns.sites.siteoptions.yes" | translate }}</a>
+                  <span ng-hide="row2.WithRecurrings">{{ "campaigns.sites.siteoptions.no" | translate }}</span>
+                </td>
+                <td class="text-center">{{row2.IsActive ? 'Yes' : 'No'}}</td>
+                <td>{{row2.ProductGroupGUID}}</td>
+                <td class="center-text">
+                  <a ng-click="deletePg(row2)"><i class="fa fa-times delete-icon"></i></a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+          <div class="center-text">
+            <div st-items-by-page="10" st-pagination=""></div>
+          </div>
+        </section>
+        <div class="row margin-top-10" ng-show="addSelectClientPGs.length">
+          <div class="col-md-12 margin-top-bottom-right-10 bold">
+            {{ "campaigns.sites.siteoptions.add-product-group" | translate }}:
+          </div>
+          <div class="col-md-4">
+            <select class="whole-width"
+                    ng-model="fields.addPGSelectModel"
+                    ng-options="opt2 as opt2.Name for opt2 in addSelectClientPGs | orderBy:'Name' ">
+                    <option value=''>-- {{ "campaigns.sites.siteoptions.select-product-group-to-add-to-the-site" | translate }} --</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END Portlet PORTLET-->
+  </div>
+</div>
+
+<section ng-if="resolvedSiteDetails">
+  <div class="row" id="email-autoresponders">
+    <div class="col-md-12">
+      <div class="portlet box">
+        <div crm-portlet-header options="{title: 'Setup Email Autoresponders'}">
+        </div>
+        <div class="portlet-body" style="display: block;">
+          <a href="javascript:;" class="btn btn-success btn-lg search-box ApplyColor" ng-click="addNewItem('emails', eventsDataSafe)">{{ "campaigns.sites.siteoptions.add-new" | translate }}</a>
+          <section st-table="eventsData" st-safe-src="eventsDataSafe">
+            <div class="table-scrollable" ng-show="eventsDataSafe.length">
+              <table class="table table-striped table-auto-layout">
+                <thead>
+                <tr class="TitleBars top-radius white">
+                  <th st-ratio="5" class="cursor-pointer" st-sort="id">{{ "campaigns.sites.siteoptions.id" | translate }}</th>
+                  <th st-ratio="15" class="cursor-pointer" st-sort="name">{{ "campaigns.sites.siteoptions.name" | translate }}</th>
+                  <th st-ratio="10" class="cursor-pointer" st-sort="SmtpServer">{{ "campaigns.sites.siteoptions.smtp" | translate }}</th>
+                  <th st-ratio="15" class="cursor-pointer" st-sort="EventTypeName">{{ "campaigns.sites.siteoptions.type" | translate }}</th>
+                  <th st-ratio="15" class="cursor-pointer" st-sort="TemplateName">{{ "campaigns.sites.siteoptions.template" | translate }}</th>
+                  <th st-ratio="5" class="cursor-pointer" st-sort="IsActive">{{ "campaigns.sites.siteoptions.is-active" | translate }}</th>
+                  <th st-ratio="20">{{ "campaigns.sites.siteoptions.checked-charges" | translate }}</th>
+                  <th st-ratio="15">{{ "campaigns.sites.siteoptions.charges" | translate }}</th>
+                  <th st-ratio="5">{{ "campaigns.sites.siteoptions.delete" | translate }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="row in eventsData">
+                  <td st-ratio="5">{{row.id}}</td>
+                  <td st-ratio="15">{{row.name}}</td>
+                  <td st-ratio="10">{{row.SmtpServer}}</td>
+                  <td st-ratio="15">{{row.EventTypeName}}</td>
+                  <td st-ratio="15">{{row.TemplateName}}</td>
+                  <td st-ratio="5">{{row.IsActive ? 'Yes' : 'No'}}</td>
+                  <td st-ratio="20">
+                    <span ng-hide="row.Charges.length">Global</span>
+                    <span ng-repeat="charge in row.Charges"><span ng-if="$index!=0">, </span> {{(chargesData | filterByField: {id: charge})[0].name}}</span>
+                  </td>
+                  <td st-ratio="15">
+                    <section custom-tooltip>
+                      <div class="link cursor-pointer" style="width: 110px;color: #5b9bd1;" ng-click="chargeOptions[$index].rowCharges=row.Charges || [];openOrCloseOption($index, 'chargeOptions');">{{ "campaigns.sites.siteoptions.select-charges" | translate }}
+                        <i class="fa" style="font-size: 10px" ng-class="{'fa-chevron-up': chargeOptions[$index].show, 'fa-chevron-right': !chargeOptions[$index].show}"></i>
+                      </div>
+                      <div class="custom-tooltip charges-dropdown" style="height: 98px" ng-show="chargeOptions[$index].show">
+                        <div class="charges-dropdown-body">
+                          <div class="charges-dropdown-body-close">
+                            <a class="btn btn-success pull-left" ng-click="saveCharges(row, 'emails', chargeOptions[$index].rowCharges);chargeOptions[$index].show=false;">{{ "campaigns.sites.siteoptions.save" | translate }}</a>
+
+                            <i class="fa fa-times pull-right" ng-click="chargeOptions[$index].show=false"></i>
+                          </div>
+                          <section style="text-align: left" ng-init="chargeOptions[$index].type= (chargeOptions[$index].rowCharges.length ? 'Specific products' : 'Global')">
+                            <label class="radio-inline" style="text-align: left" ng-click="chargeOptions[$index].type='Global';chargeOptions[$index].rowCharges=[];">
+                              <div class="radio">
+                                <span ng-class="{checked: chargeOptions[$index].type=='Global'}">
+                                  <input type="radio">
+                                </span>
+                              </div>
+                              Global
+                            </label>
+                            <br/>
+                            <label class="radio-inline" style="text-align: left" ng-click="chargeOptions[$index].type='Specific products';">
+                              <div class="radio">
+                                <span ng-class="{checked: chargeOptions[$index].type=='Specific products'}">
+                                  <input type="radio">
+                                </span>
+                              </div>
+                              {{ "campaigns.sites.siteoptions.specific-products" | translate }}
+                            </label>
+                            <div class="checkbox-list" style="margin-left: 20px" ng-show="chargeOptions[$index].type=='Specific products'" ng-init="mainIndex=$index">
+                              <label class="default checkbox-" style="text-align: left" ng-repeat="charge in chargesData | orderBy:'name'" ng-click="selectPG(chargeOptions[mainIndex], charge.id, 'eventsData')">
+                                <div class="checker">
+                                  <span ng-class="{checked: chargeOptions[mainIndex].rowCharges.indexOf(charge.id)>-1}"></span>
+                                </div>
+                                {{charge.name}}
+                              </label>
+                            </div>
+                          </section>
+                        </div>
+                      </div>
+                    </section>
+                  </td>
+                  <td st-ratio="5">
+                    <i class="fa fa-times delete-icon" ng-click="unassignEvent(row.id, 'eventsData')"></i>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="center-text">
+              <div st-items-by-page="10" st-pagination=""></div>
+            </div>
+            <div class="alert alert-warning" role="alert" ng-hide="eventsData.length">{{ "campaigns.sites.siteoptions.no-data" | translate }}</div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" id="terms-offers">
+    <div class="col-md-12">
+      <div class="portlet box">
+        <div crm-portlet-header options="{title: 'campaigns.sites.siteoptions.setup-offer-image-and-terms'}">
+        </div>
+        <div class="portlet-body" style="display: block;" st-table="offersData" st-safe-src="offersDataSafe">
+          <a href="javascript:;" class="btn btn-success btn-lg search-box ApplyColor" ng-click="addNewItem('offers', offersDataSafe)">{{ "campaigns.sites.siteoptions.add-new" | translate }}</a>
+          <div class="table-scrollable" ng-show="offersData.length">
+            <table class="table table-striped table-auto-layout">
+              <thead>
+              <tr class="TitleBars top-radius white">
+                <th st-ratio="5" class="cursor-pointer" st-sort="id">{{ "campaigns.sites.siteoptions.id" | translate }}</th>
+                <th st-ratio="25" class="cursor-pointer" st-sort="name">{{ "campaigns.sites.siteoptions.name" | translate }}</th>
+                <th st-ratio="30" class="cursor-pointer" st-sort="Domain">{{ "campaigns.sites.siteoptions.domain" | translate }}</th>
+                <th st-ratio="20">{{ "campaigns.sites.siteoptions.selected-charges" | translate }}</th>
+                <th st-ratio="15">{{ "campaigns.sites.siteoptions.charges" | translate }}</th>
+                <th st-ratio="5">{{ "campaigns.sites.siteoptions.delete" | translate }}</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr ng-repeat="row in offersData">
+                <td st-ratio="5">{{row.id}}</td>
+                <td st-ratio="25">{{row.name}}</td>
+                <td st-ratio="30">{{row.Domain}}</td>
+                <td st-ratio="20">
+                  <span ng-hide="row.Charges.length">{{ "campaigns.sites.siteoptions.global" | translate }}</span>
+                  <span ng-repeat="charge in row.Charges"><span ng-if="$index!=0">, </span> {{(chargesData | filterByField: {id: charge})[0].name}}</span>
+                </td>
+                <td st-ratio="15">
+                  <section custom-tooltip>
+                    <a class="link cursor-pointer" style="width: 110px;color: #5b9bd1;" ng-click="chargeOptionsOffers[$index].rowCharges=row.Charges || [];openOrCloseOption($index, 'chargeOptionsOffers');">{{ "campaigns.sites.siteoptions.select-charges" | translate }}
+                      <i class="fa" style="font-size: 10px" ng-class="{'fa-chevron-up': chargeOptionsOffers[$index].show, 'fa-chevron-right': !chargeOptionsOffers[$index].show}"></i>
+                    </a>
+
+                    <div class="custom-tooltip charges-dropdown" style="height: 98px" ng-show="chargeOptionsOffers[$index].show">
+                      <div class="charges-dropdown-body">
+                        <div class="charges-dropdown-body-close">
+                          <a class="btn btn-success pull-left" ng-click="saveCharges(row, 'offers', chargeOptionsOffers[$index].rowCharges);chargeOptionsOffers[$index].show=false;">{{ "campaigns.sites.siteoptions.save" | translate }}</a>
+                          <i class="fa fa-times pull-right" ng-click="chargeOptionsOffers[$index].show=false"></i>
+                        </div>
+                        <section style="text-align: left" ng-init="chargeOptionsOffers[$index].type= (chargeOptionsOffers[$index].rowCharges.length>0 ? 'Specific products' : 'Global')">
+                          <label class="radio-inline" style="text-align: left" ng-click="chargeOptionsOffers[$index].type='Global';chargeOptionsOffers[$index].rowCharges=[];">
+                            <div class="radio">
+                              <span ng-class="{checked: chargeOptionsOffers[$index].type=='Global'}">
+                                <input type="radio">
+                              </span>
+                            </div>
+                            {{ "campaigns.sites.siteoptions.global" | translate }}
+                          </label>
+                          <br/>
+                          <label class="radio-inline" style="text-align: left" ng-click="chargeOptionsOffers[$index].type='Specific products';">
+                            <div class="radio">
+                              <span ng-class="{checked: chargeOptionsOffers[$index].type=='Specific products'}">
+                                <input type="radio">
+                              </span>
+                            </div>
+                            {{ "campaigns.sites.siteoptions.specific-products" | translate }}
+                          </label>
+                          <div class="checkbox-list" style="margin-left: 20px" ng-show="chargeOptionsOffers[$index].type=='Specific products'" ng-init="mainIndex=$index">
+                            <label class="default checkbox-" style="text-align: left" ng-repeat="charge in chargesData | orderBy:'name'" ng-click="selectPG(chargeOptionsOffers[mainIndex], charge.id, 'offersData')">
+                              <div class="checker">
+                                <span ng-class="{checked: chargeOptionsOffers[mainIndex].rowCharges.indexOf(charge.id)>-1}"></span>
+                              </div>
+                              {{charge.name}}
+                            </label>
+                          </div>
+                        </section>
+                      </div>
+                    </div>
+                  </section>
+                </td>
+                <td st-ratio="5">
+                  <i class="fa fa-times delete-icon" ng-click="unassignEvent(row.id, 'offersData')"></i>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="center-text">
+            <div st-items-by-page="20" st-pagination=""></div>
+          </div>
+          <div class="alert alert-warning" role="alert" ng-hide="offersData.length">{{ "campaigns.sites.siteoptions.no-data" | translate }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row margin-bottom-10">
+    <div class="col-md-12" ng-if="showSiteSaved">
+      <div class="Metronic-alerts alert alert-success fade in font-size-15">
+        <a href="javascript:;" ng-click="closeNewSiteIDNotice()"><i class="fa text-FontColor fa-times close"></i></a>
+        {{ "campaigns.sites.siteoptions.site-options-saved" | translate }}.
+      </div>
+    </div>
+    <div class="col-md-12" ng-if="showSiteSavedError">
+      <div class="Metronic-alerts alert alert-warning fade in font-size-15">
+        <a href="javascript:;" ng-click="closeNewSiteIDNotice()"><i class="fa text-FontColor fa-times close"></i></a>
+        {{ "campaigns.sites.siteoptions.site-save-error!" | translate }}
+      </div>
+    </div>
+  </div>
+  <div class="row margin-bottom-20">
+    <div class="col-md-12" style="text-align: center">
+      <a href="javascript:;" class="btn btn-success btn-lg ApplyColor" style="width: 300px;" ng-click="saveEdited(siteOptionsForm.$valid)" ng-disabled="saving">
+        <span ng-show="saving">
+          ...{{ "campaigns.sites.siteoptions.saving" | translate }}...
+        </span>
+        <span ng-hide="saving">
+          <i class="fa fa-arrow-right"></i>
+          {{ "campaigns.sites.siteoptions.save" | translate }}
+        </span>
+      </a>
+    </div>
+  </div>
+</section>

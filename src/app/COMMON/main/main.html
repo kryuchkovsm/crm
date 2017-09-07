@@ -1,0 +1,128 @@
+<div class="page-header" ng-if="loggedIn() && currentStateName!='main.login' && currentStateName!='main.newpassword'">
+  <!-- BEGIN HEADER TOP -->
+  <div class="page-header-top">
+    <div class="container menu-container">
+      <div class="page-logo">
+        <a href="#/"  title="Home">
+          <img ng-src="{{logoImage}}" style="max-width: 100%;">
+          <!--<div class="CustomLogo"></div>-->
+        </a>
+      </div>
+      <a href="javascript:;" class="menu-toggler"><i class="fa fa-align-justify fa-4x"></i></a>
+      <div class="top-menu">
+        <ul class="nav navbar-nav">
+          <li class="dropdown dropdown-user dropdown-dark">
+            <i class="fa fa-user fa-4x"></i>
+            <span class="username username-hide-mobile">{{commonObject().Username}}</span>
+          </li>
+          <a href="#login" >
+            <span class="username" ng-click="logout()">{{ "common.main.main.logout" | translate }}</span>
+          </a>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="page-header-menu ThemeColor">
+    <div class="container menu-container">
+      <div class="hor-menu" >
+        <ul class="nav navbar-nav" ng-show="commonObject().AuthorizedSections.length">
+          <li class="divider-vertical MenuDelimiterColor"></li>
+          <li class="menu-dropdown mega-menu-dropdown" ng-repeat-start="authSection in commonObject().AuthorizedSections">
+            <a data-hover="megamenu-dropdown" data-close-others="true"
+               ng-class="{ActiveElementColor: (authSection.RouteName && currentSection.RouteName==authSection.RouteName) ||
+               (!authSection.RouteName && getSectionRouteNames(authSection).indexOf(currentSection.RouteName)>-1)}"
+               data-toggle="dropdown" href="javascript:;" class="dropdown-toggle ActiveElementHoverColor" ng-click="authSection.RouteName ? go(authSection.RouteName) : return">
+              <i class="{{iconsClass[authSection.name]}}"></i>
+              {{authSection.name | translate}}
+            </a>
+            <ul class="dropdown-menu ThemeColor" ng-if="authSection.Sections.length>0">
+              <li>
+                <div class="mega-menu-content">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <ul class="mega-menu-submenu">
+                        <section ng-repeat="section in authSection.Sections | orderBy:'SectionOrder'">
+                          <li ng-if="section.SectionOrder != -1">
+                            <a ng-if="section.Sections.length==0 || !section.Sections" 
+                              class="ActiveElementHoverColor" 
+                              ng-class="{ActiveElementColor: currentSection.RouteName==section.RouteName}" 
+                              ui-sref="{{section.RouteName}}({clientID: ''})">
+                              <i class="fa fa-angle-right"></i>
+                              {{section.name | translate}}
+                            </a>
+                            <a ng-if="section.Sections.length>0" class="ActiveElementHoverColor" 
+                              ng-class="{ActiveElementColor: getSectionRouteNames(section).indexOf(currentSection.RouteName)>-1}" 
+                              href="javascript:;" 
+                              ng-click="submenu.Toggle[$index]=!submenu.Toggle[$index]">
+                              <i class="fa fa-angle-right" ng-show="!submenu.Toggle[$index]"></i>
+                              <i class="fa fa-angle-down" ng-show="submenu.Toggle[$index]"></i>
+                              {{section.name | translate}}
+                            </a>
+                          </li>
+                          <div ng-if="section.Sections.length>0" ng-show="submenu.Toggle[$index]" 
+                            class="padding-left-10 ngBounce" ng-animate="'animate'">
+                            <li ng-repeat="subSection in section.Sections">
+                              <a class="ActiveElementHoverColor" 
+                                ng-class="{ActiveElementColor: currentSection.RouteName==subSection.RouteName}" 
+                                ui-sref="{{subSection.RouteName}}">
+                                <i class="fa fa-angle-right"></i>
+                                {{subSection.name | translate}}
+                              </a>
+                            </li>
+                          </div>
+                        </section>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </li>
+          <li class="divider-vertical MenuDelimiterColor" ng-repeat-end></li>
+        </ul>
+      </div>
+      <!-- END MEGA MENU -->
+    </div>
+  </div>
+
+  <div class="header-bottom1">
+    <div class="container"  style="max-width: 1023px">
+      <ul class="page-breadcrumb breadcrumb">
+        <li id='secondBreadcrumb' class="active">
+          {{ currentSection.name | translate }}
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- END HEADER MENU -->
+</div>
+
+<div class="page-container">
+  <div class="PageContentBg page-content">
+    <div class="container body-container">
+      <div class="center-text" ng-show="loadingRequest()">
+        <div class="cssload-loader">{{ "common.main.main.loading" | translate }}...</div>
+      </div>
+      <div ui-view class="margin-top-20 margin-bottom-20"></div>
+    </div>
+  </div>
+  <div class="color-grey trademark">
+    {{loginInfo().FooterText || commonObject().FooterText}}
+  </div>
+
+</div>
+
+<section ng-include="'app/SUPPORT/widget/widget.html'"></section>
+
+<script type="text/ng-template" id="customTablePagination.html">
+  <nav ng-if="pages.length >= 2">
+    <ul class="pagination custom-pagintaion">
+      <li><a ng-click="selectPage(1)">First</a>
+      </li><li><a ng-click="selectPage(currentPage - 1)"><i class="fa fa-chevron-left"></i></a>
+      </li><li><a class="padding-4"><page-select></page-select> {{ "common.main.main.of" | translate }} {{numPages}}</a>
+      </li><li><a ng-click="selectPage(currentPage + 1)"><i class="fa fa-chevron-right"></i></a>
+      </li><li><a ng-click="selectPage(numPages)">{{ "common.main.main.last" | translate }}</a></li>
+    </ul>
+  </nav>
+</script>

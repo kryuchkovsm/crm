@@ -1,0 +1,164 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="row ">
+      <form name="editCustomerForm" ng-model="editCustomerForm"  novalidate>
+        <div class="col-md-4">
+            <div class="portlet box">
+              <div class="portlet-title ThemeColor">
+                <div class="caption">
+                  {{ "administration.configcenter.configcenter.select-services" | translate }}
+                </div>
+              </div>
+              <div class="portlet-body" style="padding: 5px">
+                <div class="well well-sm well-light form-group margin-bottom-0">
+                  <span class="block ng-binding">{{ "administration.configcenter.configcenter.client(s)" | translate }}:</span>
+                  <span class="inline-block pull-right weight-bold ng-binding"></span>
+                  <select class="form-control search-box whole-width" ng-model="selectedClient"
+                          ng-options="item as item.CompanyName for item in fullConfig.Clients track by item.ClientId">
+                    <option value="" selected>- {{ "administration.configcenter.configcenter.please-select-client" | translate }} -</option>
+                  </select>
+                </div>
+                <div class="well well-sm well-light form-group margin-bottom-0" ng-show="selectedClient.ClientId">
+                  <span class="block ng-binding">{{ "administration.configcenter.configcenter.available-services" | translate }}:</span>
+                  <span class="inline-block pull-right weight-bold ng-binding"></span>
+                  <select class="form-control search-box whole-width" ng-model="selectedService"
+                          ng-options="item as item.ServiceName for item in fullConfig.Services track by item.ServiceId">
+                    <option value="" selected>- {{ "administration.configcenter.configcenter.please-select-service" | translate }} -</option>
+                  </select>
+                </div>
+                <div class="well well-sm well-light form-group margin-bottom-0" ng-show="selectedService">
+                  <span class="block ng-binding">{{ "administration.configcenter.configcenter.available-providers" | translate }}:</span>
+                  <select class="form-control search-box whole-width" ng-model="selectedProvider"
+                          ng-options="item as item.ProviderName for item in availableProviders | filterByField: {ServiceId: selectedService.ServiceId}">
+                    <option value="" selected>- {{ "administration.configcenter.configcenter.please-select-provider" | translate }} -</option>
+                  </select>
+                </div>
+
+              </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+          <div class="portlet box">
+            <div class="portlet-title ThemeColor">
+              <div class="caption">
+                {{ "administration.configcenter.configcenter.options" | translate }}
+              </div>
+            </div>
+            <div class="portlet-body">
+              <div class="alert alert-warning" role="alert" ng-show="!selectedProvider">{{ "administration.configcenter.configcenter.no-data" | translate }}</div>
+              <section ng-include src="'providerOptions.html'"></section>
+              <div class="row" ng-if="selectedProvider && !selectedService.IsClientLevel">
+                <div class="col-md-12 margin-bottom-30">
+                  <div class="alert alert-warning" role="alert" ng-hide="selectedClient.Sites.length">{{ "administration.configcenter.configcenter.no-data" | translate }}</div>
+                  <section st-table="clientSites" st-safe-src="selectedClient.Sites" ng-show="selectedClient.Sites.length">
+                    <div class="table-scrollable">
+                      <table class="table table-striped table-auto-layout">
+                        <thead>
+                          <tr class="TitleBars top-radius white">
+                            <th st-ratio="{{selectedService.ServiceId==serviceType.Grapi ? 20 : 45}}" class="cursor-pointer" st-sort="SiteID">{{ "administration.configcenter.configcenter.site-id" | translate }}</th>
+                            <th st-ratio="{{selectedService.ServiceId==serviceType.Grapi ? 30 : 45}}" class="cursor-pointer" st-sort="Name">{{ "administration.configcenter.configcenter.site-name" | translate }}</th>
+                            <th class="cursor-pointer">#</th>
+                            <th class="cursor-pointer" ng-if="selectedService.ServiceId==serviceType.Grapi">{{ "administration.configcenter.configcenter.listid-(i)" | translate }}</th>
+                            <th class="cursor-pointer" ng-if="selectedService.ServiceId==serviceType.Grapi">{{ "administration.configcenter.configcenter.listid-(c)" | translate }}</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr ng-repeat="row in clientSites track by $index">
+                            <td>{{row.SiteID}}</td>
+                            <td>{{row.Name}}</td>
+                            <td class="center-text" style="padding-top: 13px;padding-bottom: 0px;">
+                              <div class="checker" ng-click="row.Checked=!row.Checked;selectCheckedSite(row)">
+                                <span ng-class="{checked: row.Checked}"></span>
+                              </div>
+                            </td>
+                            <td ng-if="selectedService.ServiceId==serviceType.Grapi">
+                              <input type="text" class="form-control" id="1" style="height: 25px" name="listIDI" ng-model="(row.Providers | filterByField: {ProviderId: selectedProvider.ProviderId })[0].ListIdI" ng-disabled="!row.Checked">
+                            </td>
+                            <td ng-if="selectedService.ServiceId==serviceType.Grapi">
+                              <input type="text" class="form-control" id="2" style="height: 25px" name="listIDC" ng-model="(row.Providers | filterByField: {ProviderId: selectedProvider.ProviderId })[0].ListIdC" ng-disabled="!row.Checked">
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="center-text">
+                      <div  st-items-by-page="10" st-pagination=""></div>
+                    </div>
+                  </section>
+                </div>
+              </div>
+              <div class="row" ng-if="selectedProvider">
+                <div class="col-md-4 col-md-offset-4">
+                  <a href="javascript:;" class="btn btn-lg ApplyColor full-width"  ng-click="save(selectedClient, selectedProvider)" ng-disabled="saving">
+                    <span ng-hide="saving">
+                      <i class="fa fa-save"></i>
+                      {{ "administration.configcenter.configcenter.save" | translate }}
+                    </span>
+                    <span ng-show="saving">...{{ "administration.configcenter.configcenter.saving" | translate }}...</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script type="text/ng-template" id="providerOptions.html">
+  <div class="row" ng-show="selectedProvider">
+    <section ng-repeat="option in selectedProvider.Options">
+      <div ng-class="{'col-md-12': !selectedService.IsClientLevel, 'col-md-6': selectedService.IsClientLevel}">
+        <div class="well well-sm well-light form-group" ng-class="{'bg-greyEEE': selectedService.IsClientLevel, 'margin-bottom-0': !selectedService.IsClientLevel}">
+          <span class="block ng-binding">{{option.OptionName}}:</span>
+          <span class="inline-block pull-right weight-bold ng-binding"></span>
+          <section ng-switch="option.OptionType">
+            <section ng-switch-when="0">
+              <input type="number" class="form-control" ng-model="option.OptionValue" />
+            </section>
+            <section ng-switch-when="1">
+              <input type="text" class="form-control" ng-model="option.OptionValue" />
+            </section>
+            <section ng-switch-when="3">
+              <input type="number" placeholder="0" class="form-control search-box first-combo" ng-model="option.OptionValue">
+              <select class="form-control search-box second-combo ng-pristine ng-untouched ng-valid" ng-model="option.SelectedDelay">
+                <option value="">{{ "administration.configcenter.configcenter.select-please" | translate }}</option>
+                <option value="h">{{ "administration.configcenter.configcenter.hours" | translate }}</option>
+                <option value="d">{{ "administration.configcenter.configcenter.days" | translate }}</option>
+                <option value="m">{{ "administration.configcenter.configcenter.months" | translate }}</option>
+              </select>
+            </section>
+            <section ng-switch-when="4">
+              <select class="form-control" ng-model="option.OptionValue">
+                <option value="" ng-selected="!fr">- {{ "administration.configcenter.configcenter.select-frequency" | translate }} -</option>
+                <option ng-repeat="fr in [5,10,30,60]" ng-selected="fr==option.OptionValue" value="{{fr}}">{{fr}}</option>
+              </select>
+            </section>
+            <section ng-switch-when="2">
+              <div class="checkbox-list ">
+                <label class="default checkbox-" style="height: 39px" ng-click="option.OptionValue=!option.OptionValue">
+                  <div class="checker">
+                    <span ng-class="{checked: option.OptionValue}"></span>
+                  </div> {{option.OptionName}}
+                </label>
+              </div>
+            </section>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <div class="checkbox-list col-md-12">
+      <div class="well well-sm well-light form-group"
+        <label class="default checkbox-" ng-click="selectCheckedProvider(selectedProvider)">
+          <div class="checker">
+            <span ng-class="{checked: isActiveProvider}"></span>
+          </div> {{ "administration.configcenter.configcenter.is-active-provider" | translate }}
+        </label>
+      </div>
+    </div>
+  </div>
+
+</script>

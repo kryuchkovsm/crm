@@ -1,0 +1,58 @@
+<div class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a href="javascript:;" ng-click="close('false')" data-dismiss="modal"><i class="fa fa-times close"></i></a>
+        <h4 class="modal-title">{{modalTitle}}</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <form name="addProductGroupForm" ng-model="addProductGroupForm">
+              <div ng-if="!saved"
+                crm-text-input=""
+                options="nameTxtOptions"
+                value="fields.nameTxtValue"
+                >
+              </div>
+              <div ng-if="!saved && data.groupToEdit.ID"
+                crm-radio-list=""
+                options="activeRLOptions"
+                value="fields.activeRLValue">
+              </div>
+            </form>
+            <div class="panel panel-success" ng-if="saved">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  {{savedMessage}}
+                </h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-md-6">
+            <a href="javascript:;" class="btn btn-lg CancelColor full-width" ng-click="close('false')"  data-dismiss="modal">
+              <i class="fa fa-rotate-left"></i>
+              {{ "modals.campaigns.products.addproductgroup.back" | translate }}
+            </a>
+          </div>
+          <div class="col-md-6" ng-if="!saved">
+            <a href="javascript:;" class="btn btn-lg ApplyColor full-width" ng-click="save(fields)">
+              <i class="fa fa-arrow-right"></i>
+              {{ "modals.campaigns.products.addproductgroup.save" | translate }}
+            </a>
+          </div>
+          <div class="col-md-6" ng-if="saved">
+            <a href="javascript:;" class="btn btn-lg ApplyColor full-width" ng-click="addAnother()" ng-if="saved">
+              <i class="fa fa-arrow-right"></i>
+              {{ "modals.campaigns.products.addproductgroup.add-another" | translate }}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

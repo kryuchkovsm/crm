@@ -1,0 +1,123 @@
+<div class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content modal-middle-width">
+      <div class="modal-header">
+        <a href="javascript:;" ng-click="close('false')" data-dismiss="modal"><i class="fa fa-times close"></i></a>
+        <h4 class="modal-title">{{modalTitle}}</h4>
+      </div>
+      <div class="modal-body">
+        <form name="addForm" ng-model="addForm">
+          <div class="row">
+          <div class="col-md-6">
+            <div ng-if="!saved"
+                 crm-text-input=""
+                 options="inputOptions.companynameTxtOptions"
+                 value="fields.companynameTxtValue"
+              >
+            </div>
+            <div ng-if="!saved"
+                 crm-text-input=""
+                 options="inputOptions.firstnameTxtOptions"
+                 value="fields.firstnameTxtValue"
+              >
+            </div>
+            <div ng-if="!saved"
+                 crm-text-input=""
+                 options="inputOptions.lastnameTxtOptions"
+                 value="fields.lastnameTxtValue"
+              >
+            </div>
+            <div ng-if="!saved"
+                 crm-text-input=""
+                 options="inputOptions.phoneTxtOptions"
+                 value="fields.phoneTxtValue"
+              >
+            </div>
+            <div ng-if="!saved"
+                 crm-text-input=""
+                 options="inputOptions.emailTxtOptions"
+                 value="fields.emailTxtValue"
+              >
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div ng-if="!saved"
+                 crm-text-input=""
+                 options="inputOptions.address1TxtOptions"
+                 value="fields.address1TxtValue"
+              >
+            </div>
+            <div ng-if="!saved"
+                 crm-text-input=""
+                 options="inputOptions.address2TxtOptions"
+                 value="fields.address2TxtValue"
+              >
+            </div>
+            <div ng-if="!saved"
+                 crm-text-input=""
+                 options="inputOptions.cityTxtOptions"
+                 value="fields.cityTxtValue"
+              >
+            </div>
+            <div ng-if="!saved"
+                 crm-text-input=""
+                 options="inputOptions.stateTxtOptions"
+                 value="fields.stateTxtValue"
+              >
+            </div>
+            <div ng-if="!saved"
+                 crm-text-input=""
+                 options="inputOptions.zipTxtOptions"
+                 value="fields.zipTxtValue"
+              >
+            </div>
+          </div>
+          </div>
+        </form>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="panel panel-danger" ng-if="errorMessage">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  {{errorMessage}}
+                </h4>
+              </div>
+            </div>
+            <div class="panel panel-success" ng-if="saved">
+              <div class="panel-heading" style="overflow: hidden;">
+                <h4 class="panel-title">
+                  {{savedMessage}}
+                </h4>
+              </div>
+            </div>
+            <div class="alert alert-info center-text" role="alert" ng-show="saving">
+              ...{{ "modals.administration.client.addclient.saving" | translate }}...
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="row">
+          <div ng-class="{'col-md-4': saved, 'col-md-6': !saved}">
+            <a href="javascript:;" class="btn btn-lg CancelColor full-width"  ng-click="close('false')" ng-disabled="saving">
+              <i class="fa fa-rotate-left"></i>
+              {{ "modals.administration.client.addclient.back" | translate }}
+            </a>
+          </div>
+          <div ng-class="{'col-md-4': saved, 'col-md-6': !saved}">
+            <a href="javascript:;" class="btn btn-lg ApplyColor full-width"  ng-click="save(fields)" ng-if="!saved" ng-disabled="saving">
+              <i class="fa fa-arrow-right"></i>
+              {{ "modals.administration.client.addclient.save" | translate }}
+            </a>
+          </div>
+          <div class="col-md-4">
+            <a href="javascript:;" class="btn btn-lg ApplyColor full-width"  ng-click="addAnother()" ng-if="saved">
+              <i class="fa fa-arrow-right"></i>
+              {{ "modals.administration.client.addclient.add-another" | translate }}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

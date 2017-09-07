@@ -1,0 +1,136 @@
+<div class="row">
+  <div class="col-md-12">
+    <!-- BEGIN Portlet PORTLET-->
+    <div class="portlet box">
+      <div class="portlet-title ThemeColor">
+        <div class="caption">
+          {{ "support.support.support.tickets" | translate }}
+        </div>
+      </div>
+      <div class="portlet-body contactus-page">
+        <div class="row">
+          <div class="col-md-8 left-container">
+            <div class="alert alert-success alert-dismissible" role="alert" ng-show="sentMessage">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="sentMessage=false"><span aria-hidden="true">&times;</span></button>
+              {{ "support.support.support.your-message-has-been-sent.-we'll-notify-you-here-and-by-email-when-we-reply." | translate }}
+            </div>
+            <section class="create-ticket-section ngFlipX" ng-show="createType=='ticket'" ng-animate="'animate'">
+              <h3>{{ "support.support.support.create-new-a-ticket" | translate }}</h3>
+              <p class="font-size-15">
+                {{ "support.support.support.have-an-issue?-create-a-ticket-and-a-representative-will-get-back-to-you-as-soon-as-possible." | translate }}
+              </p>
+              <div style="margin-top: 6%;">
+                <form name="ticketForm" class="form-horizontal">
+                  <div class="form-group" ng-class="{'has-error': supportForm.email.$invalid && submitted}">
+                    <div class="col-sm-4">
+                      <span class="label-name">{{ "support.support.support.subject" | translate }}:</span>
+                    </div>
+                    <div class="col-sm-8" ng-class="{'has-error': ticketForm.subject.$invalid && submitted}">
+                      <input class="form-control" name="subject" ng-model="ticketObj.Subject" type="text" placeholder="Enter Subject" required>
+                      <p class="error-message" ng-show="ticketForm.subject.$error.required && submitted">{{ "support.support.support.subject-is-required" | translate }}</p>
+                    </div>
+                  </div>
+                  <div class="form-group" ng-class="{'has-error': ticketForm.Body.$invalid && submitted}">
+                    <label class="col-sm-4">
+                      <span class="label-name">{{ "support.support.support.ticket-body" | translate }}:</span>
+                    </label>
+                    <div class="col-sm-8">
+                      <textarea class="form-control" style="resize: vertical" name="Body" ng-model="ticketObj.Body" required placeholder="Enter your ticket here"></textarea>
+                      <p class="error-message" ng-show="ticketForm.Body.$error.required && submitted">{{ "support.support.support.ticket-body-is-required-field" | translate }}</p>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-sm-offset-4 col-sm-8">
+                      <a href="javascript:;" class="btn btn-lg search-box ApplyColor full-width" ng-click="submit(ticketForm.$invalid, ticketObj, 'ticket')" ng-disabled="processing">
+                        <span ng-hide="processing">{{ "support.support.support.submit" | translate }}</span>
+                        <span ng-show="processing">...{{ "support.support.support.submitting" | translate }}...</span>
+                      </a>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </section>
+            <section class="contact-us-section ngFlipX" ng-show="createType=='support'" ng-animate="'animate'">
+              <div>
+                <h3>{{ "support.support.support.contact-us" | translate }}</h3>
+                <p class="font-size-15">
+                  {{ "support.support.support.have-a-question,-suggestion,-or-issue-you-need-us-to-look-into" | translate }}?
+                  {{ "support.support.support.please-create-a-ticket-and-we’ll-get-back-to-you-within-24-48-hours" | translate }}
+                </p>
+              </div>
+              <div style="margin-top: 6%;">
+                <form name="supportForm" class="form-horizontal">
+                  <div class="form-group">
+                    <div class="col-sm-4">
+                      <span class="label-name">{{ "support.support.support.username" | translate }}:</span>
+                    </div>
+                    <div class="col-sm-8">
+                      <input class="form-control" ng-model="supportObj.Name" type="text" placeholder="Enter Name">
+                    </div>
+                  </div>
+                  <div class="form-group" ng-class="{'has-error': supportForm.email.$invalid && submitted}">
+                    <div class="col-sm-4">
+                      <span class="label-name">{{ "support.support.support.email" | translate }}:</span>
+                    </div>
+                    <div class="col-sm-8">
+                      <input class="form-control" name="email" ng-model="supportObj.Email" type="email" placeholder="Enter Email" required>
+                      <p class="error-message" ng-show="supportForm.email.$error.email && submitted">Enter valid email please</p>
+                    </div>
+                  </div>
+                  <div class="form-group" ng-class="{'has-error': supportForm.query.$invalid && submitted}">
+                    <label class="col-sm-4">
+                      <span class="label-name">{{ "support.support.support.your-query" | translate }}:</span>
+                    </label>
+                    <div class="col-sm-8">
+                      <textarea class="form-control" style="resize: vertical" name="query" ng-model="supportObj.Query" required placeholder="Enter your message here"></textarea>
+                      <p class="error-message" ng-show="supportForm.query.$error.required && submitted">{{ "support.support.support.query-is-required-field" | translate }}</p>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-sm-offset-4 col-sm-8">
+                      <a href="javascript:;" class="btn btn-lg search-box ApplyColor full-width" ng-click="submit(supportForm.$invalid, supportObj, 'support')" ng-disabled="processing">
+                        <span ng-hide="processing">{{ "support.support.support.submit" | translate }}</span>
+                        <span ng-show="processing">...{{ "support.support.support.submitting" | translate }}...</span>
+                      </a>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </section>
+          </div>
+          <div class="col-md-4 right-container">
+            <div>
+              <h3>{{ "support.support.support.live-chat" | translate }}</h3>
+              <p>{{ "support.support.support.need-to-talk-to-a-live-representative?-click-the-link-below-to-begin-a-live-chat" | translate }}.</p>
+              <p><b>{{ "support.support.support.operator-status" | translate }}:</b> <span class="operator-status">{{ "support.support.support.online" | translate }}</span></p>
+              <p class="center-text" style="font-size: 15px;font-style: italic;color: lightgray;">Coming soon...</p>
+              <!--<a href="javascript:;" class="btn btn-lg search-box ApplyColor full-width">-->
+                <!--Begin Live Chat-->
+              <!--</a>-->
+            </div>
+            <div class="horizontal-divider"></div>
+            <div class="ticket-support">
+              <div ng-show="createType=='support'">
+                <h3>{{ "support.support.support.ticket-support" | translate }}</h3>
+                <p>{{ "support.support.support.have-an-issue?-create-a-ticket-and-a-representative-will-get-back-to-you-as-soon-as-possible." | translate }}</p>
+                <a href="javascript:;" class="btn btn-lg search-box ApplyColor full-width" ng-click="changeType('ticket')" ng-disabled="!zendeskIsAvailable">
+                  {{ "support.support.support.create-a-ticket" | translate }}
+                </a>
+              </div>
+              <div ng-show="createType=='ticket'">
+                <h3>{{ "support.support.support.contact-us" | translate }}</h3>
+                <p>
+                  {{ "support.support.support.have-a-question,-suggestion,-or-issue-you-need-us-to-look-into" | translate }}?
+                  {{ "support.support.support.please-create-a-ticket-and-we’ll-get-back-to-you-within-24-48-hours" | translate }}
+                </p>
+                <a href="javascript:;" class="btn btn-lg search-box ApplyColor full-width" ng-show="createType=='ticket'" ng-click="changeType('support')">
+                  {{ "support.support.support.ask-a-question" | translate }}
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

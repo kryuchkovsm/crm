@@ -1,0 +1,54 @@
+<div class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a href="javascript:;" ng-click="close('false')" data-dismiss="modal"><i class="fa fa-times close"></i></a>
+        <h4 class="modal-title">{{data.modalTitle}}</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12 margin-bottom-20" >
+            <div class="center-text" ng-show="loading" style="margin-top: 35px">
+              <div class="cssload-loader">...{{ "modals.reports.useractivity.loading" | translate }}...</div>
+            </div>
+            <section st-table="grid" st-safe-src="gridSafe" ng-show="gridSafe.length">
+              <div class="table-scrollable">
+                <table class="table table-striped table-auto-layout">
+                  <thead>
+                    <tr class="TitleBars top-radius white">
+                      <th class="cursor-pointer" st-ratio="20" st-sort="DateCreated">{{ "modals.reports.useractivity.date-created" | translate }}</th>
+                      <th class="cursor-pointer" st-ratio="20" st-sort="CustomerID">{{ "modals.reports.useractivity.customer-id" | translate }}</th>
+                      <th class="cursor-pointer" st-ratio="20" st-sort="FirstName">{{ "modals.reports.useractivity.first-name" | translate }}</th>
+                      <th class="cursor-pointer" st-ratio="20" st-sort="LastName">{{ "modals.reports.useractivity.last-name" | translate }}</th>
+                      <th class="cursor-pointer" st-ratio="10" st-sort="Action">{{ "modals.reports.useractivity.action" | translate }}</th>
+                      <th class="cursor-pointer" st-ratio="10" st-sort="TransactionID">{{ "modals.reports.useractivity.transaction-id" | translate }}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="row in grid">
+                      <td st-ratio="20">
+                        <span ng-if="row.DateCreated">{{toDateFormat(row.DateCreated*1000)}}</span>
+                      </td>
+                      <td st-ratio="20">
+                        <a href="" ng-click="goToCustomer(row.CustomerID)">{{row.CustomerID}}</a>
+                      </td>
+                      <td st-ratio="20">{{row.FirstName}}</td>
+                      <td st-ratio="20">{{row.LastName}}</td>
+                      <td st-ratio="10">{{row.Action}}</td>
+                      <td st-ratio="10">{{row.TransactionID}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="center-text">
+                <div st-items-by-page="10" st-pagination=""></div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>

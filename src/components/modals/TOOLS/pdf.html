@@ -1,0 +1,14 @@
+<div class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a href="javascript:;" ng-click="close()"><i class="fa fa-times close"></i></a>
+        <h4 class="modal-title">{{ "modals.tools.pdf.pdf" | translate }}</h4>
+      </div>
+      <div class="modal-body">
+        <div id="ttt"></div>
+        <iframe ng-src="{{trustSrc(data.dataPDF)}}" style="width: 100%;height: {{windowInner.height-150}}px"></iframe>
+      </div>
+    </div>
+  </div>
+</div>

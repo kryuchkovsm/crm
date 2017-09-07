@@ -1,0 +1,12 @@
+<div class="well well-sm well-light bg-greyEEE">
+  <span class="block" ng-if="options.label">{{::options.label}}</span>
+  <form>
+    <div class="checkbox-list">
+      <label class="{{options.class}} checkbox-inline" ng-repeat="option in options.data" ng-click="setSelectedItem(option)">
+        <div class="checker">
+          <span ng-class="{checked: option.value}"></span>
+        </div> {{::option.name}}
+      </label>
+    </div>
+  </form>
+</div>

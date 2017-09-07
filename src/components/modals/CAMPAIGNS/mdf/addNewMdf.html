@@ -1,0 +1,55 @@
+<div class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a href="javascript:;" ng-click="close('false')" data-dismiss="modal"><i class="fa fa-times close"></i></a>
+        <h4 class="modal-title">{{modalTitle}}</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <form name="addMdfForm" novalidate ng-hide="saved">
+              <div class="well well-sm well-light bg-greyEEE form-group" ng-class="{'has-error': submitted && (addMdfForm.newMdf.$invalid || (existingMdfs | filterByField: {Name: fields.nameTxtValue}).length)}">
+                <span class="block">{{ "modals.campaigns.mdf.addnewmdf.name" | translate }}:</span>
+                <input type="text" class="form-control search-box" name="newMdf" ng-model="fields.nameTxtValue" required>
+                <p class="help-block" ng-if="submitted && addMdfForm.newMdf.$error.required">{{ "modals.campaigns.mdf.addnewmdf.the-name-is-required" | translate }}</p>
+                <p class="help-block" ng-show="submitted && (existingMdfs | filterByField: {Name: fields.nameTxtValue}).length">
+                  The {{fields.nameTxtValue}} already exists
+                </p>
+              </div>
+            </form>
+            <div class="panel panel-success" ng-show="saved">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  {{savedMessage}}
+                </h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-md-6">
+            <a href="javascript:;" class="btn btn-lg CancelColor full-width"  ng-click="close('false')"  data-dismiss="modal" ng-disabled="saving">
+              <i class="fa fa-rotate-left"></i>
+              {{ "modals.campaigns.mdf.addnewmdf.back" | translate }}
+            </a>
+          </div>
+          <div class="col-md-6">
+            <a href="javascript:;" class="btn btn-lg ApplyColor full-width"  ng-click="save()" ng-hide="saved" ng-disabled="saving">
+              <i class="fa fa-arrow-right"></i>
+              {{saving ? 'SAVING' : 'SAVE'}}
+            </a>
+          </div>
+          <div class="col-md-6">
+            <a href="javascript:;" class="btn btn-lg ApplyColor full-width" ng-click="addAnother()" ng-show="saved"  ng-disabled="saving">
+              <i class="fa fa-arrow-right"></i>
+              {{ "modals.campaigns.mdf.addnewmdf.add-another" | translate }}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

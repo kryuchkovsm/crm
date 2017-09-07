@@ -1,0 +1,58 @@
+<div class="row" ng-hide="currentStateName=='main.emailtemplates.modify'">
+  <div class="col-md-12">
+    <div class="portlet box">
+      <div
+        crm-portlet-header=""
+        options="{title: 'Email Autoresponders'}"
+        >
+      </div>
+      <div class="portlet-body" style="display: block;">
+        <div class="well well-sm TitleBars"><span class="block">{{ "campaigns.email.templates.templates.email-templates" | translate }}</span></div>
+        <div st-table="emailTemplates" st-safe-src="emailTemplatesSafe">
+
+          <div class="row">
+            <div class="col-md-2" style="text-align: center">
+              <a href="javascript:;" class="btn btn-lg ApplyColor margin-bottom-20 full-width" ng-click="addEditTemplate()">
+                <i class="fa fa-plus"></i>
+                {{ "campaigns.email.templates.templates.add-new" | translate }}
+              </a>
+            </div>
+          </div>
+
+          <div class="table-scrollable">
+            <table class="table table-striped table-auto-layout">
+              <thead>
+              <tr class="TitleBars top-radius white">
+                <th st-ratio="10" class="cursor-pointer" st-sort="id">{{ "campaigns.email.templates.templates.id" | translate }}</th>
+                <th st-ratio="30" class="cursor-pointer" st-sort="name">{{ "campaigns.email.templates.templates.name" | translate }}</th>
+                <th st-ratio="30" class="cursor-pointer" st-sort="TemplateType">{{ "campaigns.email.templates.templates.template-type" | translate }}</th>
+                <!--<th st-ratio="15" class="cursor-pointer" st-sort="IsActive">Is Active</th>-->
+                <th st-ratio="15">{{ "campaigns.email.templates.templates.actions" | translate }}</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr ng-repeat="row in emailTemplates">
+                <td st-ratio="10" ng-bind="row.id"></td>
+                <td st-ratio="30" ng-bind="row.name"></td>
+                <td st-ratio="30" ng-bind="row.TemplateType"></td>
+                <!--<td st-ratio="15" ng-bind="row.IsActive ? 'Yes' : 'No'"></td>-->
+                <td st-ratio="15">
+                  <a ng-click="addEditTemplate(row)"><i class="fa fa-pencil"></i></a>
+                  <a ng-click="removeTemplate(row)"><i class="fa fa-times"></i></a>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="center-text">
+            <div st-items-by-page="10" st-pagination></div>
+          </div>
+        </div>
+        <div class="alert alert-warning" role="alert" ng-hide="emailTemplatesSafe.length">{{ "campaigns.email.templates.templates.no-data" | translate }}</div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+<div ui-view></div>

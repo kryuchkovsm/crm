@@ -1,0 +1,238 @@
+<div class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content modal-middle-width">
+      <!--Modal header-->
+      <div class="modal-header no-padding no-border">
+
+        <div class="header-button" ng-show="userInfo" ng-class="userInfo"  style="width: 33%; margin-right: 2px;">
+          {{ "modals.administration.user.adduser.user-information" | translate }}
+        </div>
+        <div class="header-button" ng-show="!userInfo"  style="width: 33%; margin-right: 2px; border: 0px;">
+          &nbsp;
+        </div>
+
+        <div class="header-button" ng-show="sectionAccess" ng-class="sectionAccess" style="width: 30%; margin-right: 2px;">
+          {{ "modals.administration.user.adduser.section-access" | translate }}
+        </div>
+        <div class="header-button" ng-show="!sectionAccess" style="width: 30%; margin-right: 2px; border: 0px;">
+          &nbsp;
+        </div>
+
+        <div class="header-button" ng-show="clientSiteAccess" ng-class="clientSiteAccess"  style="width: 30%;">
+          {{ "modals.administration.user.adduser.client/site-access" | translate }}
+        </div>
+        <div class="header-button" ng-show="!clientSiteAccess"  style="width: 30%; border: 0px;">
+          &nbsp;
+        </div>
+
+      </div>
+      <!--Modal header end-->
+      <!--Modal body-->
+      <div class="modal-body">
+
+          <!--First tab-->
+        <div class="row">
+          <div class="col-md-12" ng-show="userInfo">
+            <form name="addUserForm" ng-model="addUserForm"  novalidate>
+              <div class="row  margin-top-10">
+                <div class="col-md-6">
+
+                  <div class="well well-sm well-light bg-greyEEE form-group" show-errors>
+                    <span class="block">{{ "modals.administration.user.adduser.user-name" | translate }}:</span>
+                    <input type="text" step="any" class="form-control search-box" name="username" except="{{currentUserName}}" check-unique-username ng-model="user.UserName" required>
+                    <p class="help-block" ng-show="!addUserForm.username.$error.required && addUserForm.username.$error.uniqueUsername">{{ "modals.administration.user.adduser.the-user-name-already-in-use" | translate }}</p>
+                    <p class="help-block" ng-show="addUserForm.username.$error.required">{{ "modals.administration.user.adduser.the-user-name-is-required" | translate }}</p>
+                  </div>
+
+                  <div
+                    crm-text-input=""
+                    options="fieldOptions.firstnameTxtOptions"
+                    value="user.FirstName"
+                    >
+                  </div>
+                  <div
+                    crm-text-input=""
+                    options="fieldOptions.lastnameTxtOptions"
+                    value="user.LastName"
+                    >
+                  </div>
+
+                  <div class="well well-sm well-light bg-greyEEE form-group" show-errors="">
+                    <span class="block ng-binding">{{ "modals.administration.user.adduser.user-type" | translate }}:</span>
+                    <span class="inline-block pull-right weight-bold"></span>
+                    <select class="form-control search-box whole-width" name="usertype" ng-model="user.UserTypeID" required>
+                      <option ng-selected="!user.UserTypeID" value="">- {{ "modals.administration.user.adduser.select-type" | translate }} -</option>
+                      <option ng-repeat="type in data.UserTypes" value="{{type.id}}" ng-selected="user.UserTypeID==type.id">{{type.name}}</option>
+                    </select>
+                    <p class="help-block" ng-show="addUserForm.usertype.$error.required">{{ "modals.administration.user.adduser.the-user-type-is-required" | translate }}</p>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="well well-sm well-light  bg-greyEEE form-group" show-errors="" >
+                    <span class="block ng-binding">{{ "modals.administration.user.adduser.email" | translate }}:</span>
+                    <input type="email" name="email" class="form-control search-box" ng-model="user.Email" vemail required>
+                    <p class="help-block" ng-show="addUserForm.email.$error.required">{{ "modals.administration.user.adduser.the-email-is-required" | translate }}</p>
+                    <p class="help-block" ng-show="!addUserForm.email.$error.required && addUserForm.email.$error.email">{{ "modals.administration.user.adduser.enter-valid-email-please" | translate }}</p>
+                  </div>
+                  <div class="well well-sm well-light  bg-greyEEE form-group" show-errors="" >
+                    <span class="block ng-binding">{{ "modals.administration.user.adduser.confirm-email" | translate }}:</span>
+                    <input type="email" name="confirmEmail" class="form-control search-box" ng-model="user.confirmEmail" equals="{{user.Email}}" required>
+                    <p class="help-block" ng-if="addUserForm.confirmEmail.$error.required">{{ "modals.administration.user.adduser.the-confirm-email-is-required" | translate }}</p>
+                    <p class="help-block" ng-if="!addUserForm.confirmEmail.$error.required && addUserForm.confirmEmail.$error.equals">{{ "modals.administration.user.adduser.enter-correct-confirmation-email-please" | translate }}</p>
+                  </div>
+                  <div
+                    crm-text-input=""
+                    options="fieldOptions.gatewayTxtOptions"
+                    value="user.GatewayUserID"
+                    >
+                  </div>
+
+                  <div class="well well-sm well-light bg-greyEEE">
+                    <span class="block">{{ "modals.administration.user.adduser.options" | translate }}:</span>
+                    <div class="checkbox-list margin-top-bottom-15">
+                      <label class="checkbox-inline" ng-click="user.IsActive=!user.IsActive">
+                        <div class="checker">
+                          <span ng-class="{checked: user.IsActive}"></span>
+                        </div> {{ "modals.administration.user.adduser.active" | translate }}
+                      </label>
+                      <label class="checkbox-inline" ng-click="user.IsLockedOut=!user.IsLockedOut">
+                        <div class="checker">
+                          <span ng-class="{checked: user.IsLockedOut}"></span>
+                        </div> {{ "modals.administration.user.adduser.locked-out" | translate }}
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!--Second tab-->
+        <div class="row">
+          <div class="col-md-12" ng-show="sectionAccess">
+            <form name="addUserAccessForm" ng-model="addUserAccessForm"  novalidate>
+
+              <section ng-repeat="authSection in data.Sections">
+                <div class="well well-sm TitleBars">
+                  <span class="block">{{authSection.name}}:</span>
+                </div>
+                <div class="font-sans-serif size-15 weight-bold margin-bottom-20"  ng-if="!authSection.Sections || authSection.Sections.length==0">
+                  <label ng-click="selectCheckbox(authSection.id)">
+                    <div class="checker"><span ng-class="{checked: checkSelected(authSection.id)}"></span></div>
+                    {{ "modals.administration.user.adduser.enable" | translate }} {{authSection.name}}
+                  </label>
+                </div>
+
+                <div class="font-sans-serif size-15 weight-bold margin-bottom-20" ng-if="authSection.Sections.length>0">
+                  {{ "modals.administration.user.adduser.select-the-fields-to-have-access-to" | translate }}:
+                  <label class="desktop-only pull-right" ng-click="selectAll(getSectionIdsArr(authSection.Sections))">
+                    <div class="checker"><span ng-class="{checked: checkAllSelected(getSectionIdsArr(authSection.Sections))}"></span></div>
+                    {{ "modals.administration.user.adduser.select-all" | translate }}
+                  </label>
+                </div>
+                <div ng-if="authSection.Sections.length>0">
+                  <div class="row add-user-row">
+                    <div class="col-md-4" ng-repeat="section in authSection.Sections">
+                      <div class="checkbox-list ">
+                        <label class="mobile-only" ng-click="selectAll(getSectionIdsArr(authSection.Sections))">
+                          <div class="checker"><span ng-class="{checked: checkAllSelected(getSectionIdsArr(authSection.Sections))}"></span></div>
+                          {{ "modals.administration.user.adduser.select-all" | translate }}
+                        </label>
+
+                        <label ng-click="selectCheckbox(section.id)">
+                          <div class="checker"><span ng-class="{checked: checkSelected(section.id)}"></span></div>
+                          {{section.name}}
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+            </form>
+          </div>
+        </div>
+
+        <!--Third tab-->
+        <div class="row">
+          <div class="col-md-12" ng-show="clientSiteAccess">
+            <form name="addUserSitesForm" ng-model="addUserSitesForm"  novalidate>
+              <div class="row  margin-top-10">
+                <div class="well well-sm TitleBars">
+                  <span class="block">{{ "modals.administration.user.adduser.this-user-has-access-to-view-the-following-clients-&-sites" | translate }}:</span>
+                </div>
+                <div class="col-md-6">
+                  <div
+                    ng-dropdown-multiselect=""
+                    options="clientsData"
+                    selected-model="clientsModel"
+                    extra-settings="clientsSettings"
+                    >
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div
+                    ng-dropdown-multiselect=""
+                    options="sitesData"
+                    selected-model="sitesModel"
+                    extra-settings="sitesSettings">
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!--Modal body end-->
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-md-4 margin-bottom-10">
+            <a href="javascript:;" class="btn btn-lg CancelColor full-width" ng-click="cancel(false)"  data-dismiss="modal">
+              <i class="fa fa-times"></i>
+              {{ "modals.administration.user.adduser.cancel" | translate }}
+            </a>
+          </div>
+          <div class="col-md-4 margin-bottom-10">
+            <a href="javascript:;" class="btn btn-lg WarningColor full-width" ng-click="prev()" ng-if="clientSiteAccess || sectionAccess">
+              <i class="fa fa-arrow-left"></i>
+              {{ "modals.administration.user.adduser.previous" | translate }}
+            </a>
+          </div>
+          <div class="col-md-4">
+            <a href="javascript:;" class="btn btn-lg ApplyColor full-width" 
+               ng-disabled="addUserForm.email.checking_email || addUserForm.username.checking_username" 
+               ng-click="next({addUserForm: userInfo, addUserAccessForm: sectionAccess})" 
+               ng-if="userInfo || sectionAccess">
+              <span ng-show="addUserForm.username.checking_username">Checking username...</span>
+              <span ng-show="addUserForm.email.checking_email">Checking email...</span>
+              <span ng-hide="addUserForm.username.checking_username || addUserForm.email.checking_email">
+                <i class="fa fa-arrow-right"></i>
+                {{ "modals.administration.user.adduser.next" | translate }}
+              </span>
+            </a>
+            <a href="javascript:;" class="btn btn-lg ApplyColor full-width" 
+               ng-click="close()"  
+               ng-if="clientSiteAccess" 
+               ng-disabled="submitting">
+              <span ng-show="submitting">
+                ...{{ "modals.administration.user.adduser.submitting" | translate }}...
+              </span>
+              <span ng-hide="submitting">
+              <i class="fa fa-arrow-right"></i>
+              {{ "modals.administration.user.adduser.finish" | translate }}
+              </span>
+            </a>
+          </div>
+        </div>
+        <div class="row" ng-show="user.UserID">
+          <div class="col-md-12">
+            <a href="javascript:;" class="btn btn-lg ApplyColor full-width" ng-click="resendConfirmation()" ng-disabled="sendingConfirmation">
+              {{sendingConfirmation ? '...SENDING...' : 'RESEND CONFIRMATION INSTRUCTIONS'}}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

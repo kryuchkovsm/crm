@@ -1,0 +1,61 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="portlet box">
+      <div
+        crm-portlet-header=""
+        options="{title: 'Offer Image and Terms'}"
+        >
+      </div>
+      <div class="portlet-body" style="display: block;">
+
+        <div class="row">
+          <div class="col-md-2" style="text-align: center">
+            <a href="javascript:;" class="btn btn-lg ApplyColor margin-bottom-20 full-width" ng-click="addEditItem()"><i class="fa fa-plus"></i> {{ "campaigns.offerimageandterms.offerimageandterms.add-new" | translate }}</a>
+          </div>
+        </div>
+
+        <section st-table="offerITs" st-safe-src="offerITsSafe">
+          <div class="table-scrollable">
+            <table class="table table-striped table-auto-layout">
+              <thead>
+                <tr class="TitleBars top-radius white">
+                  <th st-sort="id" class="cursor-pointer">{{ "campaigns.offerimageandterms.offerimageandterms.id" | translate }}</th>
+                  <th st-sort="name" class="cursor-pointer">{{ "campaigns.offerimageandterms.offerimageandterms.name" | translate }}</th>
+                  <th st-sort="DomainUrl" class="cursor-pointer">{{ "campaigns.offerimageandterms.offerimageandterms.domain-url" | translate }}</th>
+                  <th st-sort="DateModified" class="cursor-pointer">{{ "campaigns.offerimageandterms.offerimageandterms.date-modified" | translate }}</th>
+                  <th>{{ "campaigns.offerimageandterms.offerimageandterms.sites" | translate }}</th>
+                  <th>{{ "campaigns.offerimageandterms.offerimageandterms.charges" | translate }}</th>
+                  <th>{{ "campaigns.offerimageandterms.offerimageandterms.actions" | translate }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="row in offerITs">
+                  <td>{{row.id}}</td>
+                  <td>{{row.name}}</td>
+                  <td>{{row.DomainUrl}}</td>
+                  <td>{{dateFromServer(row.DateModified, true)}}</td>
+                  <td>{{joinNames(row.Sites)}}</td>
+                  <td>{{joinNames(row.Charges)}}</td>
+                  <td>
+                    <a href="" ng-click="addEditItem(row.id)">
+                      <i class="fa fa-pencil" style="cursor: pointer"></i>
+                    </a>
+                    <a href="" ng-click="removeEvent(row.id)">
+                      <i class="fa fa-times" style="cursor: pointer"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="center-text">
+            <div st-items-by-page="10" st-pagination=""></div>
+          </div>
+          <div class="alert alert-warning center-text" ng-hide="offerITs.length" role="alert">
+            {{ "campaigns.offerimageandterms.offerimageandterms.no-data" | translate }}
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>

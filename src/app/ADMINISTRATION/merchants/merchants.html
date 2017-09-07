@@ -1,0 +1,108 @@
+<div class="row">
+  <div class="col-md-12">
+      <div class="row ">
+        <!-- BEGIN Portlet PORTLET-->
+        <div class="portlet box">
+          <div class="portlet-title ThemeColor">
+            <div class="caption">{{ "administration.merchants.merchants.select-sites-and-charges" | translate }}
+            </div>
+          </div>
+          <div class="portlet-body" style="display: block;">
+            <div class="row">
+              <div class="col-md-4">
+                <div
+                  ng-dropdown-multiselect=""
+                  options="clientsData"
+                  idprop="ClientID"
+                  selected-model="clientsModel"
+                  extra-settings="clientsSettings"
+                  >
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div
+                  ng-dropdown-multiselect=""
+                  options="sitesData"
+                  idprop="SiteID"
+                  selected-model="sitesModel"
+                  extra-settings="sitesSettings">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div
+                  ng-dropdown-multiselect=""
+                  options="chargesData"
+                  idprop="chid"
+                  selected-model="chargesModel"
+                  extra-settings="chargesSettings">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- END Portlet PORTLET-->
+        
+        <div class="well well-sm TitleBars" ng-if="!productRules.length">
+          <span class="block">{{ "administration.merchants.merchants.select-charges-to-display-rules" | translate }}</span>
+        </div>
+        
+        <!-- BEGIN Portlet PORTLET-->
+        <div class="portlet box" ng-if="productRules.length">
+          <div class="portlet-title ThemeColor" style="position: relative">
+            <div class="caption">
+              <i class="fa fa-list"></i>
+              {{ "administration.merchants.merchants.controller.existing-rules" | translate }}
+            </div>
+          </div>
+
+          <div class="portlet-body" style="display: block;">
+            <div class="row" ng-repeat="productRule in productRules">
+              <div class="col-md-3 no-padding">
+                <table st-table="productRule.Products" class="table">
+                  <thead>
+                    <th st-ratio="100">{{ "administration.merchants.merchants.apply-to" | translate }}</th>
+                  </thead>
+                  <tbody>
+                  <tr>
+                    <td st-ratio="100">
+                      <ul class="no-padding" style="list-style-type: none;">
+                        <li ng-repeat="product in productRule.Products">{{product.Name}}</li>
+                      </ul>
+                      <a href="javascript:;" class="btn btn-lg ApplyColor margin-bottom-20" 
+                         ng-click="editrule(productRule)">
+                        <span ng-show="!productRule.Rules.length">
+                          <i class="fa fa-pencil"></i> {{ "administration.merchants.merchants.add-rule" | translate }}
+                        </span>
+                        <span ng-show="productRule.Rules.length">
+                          <i class="fa fa-pencil"></i> {{ "administration.merchants.merchants.edit-rule" | translate }}
+                        </span>
+                      </a>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="col-md-9 no-padding">
+                <table st-table="productRule.Rules" class="table crmTable">
+                  <thead>
+                    <th st-ratio="33">{{ "administration.merchants.merchants.processor-name" | translate }}</th>
+                    <th st-ratio="34">{{ "administration.merchants.merchants.load-percentage" | translate }}</th>
+                    <th st-ratio="33">{{ "administration.merchants.merchants.advanced-rules" | translate }}</th>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="rule in productRule.Rules">
+                      <td st-ratio="33">{{rule.ProcessorName}}</td>
+                      <td st-ratio="34">{{rule.LoadPercentage}}</td>
+                      <td st-ratio="33"><a ng-click="advancedRules(rule.ProcessorsAdvancedRuleID)"><i class="fa fa-pencil"></i></a></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!-- END Portlet PORTLET-->
+      </div>
+  </div>
+</div>

@@ -1,0 +1,349 @@
+<div class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form name="advancedMdfForm" ng-model="addMdfForm">
+        <div class="modal-header">
+          <a href="javascript:;" ng-click="close('false')" data-dismiss="modal">
+            <i class="fa fa-times close"></i>
+          </a>
+          <h4 class="modal-title">{{modalTitle}}</h4>
+        </div>
+        <div class="modal-body" ng-if="readyContent">
+          <div class="row" ng-show="noData">
+            <div class="col-md-12">
+              <h3 class="center-text"> {{ "modals.campaigns.processor.advancedprocessor.no-data" | translate }}</h3>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="well well-sm TitleBars">
+                <div class="block">{{::level}} {{::ruleName}}
+              <span ng-if="!IsProcessorLevelRule">
+                ( <a href="" class="cursor-pointer" ng-click="gotToRule(ProcessorLevelRuleID)">Rule</a> )
+              </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="well well-sm TitleBars">
+                <span class="block">{{ "modals.campaigns.processor.advancedprocessor.card-type-breakdown" | translate }}:</span>
+              </div>
+              <div class="margin-bottom-20">
+                <div
+                  crm-checkbox=""
+                  options="fieldOptions.cardTypeCheckboxOptions"
+                  value="fields.cardTypeCheckboxValues">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4">
+              <div class="well well-sm TitleBars">
+                <span class="block">{{ "modals.campaigns.processor.advancedprocessor.transaction-amount" | translate }}:</span>
+              </div>
+
+              <div class="well well-sm well-light bg-greyEEE" ng-if="activeCardTypes[1]" >
+                <span class="block full-width">{{fieldOptions.visaAmountComboOptions.label}}</span>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="row">
+                      <div class="col-md-3 col-sm-2"><div class="margin-top-15">{{fieldOptions.visaAmountComboOptions.label1}}:</div></div>
+                      <div class="col-md-9 col-sm-10">
+                        <input type="number" class="form-control search-box full-width" name="visaAmountComboValue_value1" ng-model="fields.visaAmountComboValue.value1"
+                               ng-min="0"
+                               ng-max="{{fields.visaAmountComboValue.value2 || 0 }}"
+                               min="0"
+                               max="{{fields.visaAmountComboValue.value2 || 0 }}"
+                               positive-number>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="row">
+                      <div class="col-md-3 col-sm-2"><div class="margin-top-15">{{fieldOptions.visaAmountComboOptions.label2}}:</div></div>
+                      <div class="col-md-9 col-sm-10">
+                        <input type="number"
+                               name="visaAmountComboValue_value2"
+                               class="form-control search-box full-width"
+                               ng-model="fields.visaAmountComboValue.value2" min="0" positive-number>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <p class="error-message" ng-show="advancedMdfForm.visaAmountComboValue_value1.$invalid">{{ "modals.campaigns.processor.advancedprocessor.max-should-be-bigger-than-min" | translate }}</p>
+              </div>
+
+              <div class="well well-sm well-light bg-greyEEE" ng-if="activeCardTypes[2]" >
+                <span class="block full-width">{{fieldOptions.msAmountComboOptions.label}}</span>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="row">
+                      <div class="col-md-3 col-sm-2"><div class="margin-top-15">{{fieldOptions.msAmountComboOptions.label1}}:</div></div>
+                      <div class="col-md-9 col-sm-10">
+                        <input type="number"
+                               class="form-control search-box full-width"
+                               ng-model="fields.msAmountComboValue.value1"
+                               name="msAmountComboValue_value1"
+                               ng-min="0"
+                               ng-max="{{fields.msAmountComboValue.value2 || 0 }}"
+                               min="0"
+                               max="{{fields.msAmountComboValue.value2 || 0 }}"
+                               positive-number>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="row">
+                      <div class="col-md-3 col-sm-2"><div class="margin-top-15">{{fieldOptions.msAmountComboOptions.label2}}:</div></div>
+                      <div class="col-md-9 col-sm-10">
+                        <input type="number"
+                               class="form-control search-box full-width"
+                               ng-model="fields.msAmountComboValue.value2" min="0" positive-number>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <p class="error-message" ng-show="advancedMdfForm.msAmountComboValue_value1.$invalid">{{ "modals.campaigns.processor.advancedprocessor.max-should-be-bigger-than-min" | translate }}</p>
+              </div>
+
+              <div class="well well-sm well-light bg-greyEEE" ng-if="activeCardTypes[3]" >
+                <span class="block full-width">{{fieldOptions.aeAmountComboOptions.label}}</span>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="row">
+                      <div class="col-md-3 col-sm-2"><div class="margin-top-15">{{fieldOptions.aeAmountComboOptions.label1}}:</div></div>
+                      <div class="col-md-9 col-sm-10">
+                        <input type="number"
+                               class="form-control search-box full-width"
+                               ng-model="fields.aeAmountComboValue.value1"
+                               name="aeAmountComboValue_value1"
+                               ng-min="0"
+                               ng-max="{{fields.aeAmountComboValue.value2 || 0 }}"
+                               min="0"
+                               max="{{fields.aeAmountComboValue.value2 || 0 }}"
+                               positive-number>
+
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="row">
+                      <div class="col-md-3 col-sm-2"><div class="margin-top-15">{{fieldOptions.aeAmountComboOptions.label2}}:</div></div>
+                      <div class="col-md-9 col-sm-10">
+                        <input type="number"
+                               class="form-control search-box full-width"
+                               ng-model="fields.aeAmountComboValue.value2" min="0" positive-number>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <p class="error-message" ng-show="advancedMdfForm.aeAmountComboValue_value1.$invalid">{{ "modals.campaigns.processor.advancedprocessor.max-should-be-bigger-than-min" | translate }}</p>
+              </div>
+
+              <div class="well well-sm well-light bg-greyEEE" ng-if="activeCardTypes[4]" >
+                <span class="block full-width">{{fieldOptions.discAmountComboOptions.label}}</span>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="row">
+                      <div class="col-md-3 col-sm-2"><div class="margin-top-15">{{fieldOptions.discAmountComboOptions.label1}}:</div></div>
+                      <div class="col-md-9 col-sm-10">
+                        <input type="number"
+                               class="form-control search-box full-width"
+                               ng-model="fields.discAmountComboValue.value1"
+                               name="discAmountComboValue_value1"
+                               ng-min="0"
+                               ng-max="{{fields.discAmountComboValue.value2 || 0 }}"
+                               min="0"
+                               max="{{fields.discAmountComboValue.value2 || 0 }}"
+                               positive-number>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="row">
+                      <div class="col-md-3 col-sm-2"><div class="margin-top-15">{{fieldOptions.discAmountComboOptions.label2}}:</div></div>
+                      <div class="col-md-9 col-sm-10">
+                        <input type="number"
+                               class="form-control search-box full-width"
+                               ng-model="fields.discAmountComboValue.value2" min="0" positive-number>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <p class="error-message" ng-show="advancedMdfForm.discAmountComboValue_value1.$invalid">{{ "modals.campaigns.processor.advancedprocessor.max-should-be-bigger-than-min" | translate }}</p>
+              </div>
+
+              <div class="well well-sm well-light bg-greyEEE" ng-if="activeCardTypes[5]" >
+                <span class="block full-width">{{fieldOptions.maeAmountComboOptions.label}}</span>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="row">
+                      <div class="col-md-3 col-sm-2"><div class="margin-top-15">{{fieldOptions.maeAmountComboOptions.label1}}:</div></div>
+                      <div class="col-md-9 col-sm-10">
+                        <input type="number"
+                               class="form-control search-box full-width"
+                               ng-model="fields.maeAmountComboValue.value1"
+                               name="maeAmountComboValue_value1"
+                               ng-min="0"
+                               ng-max="{{fields.maeAmountComboValue.value2 || 0 }}"
+                               min="0"
+                               max="{{fields.maeAmountComboValue.value2 || 0 }}"
+                               positive-number>
+
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="row">
+                      <div class="col-md-3 col-sm-2"><div class="margin-top-15">{{fieldOptions.maeAmountComboOptions.label2}}:</div></div>
+                      <div class="col-md-9 col-sm-10">
+                        <input type="number"
+                               class="form-control search-box full-width"
+                               ng-model="fields.maeAmountComboValue.value2" min="0" positive-number>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <p class="error-message" ng-show="advancedMdfForm.maeAmountComboValue_value1.$invalid">{{ "modals.campaigns.processor.advancedprocessor.max-should-be-bigger-than-min" | translate }}</p>
+              </div>
+
+            </div>
+
+            <div class="col-md-4">
+              <div class="well well-sm TitleBars">
+                <span class="block">{{ "modals.campaigns.processor.advancedprocessor.card-type-volume" | translate }}:</span>
+              </div>
+              <div
+                ng-if="activeCardTypes[1]"
+                crm-text-input=""
+                options="fieldOptions.visaVolumeTxtOptions"
+                value="fields.visaVolumeTxtValue"
+                >
+              </div>
+              <div
+                ng-if="activeCardTypes[2]"
+                crm-text-input=""
+                options="fieldOptions.msVolumeTxtOptions"
+                value="fields.msVolumeTxtValue"
+                >
+              </div>
+              <div
+                ng-if="activeCardTypes[3]"
+                crm-text-input=""
+                options="fieldOptions.aeVolumeTxtOptions"
+                value="fields.aeVolumeTxtValue"
+                >
+              </div>
+              <div
+                ng-if="activeCardTypes[4]"
+                crm-text-input=""
+                options="fieldOptions.discVolumeTxtOptions"
+                value="fields.discVolumeTxtValue"
+                >
+              </div>
+              <div
+                ng-if="activeCardTypes[5]"
+                crm-text-input=""
+                options="fieldOptions.maeVolumeTxtOptions"
+                value="fields.maeVolumeTxtValue"
+                >
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="well well-sm TitleBars">
+                <span class="block">{{ "modals.campaigns.processor.advancedprocessor.transaction-count" | translate }}:</span>
+              </div>
+              <div
+                ng-if="activeCardTypes[1]"
+                crm-text-input=""
+                options="fieldOptions.visaCountTxtOptions"
+                value="fields.visaCountTxtValue"
+                >
+              </div>
+              <div
+                ng-if="activeCardTypes[2]"
+                crm-text-input=""
+                options="fieldOptions.msCountTxtOptions"
+                value="fields.msCountTxtValue"
+                >
+              </div>
+              <div
+                ng-if="activeCardTypes[3]"
+                crm-text-input=""
+                options="fieldOptions.aeCountTxtOptions"
+                value="fields.aeCountTxtValue"
+                >
+              </div>
+              <div
+                ng-if="activeCardTypes[4]"
+                crm-text-input=""
+                options="fieldOptions.discCountTxtOptions"
+                value="fields.discCountTxtValue"
+                >
+              </div>
+              <div
+                ng-if="activeCardTypes[5]"
+                crm-text-input=""
+                options="fieldOptions.maeCountTxtOptions"
+                value="fields.maeCountTxtValue"
+                >
+              </div>
+            </div>
+            <div class="col-md-12" ng-if="!IsProcessorLevelRule">
+              <div class="well well-sm TitleBars">
+                <span class="block">{{ "modals.campaigns.processor.advancedprocessor.select-rules" | translate }}:</span>
+              </div>
+              <div class="row">
+                <div class="col-md-6" ng-if="fieldOptions.RecurringRulesSettings">
+                  <div
+                    ng-dropdown-multiselect=""
+                    options="fieldOptions.RecurringProductsData"
+                    selected-model="fields.RecurringRulesModel"
+                    extra-settings="fieldOptions.RecurringRulesSettings">
+                  </div>
+                </div>
+                <div class="col-md-6" ng-if="fieldOptions.RecurringRulesSettings">
+                  <h3 style="margin-top: 0px;">{{ "modals.campaigns.processor.advancedprocessor.sticky-rules" | translate }}</h3>
+                  <table class="sticky-rules-table">
+                    <tbody>
+                    <tr ng-repeat="sticky in stickyTable" ng-init="sticky.selected=true">
+                      <td>{{sticky.Name}}</td>
+                      <td>
+                        <select class="form-control" ng-model="sticky.RegularChargeID" ng-init="sticky.RegularChargeID = sticky.ReferenceProductID || '' "
+                                ng-options="regProd.ChargeID as regProd.Name for regProd in fieldOptions.RegularProducts">
+                          <option value=""> {{ "modals.campaigns.processor.advancedprocessor.none" | translate }} </option>
+                        </select>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="row">
+            <div class="col-md-6">
+              <a href="javascript:;" class="btn btn-lg CancelColor full-width"  ng-click="close('false')"  data-dismiss="modal" ng-disabled="saving">
+                <i class="fa fa-rotate-left"></i>
+                {{ "modals.campaigns.processor.advancedprocessor.back" | translate }}
+              </a>
+            </div>
+            <div class="col-md-6">
+              <a href="javascript:;" class="btn btn-lg ApplyColor full-width"  ng-click="save(advancedMdfForm)" ng-disabled="saving">
+                <i class="fa fa-arrow-right"></i>
+                {{ saving ? 'SAVING' : 'SAVE'}}
+              </a>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

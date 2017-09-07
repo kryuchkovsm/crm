@@ -1,0 +1,58 @@
+<div class="well well-sm well-light bg-greyEEE" ng-if="!options.doubleSelect  && !options.doubleNumber">
+  <span class="block" ng-class="{'inline-half': options.checkbox, 'full-width': !options.checkbox}">
+    {{::options.label}}
+  </span>
+  <label ng-show="options.checkbox" class="{{options.checkbox.class}}" ng-click="setSelectedItem()">
+    <div class="checker">
+      <span ng-class="{checked: options.checkbox.value}"></span>
+    </div> {{::options.checkbox.name}}
+  </label>
+  <input ng-show="options.number && options.checkbox" type="number"  placeholder="{{::options.placeholder}}"
+         class="form-control search-box"
+         ng-model="value.numberValue"
+         ng-disabled="options.disabled"
+    >
+  <input ng-show="options.number && !options.checkbox" type="number"  placeholder="{{::options.placeholder}}"
+         class="form-control search-box first-combo"
+         ng-model="value.numberValue">
+  <select ng-show="options.select" class="form-control search-box second-combo" ng-model="value.selectValue"
+          ng-options="opt as opt.name for opt in selectOptions">
+          <option value=''>{{default}}</option>
+  </select>
+  <a ng-show="options.button" href="javascript:;" class="btn btn-md second-combo {{::options.data.class}}"  ng-click="buttonClick()">
+    <i class="fa {{::options.data.icon}}"></i>
+    {{::options.data.name}}
+  </a>
+</div>
+
+<div class="well well-sm well-light bg-greyEEE" ng-if="options.doubleSelect && !options.doubleNumber">
+  <span class="block full-width">{{::options.label}}</span>
+  <div class="row">
+    <div class="col-md-6 col-sm-6">
+      <select class="form-control search-box expire-combo full-width" ng-model="value.select1Value"
+              ng-options="opt as opt.name for opt in options.select1Options">
+        <option value=''> -- Select month -- </option>
+      </select>
+    </div>
+    <div class="col-md-6 col-sm-6">
+      <select class="form-control search-box expire-combo full-width" ng-model="value.select2Value"
+              ng-options="opt as opt.name for opt in options.select2Options">
+        <option value=''> -- Select year -- </option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<div class="well well-sm well-light bg-greyEEE" ng-if="!options.doubleSelect && options.doubleNumber">
+  <span class="block full-width">{{::options.label}}</span>
+  {{::options.label1}}:
+  <input type="number"
+         class="form-control search-box first-combo width-80"
+         ng-model="value.value1">
+  <span class="pull-right">
+     {{::options.label2}}:
+     <input type="number"
+            class="form-control search-box first-combo width-80"
+            ng-model="value.value2">
+  </span>
+</div>

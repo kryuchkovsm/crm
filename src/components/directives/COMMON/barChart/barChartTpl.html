@@ -1,0 +1,12 @@
+<div class="ThemeColor"
+     style="padding-left: 20px; padding-right: 20px;"
+     ng-attr-style="padding-left: 5px; padding-right: 5px; padding-top: {{::paddingTop}}px; padding-bottom: {{::paddingBottom}}px;"
+  >
+  <div id="chart_{{::options.chartID}}" class="chart flot-base-top-left-5"
+       style="position: relative;"
+       ng-attr-style="height: {{::height}}px;"
+    >
+  </div>
+  <div ng-if="options.bottomLabel" class="center-text  weight-bold grey" ng-bind="options.bottomLabel">
+  </div>
+</div>

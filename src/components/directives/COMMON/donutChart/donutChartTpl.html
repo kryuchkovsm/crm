@@ -1,0 +1,25 @@
+<div style="position: relative">
+  <div class="CircleGraphBackgroundColor" style="box-shadow: inset 0 0 7px rgb(136, 136, 136);">
+    <div class="lineChartAmount donutType"
+         ng-style="options.amountLabelStyles"
+         style="color: {{options.color}};">
+      {{options.percents}}%
+    </div>
+    <div ng-if="options.tooltipLabel"
+         class="lineChartLabel"
+         ng-style="options.tooltipLabelStyles"
+         style="color: {{options.color}};"
+         ng-class="{'left-minus-5': options.squareDonut}"
+         ng-bind="options.tooltipLabel | uppercase">
+    </div>
+  </div>
+
+  <div class="SmallGraphBackgroundColor longDonut" ng-class="{'squareDonut': options.squareDonut}" >
+    <div id="chart_{{options.chartID}}"
+         class="chart"
+         style="padding-left: 5px; padding-right: 5px; position: relative; height: 190px;">
+    </div>
+    <div ng-if="options.bottomLabel" class="center-text  weight-bold grey" ng-bind="options.bottomLabel">
+    </div>
+  </div>
+</div>

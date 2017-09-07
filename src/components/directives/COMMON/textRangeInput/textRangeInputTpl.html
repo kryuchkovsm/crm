@@ -1,0 +1,20 @@
+<div class="well well-sm well-light  bg-greyEEE form-group">
+  <span class="block full-width" ng-bind="options.label"></span>
+
+  <span class="bold rangeTextPred" ng-bind="options.pred1"></span>
+  <input type="{{::options.type}}"
+         class="form-control rangeText search-box"
+         id="inputTxtId1{{::name}}"
+         name="1{{::name}}"
+         ng-model="value[0]"
+         placeholder="{{::options.placeholder1}}">
+  &nbsp;&nbsp; -
+  <span class="bold rangeTextPred" ng-bind="options.pred2"></span>
+  <input type="{{::options.type}}"
+         class="form-control rangeText search-box"
+         id="inputTxtId2{{::name}}"
+         name="2{{::name}}"
+         ng-model="value[1]"
+         placeholder="{{::options.placeholder2}}">
+
+</div>

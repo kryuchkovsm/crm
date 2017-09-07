@@ -1,0 +1,224 @@
+<div class="well well-sm TitleBars">
+  <span class="block">{{ "campaigns.campaigns.steps.step6.confirmation-page" | translate }}</span>
+</div>
+
+<section ng-repeat="page in fields.Pages | filterByField: {Type: 'confirmation'}">
+  <div class="bg-greyEEE padding-10 rounded-3 margin-bottom-20 padding-20">
+    <div class="row confirmation-cb-list">
+      <div class="col-md-6 margin-bottom-10">
+        <div class="font-sans-serif main-section-title margin-bottom-10">
+          {{ "campaigns.campaigns.steps.step6.order-details-options" | translate }}:
+        </div>
+        <div class="margin-bottom-10">
+          <div class="checkbox-list ">
+            <label class="weight-bold checkbox-">
+              <span class="cursor-pointer" ng-click="setCommonCb('CustomerInformation')">
+                <div class="checker">
+                  <span ng-class="{checked: checkConfirmationCb(page.Properties.CustomerInformation)}"></span>
+                </div> <span class="section-title">{{ "campaigns.campaigns.steps.step6.display-customer-information" | translate }}</span>
+              </span>
+            </label>
+          </div>
+        </div>
+        <div class="checkbox-list ">
+            <label class="margin-left-20 checkbox-">
+              <span class="cursor-pointer" ng-click="page.Properties.CustomerInformation.FirstLastName=!page.Properties.CustomerInformation.FirstLastName">
+                <div class="checker">
+                  <span ng-class="{checked: page.Properties.CustomerInformation.FirstLastName}"></span>
+                </div> <span class="section-name">{{ "campaigns.campaigns.steps.step6.customer-first/last-name" | translate }}</span>
+              </span>
+            </label>
+            <label class="margin-left-20 checkbox-">
+              <span class="cursor-pointer" ng-click="page.Properties.CustomerInformation.BillingShippingAddress=!page.Properties.CustomerInformation.BillingShippingAddress">
+                <div class="checker">
+                  <span ng-class="{checked: page.Properties.CustomerInformation.BillingShippingAddress}"></span>
+                </div> <span class="section-name">{{ "campaigns.campaigns.steps.step6.customer-billing/shipping-address" | translate }}</span>
+              </span>
+            </label>
+            <label class="margin-left-20 checkbox-">
+              <span class="cursor-pointer" ng-click="page.Properties.CustomerInformation.Phone=!page.Properties.CustomerInformation.Phone">
+                <div class="checker"><span ng-class="{checked: page.Properties.CustomerInformation.Phone}"></span>
+                </div> <span class="section-name">{{ "campaigns.campaigns.steps.step6.customer-phone" | translate }}</span>
+              </span>
+            </label>
+            <label class="margin-left-20 checkbox-">
+              <span class="cursor-pointer" ng-click="page.Properties.CustomerInformation.Email=!page.Properties.CustomerInformation.Email">
+                <div class="checker">
+                  <span ng-class="{checked: page.Properties.CustomerInformation.Email}"></span>
+                </div> <span class="section-name">{{ "campaigns.campaigns.steps.step6.customer-email" | translate }}</span>
+              </span>
+            </label>
+        </div>
+
+        <div class="margin-bottom-10">
+          <div class="checkbox-list ">
+            <label class="weight-bold checkbox-">
+              <span class="cursor-pointer" ng-click="setCommonCb('OrderInformation')">
+                <div class="checker">
+                  <span ng-class="{checked: checkConfirmationCb(page.Properties.OrderInformation)}"></span>
+                </div> <span class="section-title">{{ "campaigns.campaigns.steps.step6.display-order-information" | translate }}</span>
+              </span>
+            </label>
+          </div>
+        </div>
+        <div class="checkbox-list ">
+          <label class="margin-left-20 checkbox-">
+            <span class="cursor-pointer" ng-click="page.Properties.OrderInformation.ProductName=!page.Properties.OrderInformation.ProductName">
+              <div class="checker">
+                <span ng-class="{checked: page.Properties.OrderInformation.ProductName}"></span>
+              </div> <span class="section-name">{{ "campaigns.campaigns.steps.step6.display-product-name" | translate }}</span>
+            </span>
+          </label>
+          <label class="margin-left-20 checkbox-">
+            <span class="cursor-pointer" ng-click="page.Properties.OrderInformation.ProductAmount=!page.Properties.OrderInformation.ProductAmount">
+              <div class="checker">
+                <span ng-class="{checked: page.Properties.OrderInformation.ProductAmount}"></span>
+              </div> <span class="section-name">{{ "campaigns.campaigns.steps.step6.display-product-amount" | translate }}</span>
+            </span>
+          </label>
+          <label class="margin-left-20 checkbox-">
+            <span class="cursor-pointer" ng-click="page.Properties.OrderInformation.TotalProductTax=!page.Properties.OrderInformation.TotalProductTax">
+              <div class="checker">
+                <span ng-class="{checked: page.Properties.OrderInformation.TotalProductTax}"></span>
+              </div> <span class="section-name">{{ "campaigns.campaigns.steps.step6.display-total-product-tax" | translate }}</span>
+            </span>
+          </label>
+          <label class="margin-left-20 checkbox-">
+            <span class="cursor-pointer" ng-click="page.Properties.OrderInformation.Subtotal=!page.Properties.OrderInformation.Subtotal">
+              <div class="checker">
+                <span ng-class="{checked: page.Properties.OrderInformation.Subtotal}"></span>
+              </div> <span class="section-name">{{ "campaigns.campaigns.steps.step6.display-subtotal" | translate }}</span>
+            </span>
+          </label>
+          <label class="margin-left-20 checkbox-">
+            <span class="cursor-pointer" ng-click="page.Properties.OrderInformation.ShippingAmount=!page.Properties.OrderInformation.ShippingAmount">
+              <div class="checker">
+                <span ng-class="{checked: page.Properties.OrderInformation.ShippingAmount}"></span>
+              </div> <span class="section-name">{{ "campaigns.campaigns.steps.step6.display-shipping-amount" | translate }}</span>
+            </span>
+          </label>
+          <label class="margin-left-20 checkbox-">
+            <span class="cursor-pointer" ng-click="page.Properties.OrderInformation.TotalAmount=!page.Properties.OrderInformation.TotalAmount">
+              <div class="checker">
+                <span ng-class="{checked: page.Properties.OrderInformation.TotalAmount}"></span>
+              </div> <span class="section-name">{{ "campaigns.campaigns.steps.step6.display-total-amount" | translate }}</span>
+            </span>
+          </label>
+          <label class="margin-left-20 checkbox-">
+            <span class="cursor-pointer" ng-click="page.Properties.OrderInformation.TransactionID=!page.Properties.OrderInformation.TransactionID">
+              <div class="checker">
+                <span ng-class="{checked: page.Properties.OrderInformation.TransactionID}"></span>
+              </div> <span class="section-name">{{ "campaigns.campaigns.steps.step6.display-transaction-id" | translate }}</span>
+            </span>
+          </label>
+          <label class="margin-left-20 checkbox-">
+            <span class="cursor-pointer" ng-click="page.Properties.OrderInformation.CustomerID=!page.Properties.OrderInformation.CustomerID">
+              <div class="checker">
+                <span ng-class="{checked: page.Properties.OrderInformation.CustomerID}"></span>
+              </div> <span class="section-name">{{ "campaigns.campaigns.steps.step6.display-customer-id" | translate }}</span>
+            </span>
+          </label>
+        </div>
+
+      </div>
+      <div class="col-md-6">
+        <div class="font-sans-serif main-section-title margin-bottom-10">
+          {{ "campaigns.campaigns.steps.step6.display/format-options" | translate }}:
+        </div>
+        <div class="checkbox-list">
+          <label class="weight-bold checkbox-">
+            <span class="cursor-pointer" ng-click="setCommonCb('UseTables')">
+              <div class="checker"><span ng-class="{checked: checkConfirmationCb(page.Properties.UseTables)}"></span></div>
+              <span class="section-title">{{ "campaigns.campaigns.steps.step6.use-tables" | translate }}</span>
+            </span>
+          </label>
+        </div>
+        <div class="checkbox-list">
+          <label class="margin-left-20 checkbox-">
+            <span class="cursor-pointer" ng-click="page.Properties.UseTables.EnableBorders=!page.Properties.UseTables.EnableBorders">
+              <div class="checker"><span ng-class="{checked: page.Properties.UseTables.EnableBorders}"></span></div>
+              <span class="section-name">{{ "campaigns.campaigns.steps.step6.enable-borders" | translate }}</span>
+            </span>
+          </label>
+          <label class="margin-left-20 checkbox-">
+            <span class="cursor-pointer" ng-click="page.Properties.UseTables.HorizontallyCenteredWithinPage=!page.Properties.UseTables.HorizontallyCenteredWithinPage">
+              <div class="checker"><span ng-class="{checked: page.Properties.UseTables.HorizontallyCenteredWithinPage}"></span></div>
+              <span class="section-name">{{ "campaigns.campaigns.steps.step6.horizontally-centered-within-page" | translate }}</span>
+            </span>
+          </label>
+          <label class="margin-left-20 checkbox-">
+            <span class="cursor-pointer" ng-click="page.Properties.UseTables.CenterText=!page.Properties.UseTables.CenterText">
+              <div class="checker"><span ng-class="{checked: page.Properties.UseTables.CenterText}"></span></div>
+              <span class="section-name">{{ "campaigns.campaigns.steps.step6.center-text" | translate }}</span>
+            </span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="well well-sm TitleBars">
+    <span class="block">{{ "campaigns.campaigns.steps.step6.pixels" | translate }}</span>
+  </div>
+
+  <div class="bg-greyEEE padding-10 rounded-3 margin-bottom-20" style="position: relative">
+    <span class="campaign-setup-form-label">{{ "campaigns.campaigns.steps.step6.header-pixel" | translate }}:</span>
+    <div class="tokens-container" ng-include textarea-id="thanks-header-pixels" src="'tokens.html'"></div>
+    <textarea ng-model="page.HeaderPixel" maxlength="5000" id="thanks-header-pixels"
+                placeholder="Example:
+                <iframe src='https://response-pixel.com/p.ashx?o=XXX&e={{transaction_id}}&t={{customer_id}}'></iframe>"
+                class="remarkTxtArea"></textarea>
+  </div>
+
+  <div class="bg-greyEEE padding-10 rounded-3 margin-bottom-20" style="position: relative">
+    <span class="campaign-setup-form-label">FOOTER PIXEL:</span>
+    <div class="tokens-container" ng-include textarea-id="thanks-footer-pixels" src="'tokens.html'"></div>
+    <textarea ng-model="page.FooterPixel" maxlength="5000" id="thanks-footer-pixels"
+              placeholder="Example:
+                <iframe src='https://response-pixel.com/p.ashx?o=XXX&e={{transaction_id}}&t={{customer_id}}'></iframe>"
+              class="remarkTxtArea"></textarea>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4 col-md-push-2">
+      <a href="javascript:;" class="btn btn-lg CancelColor margin-bottom-20 full-width" ng-click="prevFromComplete()" ng-disabled="submitting">
+        {{ "campaigns.campaigns.steps.step6.previous" | translate }}
+      </a>
+    </div>
+    <div class="col-md-4 col-md-push-2">
+      <a href="javascript:;" class="btn btn-lg ApplyColor margin-bottom-20 full-width" ng-click="completeSetup()" ng-disabled="submitting">
+        {{ "campaigns.campaigns.steps.step6.complete-setup" | translate }}
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="row" ng-show="common.generatedSite">
+  <div class="col-md-12">
+    <div class="alert alert-success alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      {{ "campaigns.campaigns.steps.step6.site-was-generated.click-download-kit" | translate }}
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-4 col-md-push-4">
+    <div class="font-sans-serif size-16 weight-bold margin-bottom-20 full-width center-text">
+      {{ "campaigns.campaigns.steps.step6.your-api-site-is-ready-for-download" | translate }}
+    </div>
+    <a class="btn btn-lg CancelColor margin-bottom-20 full-width" href="/kit" target="_blank">
+      {{ "campaigns.campaigns.steps.step6.preview-kit" | translate }}
+    </a>
+    <a href="javascript:;" class="btn btn-lg ApplyColor margin-bottom-20 full-width" ng-show="apiGuid" ng-click="downloadKit()">
+      {{ "campaigns.campaigns.steps.step6.download-kit" | translate }}
+    </a>
+    <!--<a href="javascript:;" class="btn btn-lg ApplyColor margin-bottom-20 full-width" ng-click="showSelectClientModal('main.mycampaigns')">-->
+      <!--CAMPAIGN LIST-->
+    <!--</a>-->
+    <a href="javascript:;" class="btn btn-lg ApplyColor margin-bottom-20 full-width" ng-click="go('main.mycampaigns', {clientID: clientID})">
+      {{ "campaigns.campaigns.steps.step6.campaign-list" | translate }}
+    </a>
+  </div>
+</div>

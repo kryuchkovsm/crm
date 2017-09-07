@@ -1,0 +1,213 @@
+<div class="row">
+  <div class="col-md-12">
+      <!-- BEGIN Portlet PORTLET-->
+      <div class="portlet box">
+        <div
+          crm-portlet-header=""
+          options="portletHeaderOptions"
+          >
+        </div>
+        <div class="portlet-body">
+          <form ng-model="chargeBackReportSystem" name="chargeBackReportSystem">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="well well-sm TitleBars">
+                  <span class="block">{{ "reports.chargebackreport.chargebackreport.choose-client" | translate }}:</span>
+                </div>
+                <div
+                  ng-dropdown-multiselect=""
+                  options="clientsData"
+                  selected-model="clientsModel"
+                  extra-settings="clientsSettings">
+                </div>
+              </div>
+              <div class="col-md-8">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="well well-sm TitleBars">
+                      <span class="block">{{ "reports.chargebackreport.chargebackreport.select-date-range" | translate }}:</span>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div crm-date-picker="" options="startDateOptions" value="fields.startDateValue"></div>
+                      </div>
+                      <div class="col-md-4">
+                        <div crm-date-picker="" options="endDateOptions" value="fields.endDateValue">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div crm-select="" options="filterReportBySelectOptions" value="fields.filterReportBySelectValue"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-12">
+                    <div
+                      crm-radio-list=""
+                      options="retryOptions"
+                      value="retryOptionValue">
+                    </div>
+                  </div>
+                </div>
+
+                <div ng-if="selectFilterNotice" class="Metronic-alerts alert alert-warning font-size-15 center-text">
+                  {{ "reports.chargebackreport.chargebackreport.please-choose" | translate }} {{selectFilterNotice}}
+                </div>
+
+                <div class="row">
+                  <div class="col-md-4 pull-right">
+                    <a href="javascript:;"
+                       class="btn btn-success btn-lg ApplyColor margin-bottom-20 full-width"
+                       ng-click="displayReport()"
+                       ng-show="haveQuery && haveClient"
+                       ng-disabled="processing">
+                      <i class="fa fa-arrow-right"></i>
+                      {{ "reports.chargebackreport.chargebackreport.search" | translate }}
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+
+          <div class="row" ng-show="chartsReady">
+            <div class="col-md-12" st-table="tableObj" st-safe-src="tableObjCopy" >
+
+              <div class="well well-sm ThemeColor">
+                <div class="row">
+                  <div class="col-md-4 col-sm-3 col-xs-6">
+                    <a href="javascript:;"
+                       class="btn btn-success bg-greyEEE font-blue-ebonyclay bold margin-right-5 full-width"
+                       ng-click="typeViewData='charts'" ng-disabled="typeViewData=='charts'">
+                      {{ "reports.chargebackreport.chargebackreport.overall" | translate }}
+                    </a>
+                  </div>
+                  <div class="col-md-4 col-sm-3 col-xs-6">
+                    <a href="javascript:;"
+                       class="btn btn-success bg-greyEEE font-blue-ebonyclay bold full-width"
+                       ng-click="typeViewData='line'" ng-disabled="typeViewData=='line'">
+                      {{ "reports.chargebackreport.chargebackreport.line-item" | translate }}
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <section ng-show="typeViewData=='line'">
+                <section ng-hide="
+                  sData.Chargebacks.length>0 ||
+                  sData.Transactions.length>0 ||
+                  sData.ChargebackRatioBreakdown.length>0">
+                  <div class="alert alert-warning" role="alert">
+                    {{ "reports.chargebackreport.chargebackreport.no-data" | translate }}
+                  </div>
+                </section>
+                <div class="well well-sm ActiveElementColor" ng-show="sData.Chargebacks.length>0 || sData.Transactions.length>0 || sData.ChargebackRatioBreakdown.length>0">
+                  <div class="bg-white">
+                    <section st-table="sDataSafe[key]" st-safe-src="sData[key]" ng-repeat="key in ['Chargebacks', 'Transactions', 'ChargebackRatioBreakdown']">
+                      <div ng-if="sDataSafe[key].length">
+                        <h3 class="reports-line-table-title">{{key == 'ChargebackRatioBreakdown' ? 'Chargeback Ratio Breakdown' : key}}</h3>
+                        <div class="row">
+                          <div class="col-md-12">
+                            <div class="table-scrollable" fixed-header-footer datatable="sData[key]">
+                              <table class="table table-stripped reports-line-table table-auto-layout">
+                                <thead>
+                                  <tr class="TitleBars top-radius white">
+                                    <th>{{ "reports.chargebackreport.chargebackreport.date" | translate }}</th>
+                                    <th>{{ "reports.chargebackreport.chargebackreport.count" | translate }}</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="data in sDataSafe[key]">
+                                  <td>{{dateFromServer(data.Date, true)}}</td>
+                                  <td>{{data.Count || data.Ratio}}</td>
+                                </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </div>
+              </section>
+
+              <section ng-show="typeViewData=='charts'">
+                <section ng-hide="chargebacksChart.chartData.length>0 || transactionsChart.chartData.length>0 || ratioChart.chartData.length>0">
+                  <div class="alert alert-warning" role="alert">
+                    {{ "reports.chargebackreport.chargebackreport.no-data" | translate }}
+                  </div>
+                </section>
+                <div class="well well-sm ActiveElementColor" ng-show="chargebacksChart.chartData.length>0 || transactionsChart.chartData.length>0 || ratioChart.chartData.length>0">
+                  <div class="row no-margin bg-white chargeback-report-charts">
+                    <div class="col-md-4 col-sm-4">
+                      <!-- BEGIN CHART-->
+                      <div crm-linechart=""
+                           options="transactionsChart">
+                      </div>
+                      <!-- END CHART-->
+                    </div>
+                    <div class="col-md-4 col-sm-4">
+                      <!-- BEGIN CHART-->
+                      <div crm-linechart=""
+                           options="chargebacksChart">
+                      </div>
+                      <!-- END CHART-->
+                    </div>
+                    <div class="col-md-4 col-sm-4">
+                      <!-- BEGIN CHART-->
+                      <div crm-linechart=""
+                           options="ratioChart">
+                      </div>
+                      <!-- END CHART-->
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
+
+          <div class="row" ng-show="dataReady">
+            <div class="col-md-12" st-table="tableObj" st-safe-src="tableObjCopy" >
+              <div class="fixed-table-header">
+                <table class="table scrollable table-striped" table-height="400" fixed-header arr="tableObj">
+                  <thead>
+                    <tr class="TitleBars top-radius white">
+                      <th>{{ fields.filterReportBySelectValue.sName | uppercase }}</th>
+                      <th ng-if="fields.filterReportBySelectValue.sName == 'affiliate'" st-sort="AffiliateSubID">{{ "reports.chargebackreport.chargebackreport.affiliatesubid" | translate }}</th>
+                      <th st-sort="ChargebackCount">{{ "reports.chargebackreport.chargebackreport.cb-count" | translate }}</th>
+                      <th st-sort="TransactionCount">{{ "reports.chargebackreport.chargebackreport.transaction-count" | translate }}</th>
+                      <th st-sort="ChargebackRatio">{{ "reports.chargebackreport.chargebackreport.cb-count-%" | translate }}</th>
+                      <th st-sort="ChargebackSubTotalAmount">{{ "reports.chargebackreport.chargebackreport.chargeback-amount" | translate }}</th>
+                      <th st-sort="TransactionAmount">{{ "reports.chargebackreport.chargebackreport.transaction-amount" | translate }}</th>
+                      <th st-sort="ChargebackVolumeRatio">{{ "reports.chargebackreport.chargebackreport.cb-amount-%" | translate }}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                  <tr ng-if="tableObjCopy.length==0">
+                    <td colspan="8">NO DATA</td>
+                  </tr>
+
+                  <tr ng-repeat="row in tableObj">
+                    <td ng-bind="row.FilterBy"></td>
+                    <td ng-bind="row.AffiliateSubID" ng-if="fields.filterReportBySelectValue.sName == 'affiliate'"></td>
+                    <td ng-bind="row.ChargebackCount"></td>
+                    <td ng-bind="row.TransactionCount"></td>
+                    <td ng-bind="row.ChargebackRatio"></td>
+                    <td ng-bind="row.ChargebackSubTotalAmount"></td>
+                    <td ng-bind="row.TransactionSubTotalAmount"></td>
+                    <td ng-bind="row.ChargebackVolumeRatio"></td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- END Portlet PORTLET-->
+  </div>
+</div>

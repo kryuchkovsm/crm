@@ -1,0 +1,70 @@
+<div class="row">
+
+  <div class="col-md-12">
+      <div class="row ">
+        <!-- BEGIN Portlet PORTLET-->
+        <div class="portlet box">
+          <div
+            crm-portlet-header=""
+            options="assignedTableHeaderOptions"
+            >
+          </div>
+          <div class="portlet-body" style="display: block;">
+            <div st-table="sites" st-safe-src="sitesSafe">
+              <div class="tableSearchInput top-minus-35">
+                <input st-search class="form-control st-search-input" placeholder="Search"  type="search"/><i class="fa fa-search"></i>
+              </div>
+
+              <div class="row">
+                <div class="col-md-2" style="text-align: center">
+                  <a href="javascript:;" ng-click="addnew()" class="btn btn-lg ApplyColor margin-bottom-20 full-width">
+                    <i class="fa fa-plus"></i>
+                    {{ "campaigns.sites.sites.add-new" | translate }}
+                  </a>
+                </div>
+              </div>
+
+              <div class="table-scrollable">
+                <table class="table table-striped table-auto-layout">
+                  <thead>
+                    <tr class="TitleBars top-radius white">
+                      <th st-ratio="9" st-sort="SiteID" class="cursor-pointer">{{ "campaigns.sites.sites.site-id" | translate }}</th>
+                      <th st-ratio="19" st-sort="Name" class="cursor-pointer">{{ "campaigns.sites.sites.name" | translate }}</th>
+                      <th st-ratio="15" st-sort="DateEntered" class="cursor-pointer">{{ "campaigns.sites.sites.created" | translate }}</th>
+                      <th st-ratio="15" st-sort="DateModified" class="cursor-pointer">{{ "campaigns.sites.sites.updated" | translate }}</th>
+                      <th st-ratio="15" st-sort="LastTRX" class="cursor-pointer">{{ "campaigns.sites.sites.last-trx" | translate }}</th>
+                      <th st-ratio="5" st-sort="IsActive" class="cursor-pointer">{{ "campaigns.sites.sites.is-active" | translate }}</th>
+                      <th st-ratio="5" ng-if="(authSections | searchAuthSection: {RouteName: 'main.merchants'})">{{ "campaigns.sites.sites.live" | translate }}</th>
+                      <th st-ratio="8">{{ "campaigns.sites.sites.options" | translate }}</th>
+                      <th st-ratio="9">{{ "campaigns.sites.sites.actions" | translate }}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="row in sites"  ng-class="row.class">
+                      <td st-ratio="9">{{row.SiteID}}</td>
+                      <td st-ratio="19">{{row.Name}}</td>
+                      <td st-ratio="15"><span ng-if="row.DateEntered">{{dateFromServer(row.DateEntered)}}</span></td>
+                      <td st-ratio="15"><span ng-if="row.DateModified">{{dateFromServer(row.DateModified)}}</span></td>
+                      <td st-ratio="15"><span ng-if="row.LastTRX">{{dateFromServer(row.LastTRX)}}</span></td>
+                      <td st-ratio="5">{{row.IsActive ? 'Yes' : 'No'}}</td>
+                      <td st-ratio="5" class="center-text" ng-if="(authSections | searchAuthSection: {RouteName: 'main.merchants'})"><a href="javascript:;" ng-click="liveCB(row.SiteID)"><i class="fa fa-pencil"></i></a></td>
+                      <td st-ratio="8" class="center-text"><a href="javascript:;" ng-click="options(row.SiteID)"><i class="fa fa-pencil"></i></a></td>
+                      <td st-ratio="9" class="center-text">
+                        <p ng-show="row.IsActive"><a href="javascript:;" ng-click="unassignCB('deactivate', row)">{{ "campaigns.sites.sites.deactivate" | translate }}</a></p>
+                        <p ng-show="!row.IsActive"><a href="javascript:;" ng-click="unassignCB('activate', row)">{{ "campaigns.sites.sites.activate" | translate }}</a></p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="center-text">
+                <div  st-items-by-page="10" st-pagination=""></div>
+              </div>
+              <div class="alert alert-warning" role="alert" ng-hide="sites.length">{{ "campaigns.sites.sites.no-data" | translate }}</div>
+            </div>
+          </div>
+        </div>
+        <!-- END Portlet PORTLET-->
+      </div>
+  </div>
+</div>

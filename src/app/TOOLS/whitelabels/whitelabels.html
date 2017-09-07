@@ -1,0 +1,97 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="row ">
+      <div class="portlet box">
+        <div class="portlet-title ThemeColor">
+          <div class="caption">
+            {{ "tools.whitelabels.whitelabels.manage-whitelabels" | translate }}
+          </div>
+        </div>
+        <div class="portlet-body" style="display: block;">
+          <div class="row">
+            <div class="col-md-2" style="text-align: center">
+              <a href="javascript:;"
+                 class="btn btn-lg ApplyColor margin-bottom-20 full-width"
+                 ng-click="addEditWhitelabel()"
+                 ng-disabled="processing">
+                <i class="fa fa-plus"></i>
+                {{ "tools.whitelabels.whitelabels.add-new" | translate }}
+              </a>
+            </div>
+            <div class="col-md-8">
+              <div class="margin-bottom-20 center-text" style="margin-top:11px">
+                <button class="btn btn-default btn-xs letter-button"
+                        ng-repeat="letter in alphabet"
+                        ng-click="setActiveLetter(letter)"
+                        ng-class="{'btn-primary': letter==activeLetter}" >
+                  {{letter}}
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div st-table="crms" st-safe-src="crmsSafe">
+            <div class="tableSearchInput top-minus-35">
+              <input st-search class="form-control st-search-input"
+                     placeholder="Search Clients"
+                     type="text"/>
+              <i class="fa fa-search"></i>
+            </div>
+            <div class="inner-width-200 table-scrollable border-none border-left border-right" ng-show="crmsSafe.length">
+              <table class="table table-striped table-auto-layout">
+                <thead>
+                <tr class="TitleBars top-radius white">
+                  <th>{{ "tools.whitelabels.whitelabels.domain" | translate }}</th>
+                  <th>{{ "tools.whitelabels.whitelabels.csr/ssl" | translate }}</th>
+                  <th>{{ "tools.whitelabels.whitelabels.actions" | translate }}</th>
+                  <th class="cursor-pointer" st-sort="Domain">{{ "tools.whitelabels.whitelabels.domain" | translate }}</th>
+                  <th class="cursor-pointer" st-sort="CompanyName">{{ "tools.whitelabels.whitelabels.company-name" | translate }}</th>
+                  <th class="cursor-pointer" st-sort="FirstName">{{ "tools.whitelabels.whitelabels.first-name" | translate }}</th>
+                  <th class="cursor-pointer" st-sort="LastName">{{ "tools.whitelabels.whitelabels.last-name" | translate }}</th>
+                  <th class="cursor-pointer" st-sort="Phone">{{ "tools.whitelabels.whitelabels.phone" | translate }}</th>
+                  <th class="cursor-pointer" st-sort="Email">{{ "tools.whitelabels.whitelabels.email" | translate }}</th>
+                  <th class="cursor-pointer" st-sort="Address1">{{ "tools.whitelabels.whitelabels.address1" | translate }}</th>
+                  <th class="cursor-pointer" st-sort="Address2">{{ "tools.whitelabels.whitelabels.address2" | translate }}</th>
+                  <th class="cursor-pointer" st-sort="City">{{ "tools.whitelabels.whitelabels.city" | translate }}</th>
+                  <th class="cursor-pointer" st-sort="State">{{ "tools.whitelabels.whitelabels.state" | translate }}</th>
+                  <th class="cursor-pointer" st-sort="Zip">{{ "tools.whitelabels.whitelabels.zip" | translate }}</th>
+                  <th class="cursor-pointer" st-sort="AdministratorEmail">{{ "tools.whitelabels.whitelabels.administrator-email" | translate }}</th>
+                  <th class="cursor-pointer" st-sort="AdministratorUsername">{{ "tools.whitelabels.whitelabels.administrator-username" | translate }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="row in crms">
+                  <td>
+                    <a ng-click="enableDomain(row)"><i class="fa fa-list"></i></a>
+                  </td>
+                  <td>
+                    <a ng-click="openCSR(row)"><i class="fa fa-list"></i></a>
+                  </td>
+                  <td>
+                    <a ng-click="addEditWhitelabel(row)"><i class="fa fa-pencil"></i></a>
+                    <a ng-click="deleteCRM(row)"><i class="fa fa-times"></i></a>
+                  </td>
+                  <td ng-repeat="key in getKeys(row)" ng-if="key!='id'">{{row[key]}}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="text-center">
+              <div st-items-by-page="10" st-pagination=""></div>
+            </div>
+          </div>
+          <div class="panel panel-warning" ng-hide="crms.length">
+            <div class="panel-heading">
+              <h4 class="panel-title center-text">
+                {{ "tools.whitelabels.whitelabels.no-data" | translate }}
+              </h4>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+      <!-- END Portlet PORTLET-->
+    </div>
+  </div>
+</div>
+

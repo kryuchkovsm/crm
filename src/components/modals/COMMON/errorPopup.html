@@ -1,0 +1,31 @@
+<div class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a href="javascript:;" ng-click="close()" data-dismiss="modal"><i class="fa fa-times close"></i></a>
+        <h4 class="modal-title">{{ "modals.common.errorpopup.something-went-wrong" | translate }}</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="panel panel-danger">
+              <div class="panel-heading">
+                <h4 class="panel-title" ng-bind-html="data.modalTxt">
+                </h4>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <div class="center-text">
+          <a href="javascript:;" class="btn btn-lg CancelColor"  ng-click="close()"  data-dismiss="modal" style="min-width: 100px;">
+            <i ng-show="data.showButtonIcon" class="fa fa-rotate-left"></i>
+            {{data.buttonTxt || 'CANCEL'}}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
